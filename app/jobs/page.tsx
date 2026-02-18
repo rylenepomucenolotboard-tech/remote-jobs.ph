@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Users, Briefcase, Search, MapPin, DollarSign } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase, Job } from '@/lib/supabase';
@@ -74,9 +75,7 @@ export default function JobsPage() {
                         <div className="grid md:grid-cols-5 gap-6">
                             <div className="md:col-span-2">
                                 <div className="relative">
-                                    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={2} />
                                     <input
                                         type="text"
                                         placeholder="Search job title or keyword"
@@ -88,9 +87,7 @@ export default function JobsPage() {
                             </div>
                             <div className="md:col-span-2">
                                 <div className="relative">
-                                    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    </svg>
+                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={2} />
                                     <select
                                         value={categoryFilter}
                                         onChange={(e) => setCategoryFilter(e.target.value)}
@@ -118,10 +115,18 @@ export default function JobsPage() {
                             <p className="text-xl text-navy-900/40 font-semibold tracking-tight">Loading jobs...</p>
                         </div>
                     ) : filteredJobs.length === 0 ? (
-                        <div className="text-center py-24 bg-white rounded-[40px] shadow-sm border border-navy-100/50">
-                            <div className="w-20 h-20 bg-navy-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">🔎</div>
-                            <h3 className="text-2xl font-bold text-navy-950 mb-2">No jobs matched your search</h3>
-                            <p className="text-navy-900/40 font-medium">Try adjusting your filters or searching for something else.</p>
+                        <div className="text-center py-24 bg-white rounded-[40px] shadow-sm border border-navy-100/50 p-12">
+                            <div className="w-20 h-20 bg-navy-50 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
+                                <Users size={40} strokeWidth={1.5} />
+                            </div>
+                            <h3 className="text-3xl font-black text-navy-950 mb-4">Can't find the right role?</h3>
+                            <p className="text-navy-600 font-medium mb-10 max-w-md mx-auto">
+                                Let us do the work for you. Join our <strong>Talent Concierge</strong> and we'll notify you the moment a matching role drops.
+                            </p>
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <Link href="/register?type=jobseeker" className="btn-primary !px-10">Join Concierge</Link>
+                                <button onClick={() => { setSearchTerm(''); setCategoryFilter(''); }} className="btn-outline-navy !px-10">Clear Filters</button>
+                            </div>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6">
@@ -129,8 +134,8 @@ export default function JobsPage() {
                                 <Link href={`/jobs/${job.id}`} key={job.id} className="group">
                                     <div className="bg-white border border-navy-100/50 rounded-[32px] p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-navy-900/5 hover:-translate-y-1 flex flex-col md:flex-row md:items-center justify-between gap-8">
                                         <div className="flex items-start gap-6">
-                                            <div className="w-16 h-16 bg-navy-50 rounded-2xl flex items-center justify-center text-3xl shrink-0 group-hover:bg-primary/10 transition-colors">
-                                                💼
+                                            <div className="w-16 h-16 bg-navy-50 rounded-2xl flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/10 transition-colors">
+                                                <Briefcase size={32} strokeWidth={1.5} />
                                             </div>
                                             <div>
                                                 <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -147,17 +152,12 @@ export default function JobsPage() {
                                                 </h3>
                                                 <div className="flex flex-wrap gap-6 text-sm text-navy-900/40 font-medium">
                                                     <span className="flex items-center gap-2">
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
+                                                        <MapPin size={16} strokeWidth={2} />
                                                         {job.location}
                                                     </span>
                                                     {job.salary_range && (
                                                         <span className="flex items-center gap-2 text-green-600 font-bold">
-                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16V15" />
-                                                            </svg>
+                                                            <DollarSign size={16} strokeWidth={2} />
                                                             {job.salary_range}
                                                         </span>
                                                     )}

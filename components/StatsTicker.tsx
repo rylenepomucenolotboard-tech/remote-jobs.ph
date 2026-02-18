@@ -1,6 +1,5 @@
-'use client';
-
 import React, { useEffect, useState, useRef } from 'react';
+import { STATS } from '@/content/stats';
 
 interface CountUpProps {
     end: number;
@@ -49,35 +48,41 @@ const CountUp: React.FC<CountUpProps> = ({ end, duration = 4000, suffix = '' }) 
         return () => clearInterval(timer);
     }, [isVisible, end, duration]);
 
-    return <span ref={countRef}>{count.toLocaleString()}{suffix}</span>;
+    return (
+        <span
+            ref={countRef}
+            className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+        >
+            {count.toLocaleString()}{suffix}
+        </span>
+    );
 };
 
 const StatsTicker = () => {
     const stats = [
-        { label: 'Active Opportunities', value: 4200, suffix: '+', icon: '💼' },
-        { label: 'Verified Hires', value: 850, suffix: '+', icon: '✅' },
-        { label: 'Avg. Salary Boost', value: 45, suffix: '%', icon: '🚀' },
-        { label: 'Global Partners', value: 120, suffix: '+', icon: '🌍' },
+        { label: 'Roles Filled', value: parseInt(STATS.rolesFilledTotal.replace(/\D/g, '')), suffix: '+' },
+        { label: 'Global Clients', value: parseInt(STATS.globalClients.replace(/\D/g, '')), suffix: '+' },
+        { label: 'Active Resumes', value: parseInt(STATS.activeResumes.replace(/\D/g, '')), suffix: ' Million+' },
+        { label: 'Avg. Salary Growth', value: parseInt(STATS.avgSalaryGrowth.replace(/\D/g, '')), suffix: '%' },
     ];
 
     return (
         <section className="py-20 px-4 bg-[#0A0C10]">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-background-slate/50 border border-white/5 rounded-[40px] p-8 md:p-14 shadow-2xl flex flex-wrap justify-center md:justify-between items-center gap-12 md:gap-4 backdrop-blur-md relative overflow-hidden">
+                <div className="bg-background-slate/30 border border-white/5 rounded-[40px] p-8 md:p-14 shadow-2xl backdrop-blur-md relative overflow-hidden">
                     {/* Subtle Glow Background */}
                     <div className="absolute inset-0 bg-primary/2 opacity-[0.03] pointer-events-none"></div>
 
-                    {stats.map((stat, i) => (
-                        <div key={i} className="text-center md:text-left px-8 group relative z-10">
-                            <div className="flex items-center justify-center md:justify-start gap-4 mb-2">
-                                <span className="text-2xl opacity-60 group-hover:opacity-100 transition-opacity transform group-hover:scale-110 duration-300">{stat.icon}</span>
-                                <p className="text-4xl md:text-6xl font-black text-white tracking-tighter glow-indigo-hover transition-all">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 relative z-10">
+                        {stats.map((stat, i) => (
+                            <div key={i} className="text-center group">
+                                <p className="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-3 tracking-tighter transition-all">
                                     <CountUp end={stat.value} suffix={stat.suffix} />
                                 </p>
+                                <p className="text-[#6B7280] font-normal text-xs md:text-sm uppercase tracking-[0.2em]">{stat.label}</p>
                             </div>
-                            <p className="text-[#94A3B8] font-bold text-xs uppercase tracking-[0.2em]">{stat.label}</p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Phone, Briefcase, GraduationCap, FileText, Clock, CheckCircle, XCircle, ChevronLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase';
@@ -174,8 +175,9 @@ export default function EmployerApplicationsPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-8">
                         <h1>Manage Applications</h1>
-                        <Link href="/employer/dashboard" className="text-accent hover:underline text-base">
-                            ← Back to Dashboard
+                        <Link href="/employer/dashboard" className="text-accent hover:underline text-base flex items-center gap-1">
+                            <ChevronLeft size={20} strokeWidth={2} />
+                            Back to Dashboard
                         </Link>
                     </div>
 
@@ -276,18 +278,21 @@ export default function EmployerApplicationsPage() {
                                         <div className="grid md:grid-cols-2 gap-4 mb-4">
                                             <div>
                                                 {app.profiles?.phone && (
-                                                    <p className="text-base text-gray-700 mb-2">
-                                                        📞 <strong>Phone:</strong> {app.profiles.phone}
+                                                    <p className="text-base text-gray-700 mb-2 flex items-center gap-2">
+                                                        <Phone size={18} className="text-navy-400" strokeWidth={2} />
+                                                        <strong>Phone:</strong> {app.profiles.phone}
                                                     </p>
                                                 )}
                                                 {app.resumes?.experience_years !== null && app.resumes?.experience_years !== undefined && (
-                                                    <p className="text-base text-gray-700 mb-2">
-                                                        💼 <strong>Experience:</strong> {app.resumes.experience_years} years
+                                                    <p className="text-base text-gray-700 mb-2 flex items-center gap-2">
+                                                        <Briefcase size={18} className="text-navy-400" strokeWidth={2} />
+                                                        <strong>Experience:</strong> {app.resumes.experience_years} years
                                                     </p>
                                                 )}
                                                 {app.resumes?.education && (
-                                                    <p className="text-base text-gray-700 mb-2">
-                                                        🎓 <strong>Education:</strong> {app.resumes.education}
+                                                    <p className="text-base text-gray-700 mb-2 flex items-center gap-2">
+                                                        <GraduationCap size={18} className="text-navy-400" strokeWidth={2} />
+                                                        <strong>Education:</strong> {app.resumes.education}
                                                     </p>
                                                 )}
                                             </div>
@@ -325,9 +330,10 @@ export default function EmployerApplicationsPage() {
                                                     href={app.resumes.file_url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="btn-primary text-sm px-4 py-2"
+                                                    className="btn-primary text-sm px-4 py-2 flex items-center gap-2"
                                                 >
-                                                    📄 View Resume
+                                                    <FileText size={18} strokeWidth={2} />
+                                                    View Resume
                                                 </a>
                                             )}
 

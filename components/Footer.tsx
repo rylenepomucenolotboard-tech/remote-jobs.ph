@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { COPY } from '@/content/copy';
 
 export default function Footer() {
     return (
@@ -54,7 +55,7 @@ export default function Footer() {
                         <ul className="space-y-5 text-text-muted font-medium">
                             <li><Link href="/employer/post-job" className="hover:text-white transition-colors">Post a Job</Link></li>
                             <li><Link href="/employer/search-resumes" className="hover:text-white transition-colors">Hire Specialists</Link></li>
-                            <li><Link href="/employer/dashboard" className="hover:text-white transition-colors">Company Portal</Link></li>
+                            <li><Link href="/employer/dashboard" className="hover:text-white transition-colors">{COPY.navigation.employerDashboard}</Link></li>
                         </ul>
                     </div>
                 </div>

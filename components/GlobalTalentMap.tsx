@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import { STATS } from '@/content/stats';
+import { COPY } from '@/content/copy';
+import { ICONS } from '@/content/icons';
 
 const GlobalTalentMap = () => {
     return (
@@ -67,9 +69,8 @@ const GlobalTalentMap = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full h-full">
                 <div className="text-center mb-24">
-                    <h2 className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-4">Live Marketplace Impact</h2>
                     <h3 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-                        The Global <span className="text-primary italic">Talent Map</span>
+                        {COPY.sections.globalTalentMap.title.split('Map')[0]} <span className="text-primary italic">Talent Map</span>
                     </h3>
                 </div>
 
@@ -78,8 +79,11 @@ const GlobalTalentMap = () => {
                     {/* Card 1 (Top Left) */}
                     <div className="absolute top-[10%] left-[5%] md:left-[10%] animate-float">
                         <div className="glass-card p-8 border border-white/5 backdrop-blur-2xl rounded-3xl max-w-[280px] group transition-all duration-700 hover:scale-105 hover:border-primary/50 hover:shadow-glow-indigo">
-                            <h4 className="text-4xl font-black text-white mb-2 font-geist">9M++</h4>
-                            <p className="text-primary font-bold text-[10px] uppercase tracking-widest mb-4">Verified Professionals</p>
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                <ICONS.users size={24} strokeWidth={1.5} />
+                            </div>
+                            <h4 className="text-4xl font-black text-white mb-2 font-geist">{STATS.activeResumes}</h4>
+                            <p className="text-primary font-bold text-[10px] uppercase tracking-widest mb-4">Active Resumes</p>
                             <p className="text-sm text-text-muted leading-relaxed font-medium">The depth of our talent pool, ready to scale your global vision.</p>
                         </div>
                     </div>
@@ -87,8 +91,11 @@ const GlobalTalentMap = () => {
                     {/* Card 2 (Bottom Left) */}
                     <div className="absolute bottom-[10%] left-[2%] md:left-[5%] animate-float-slow">
                         <div className="glass-card p-8 border border-white/5 backdrop-blur-2xl rounded-3xl max-w-[280px] group transition-all duration-700 hover:scale-105 hover:border-primary/50 hover:shadow-glow-indigo">
-                            <h4 className="text-4xl font-black text-white mb-2 font-geist">4,200+</h4>
-                            <p className="text-primary font-bold text-[10px] uppercase tracking-widest mb-4">Hires This Month</p>
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                <ICONS.globe size={24} strokeWidth={1.5} />
+                            </div>
+                            <h4 className="text-4xl font-black text-white mb-2 font-geist">{STATS.globalClients}</h4>
+                            <p className="text-primary font-bold text-[10px] uppercase tracking-widest mb-4">Global Clients</p>
                             <p className="text-sm text-text-muted leading-relaxed font-medium">Real-time marketplace activity connecting talent to leaders.</p>
                         </div>
                     </div>
@@ -96,8 +103,11 @@ const GlobalTalentMap = () => {
                     {/* Card 3 (Top Right) */}
                     <div className="absolute top-[5%] right-[5%] md:right-[10%] animate-float-delayed">
                         <div className="glass-card p-8 border border-white/5 backdrop-blur-2xl rounded-3xl max-w-[280px] group transition-all duration-700 hover:scale-105 hover:border-accent-cyber/50 hover:shadow-[0_0_50px_rgba(202,244,113,0.1)]">
-                            <h4 className="text-4xl font-black text-white mb-2 font-geist">35%</h4>
-                            <p className="text-accent-cyber font-bold text-[10px] uppercase tracking-widest mb-4">Avg. Salary Growth</p>
+                            <div className="w-12 h-12 rounded-2xl bg-accent-cyber/10 flex items-center justify-center text-accent-cyber mb-6">
+                                <ICONS.briefcase size={24} strokeWidth={1.5} />
+                            </div>
+                            <h4 className="text-4xl font-black text-white mb-2 font-geist">{STATS.rolesFilledTotal}</h4>
+                            <p className="text-accent-cyber font-bold text-[10px] uppercase tracking-widest mb-4">Roles Filled</p>
                             <p className="text-sm text-text-muted leading-relaxed font-medium">The significant value we bring to Filipino remote professionals.</p>
                         </div>
                     </div>
@@ -105,7 +115,10 @@ const GlobalTalentMap = () => {
                     {/* Card 4 (Bottom Right) */}
                     <div className="absolute bottom-[5%] right-[2%] md:right-[8%] animate-float-slow-delayed">
                         <div className="glass-card p-8 border border-white/5 backdrop-blur-2xl rounded-3xl max-w-[280px] group transition-all duration-700 hover:scale-105 hover:border-accent-cyber/50 hover:shadow-[0_0_50px_rgba(202,244,113,0.1)]">
-                            <h4 className="text-4xl font-black text-white mb-2 font-geist">12 Days</h4>
+                            <div className="w-12 h-12 rounded-2xl bg-accent-cyber/10 flex items-center justify-center text-accent-cyber mb-6">
+                                <ICONS.clock size={24} strokeWidth={1.5} />
+                            </div>
+                            <h4 className="text-4xl font-black text-white mb-2 font-geist">{STATS.avgTimeToHire}</h4>
                             <p className="text-accent-cyber font-bold text-[10px] uppercase tracking-widest mb-4">Avg. Time-to-Hire</p>
                             <p className="text-sm text-text-muted leading-relaxed font-medium">Unparalleled efficiency for employers sourcing elite tech talent.</p>
                         </div>

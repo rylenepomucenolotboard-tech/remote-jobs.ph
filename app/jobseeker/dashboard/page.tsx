@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { CheckCircle, AlertCircle, FileText, Briefcase, GraduationCap, Plus, Save } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase, Resume, Application } from '@/lib/supabase';
@@ -230,9 +231,16 @@ export default function JobseekerDashboard() {
                                 <button
                                     type="submit"
                                     disabled={uploading}
-                                    className={`btn-primary text-base px-6 py-3 w-full ${uploading ? 'opacity-50 cursor-not-allowed' : ''
+                                    className={`btn-primary text-base px-6 py-3 w-full flex items-center justify-center gap-2 ${uploading ? 'opacity-50 cursor-not-allowed' : ''
                                         }`}
                                 >
+                                    {uploading ? (
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    ) : resume ? (
+                                        <Save size={20} strokeWidth={2} />
+                                    ) : (
+                                        <Plus size={20} strokeWidth={2} />
+                                    )}
                                     {uploading ? 'Uploading...' : resume ? 'Update Resume' : 'Upload Resume'}
                                 </button>
                             </form>
@@ -246,8 +254,9 @@ export default function JobseekerDashboard() {
                             </div>
                             <div className="card text-center">
                                 <p className="text-base text-gray-600 mb-2">Resume Status</p>
-                                <p className="text-2xl font-bold text-accent">
-                                    {resume ? '✓ Uploaded' : '⚠ Not Uploaded'}
+                                <p className="text-2xl font-bold text-accent flex items-center justify-center gap-2">
+                                    {resume ? <CheckCircle size={24} strokeWidth={2.5} /> : <AlertCircle size={24} strokeWidth={2.5} />}
+                                    {resume ? 'Uploaded' : 'Not Uploaded'}
                                 </p>
                             </div>
                             <Link href="/jobs" className="btn-secondary text-base px-6 py-3 block text-center">
@@ -278,9 +287,9 @@ export default function JobseekerDashboard() {
                                                 </h3>
                                                 <div className="flex gap-2 mb-2">
                                                     <span className={`px-3 py-1 rounded-full text-sm font-semibold ${app.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                                                            app.status === 'reviewed' ? 'bg-blue-100 text-blue-700' :
-                                                                app.status === 'shortlisted' ? 'bg-green-100 text-green-700' :
-                                                                    'bg-red-100 text-red-700'
+                                                        app.status === 'reviewed' ? 'bg-blue-100 text-blue-700' :
+                                                            app.status === 'shortlisted' ? 'bg-green-100 text-green-700' :
+                                                                'bg-red-100 text-red-700'
                                                         }`}>
                                                         {app.status.toUpperCase()}
                                                     </span>

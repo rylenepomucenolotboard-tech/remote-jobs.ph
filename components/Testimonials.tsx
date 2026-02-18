@@ -9,31 +9,27 @@ const testimonials = [
         name: 'Sarah Chen',
         role: 'CTO @ TechFlow',
         content: 'The quality of Filipino engineers we found here is unparalleled. We scaled our dev team by 40% in just two months.',
-        avatar: 'https://i.pravatar.cc/150?u=sarah',
-        accent: '#016CF9'
+        accent: '#6366f1'
     },
     {
         type: 'talent',
         name: 'Marco Rivera',
         role: 'Senior Full Stack Dev',
         content: 'Securing a global role while staying in Manila changed my life. The salary boost and work-life balance are incredible.',
-        avatar: 'https://i.pravatar.cc/150?u=marco',
         accent: '#00FF94'
     },
     {
         type: 'client',
         name: 'James Wilson',
         role: 'Founder @ ScaleUp',
-        content: 'Verified resumes saved us weeks of screening. The AI-matching is scary accurate for complex technical roles.',
-        avatar: 'https://i.pravatar.cc/150?u=james',
-        accent: '#016CF9'
+        content: 'Verified resumes saved us weeks of screening. The discovery engine is scary accurate for complex technical roles.',
+        accent: '#6366f1'
     },
     {
         type: 'talent',
         name: 'Elena Santos',
         role: 'UI/UX Lead',
         content: 'I went from local agencies to lead designer for a Silicon Valley unicorn. This platform is the ultimate career launchpad.',
-        avatar: 'https://i.pravatar.cc/150?u=elena',
         accent: '#00FF94'
     }
 ];
@@ -43,10 +39,10 @@ const Testimonials = () => {
         <section className="py-32 bg-navy-50 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-20">
-                    <h2 className="text-4xl md:text-5xl font-black text-navy-900 mb-6 tracking-tight font-geist uppercase">
+                    <h2 className="text-4xl md:text-5xl font-black text-navy-900 mb-6 tracking-tight font-geist uppercase italic">
                         Voices of Growth & Success
                     </h2>
-                    <p className="text-navy-600 text-xl max-w-2xl mx-auto font-medium">
+                    <p className="text-navy-600 text-xl max-w-[65ch] mx-auto font-medium leading-relaxed">
                         Hear from the visionaries building teams and the elite talent driving global innovation.
                     </p>
                 </div>
@@ -59,12 +55,14 @@ const Testimonials = () => {
                             className="flex-shrink-0 w-[350px] md:w-[450px] bg-white border border-navy-100 rounded-[2.5rem] p-10 transition-all duration-500 hover:scale-[1.02] hover:border-primary-indigo/20 group shadow-sm hover:shadow-xl"
                         >
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="relative w-14 h-14 rounded-2xl overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500 border border-white/10">
-                                    <img
-                                        src={t.avatar}
-                                        alt={t.name}
-                                        className="w-full h-full object-cover"
-                                    />
+                                <div
+                                    className="relative w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-black transition-all duration-500 border border-white/10"
+                                    style={{
+                                        backgroundColor: `${t.accent}20`,
+                                        color: t.accent
+                                    }}
+                                >
+                                    {t.name.split(' ').map(n => n[0]).join('')}
                                 </div>
                                 <div>
                                     <h4 className="text-navy-900 font-geist font-black text-lg leading-none mb-1">{t.name}</h4>
@@ -83,7 +81,6 @@ const Testimonials = () => {
                             </div>
 
                             <blockquote className="relative">
-                                <span className="absolute -top-4 -left-2 text-6xl opacity-10 font-serif" style={{ color: t.accent }}>"</span>
                                 <p className="text-navy-600 text-lg md:text-xl font-medium leading-relaxed italic relative z-10">
                                     {t.content}
                                 </p>

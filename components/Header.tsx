@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import { COPY } from '@/content/copy';
 
 export default function Header() {
     const [user, setUser] = useState<any>(null);
@@ -67,21 +68,21 @@ export default function Header() {
                     </Link>
 
                     {/* Navigation Block (All right-aligned) */}
-                    <div className="hidden md:flex items-center gap-10 ml-auto">
-                        <Link href="/jobs" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-xs tracking-wide uppercase">
-                            How it Works
+                    <div className="hidden lg:flex items-center gap-10 ml-auto text-center">
+                        <Link href="/jobs" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
+                            See How It Works
                         </Link>
-                        <Link href="/pricing" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-xs tracking-wide uppercase">
+                        <Link href="/pricing" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
                             Pricing
                         </Link>
-                        <Link href="/results" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-xs tracking-wide uppercase">
-                            Real Results
+                        <Link href="/results" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
+                            Success Stories
                         </Link>
 
-                        {/* For Companies Dropdown */}
+                        {/* Hiring Platform Dropdown */}
                         <div className="relative group">
-                            <button className="flex items-center gap-1.5 text-navy-600 hover:text-primary-indigo transition-colors font-bold text-xs tracking-wide uppercase cursor-pointer">
-                                For Companies
+                            <button className="flex items-center gap-1.5 text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase cursor-pointer">
+                                Hiring Platform
                                 <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -102,7 +103,7 @@ export default function Header() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                             </svg>
                                         </div>
-                                        Hire Specialists
+                                        Search Candidates
                                     </Link>
                                     <Link href="/employer/dashboard" className="flex items-center gap-3 p-3 rounded-xl hover:bg-navy-50 text-navy-600 hover:text-primary-indigo transition-all font-bold text-xs border-t border-navy-50 mt-1 pt-4">
                                         <div className="w-8 h-8 rounded-lg bg-primary-indigo/10 flex items-center justify-center text-primary-indigo">
@@ -110,16 +111,16 @@ export default function Header() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                             </svg>
                                         </div>
-                                        Company Portal
+                                        {COPY.navigation.employerDashboard}
                                     </Link>
                                 </div>
                             </div>
                         </div>
 
-                        {/* For Jobseekers Dropdown */}
+                        {/* Find Roles Dropdown */}
                         <div className="relative group">
-                            <button className="flex items-center gap-1.5 text-navy-600 hover:text-accent-cyber transition-colors font-bold text-xs tracking-wide uppercase cursor-pointer">
-                                For Jobseekers
+                            <button className="flex items-center gap-1.5 text-navy-600 hover:text-accent-cyber transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase cursor-pointer">
+                                Find Roles
                                 <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -140,7 +141,7 @@ export default function Header() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                             </svg>
                                         </div>
-                                        Post Resume
+                                        {COPY.navigation.getDiscovered}
                                     </Link>
                                     <Link href="/jobseeker/dashboard" className="flex items-center gap-3 p-3 rounded-xl hover:bg-navy-50 text-navy-600 hover:text-accent-cyber transition-all font-bold text-xs border-t border-navy-50 mt-1 pt-4">
                                         <div className="w-8 h-8 rounded-lg bg-accent-cyber/10 flex items-center justify-center text-accent-cyber">
@@ -158,14 +159,14 @@ export default function Header() {
                             <div className="flex items-center gap-10">
                                 <Link
                                     href={userType === 'employer' ? '/employer/dashboard' : '/jobseeker/dashboard'}
-                                    className={`text-navy-600 font-bold text-xs tracking-wide uppercase transition-colors ${userType === 'employer' ? 'hover:text-primary-indigo' : 'hover:text-accent-cyber'
+                                    className={`text-navy-600 font-bold text-[10px] xl:text-xs tracking-wide uppercase transition-colors ${userType === 'employer' ? 'hover:text-primary-indigo' : 'hover:text-accent-cyber'
                                         }`}
                                 >
                                     Dashboard
                                 </Link>
                                 <button
                                     onClick={handleSignOut}
-                                    className="text-navy-600 hover:text-red-500 transition-colors font-bold text-xs tracking-wide uppercase cursor-pointer"
+                                    className="text-navy-600 hover:text-red-500 transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase cursor-pointer"
                                 >
                                     Sign Out
                                 </button>
@@ -179,11 +180,11 @@ export default function Header() {
                             </div>
                         ) : (
                             <div className="flex items-center gap-10">
-                                <Link href="/login" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-xs tracking-wide uppercase">
-                                    Log In
+                                <Link href="/login" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
+                                    {COPY.navigation.login}
                                 </Link>
-                                <Link href="/register" className="btn-cyan !py-2.5 !px-8 shadow-lg !text-xs">
-                                    Create Account
+                                <Link href="/register" className="btn-cyan !py-2.5 !px-8 shadow-lg !text-[10px]">
+                                    {COPY.navigation.createAccount}
                                 </Link>
                             </div>
                         )}
@@ -192,7 +193,7 @@ export default function Header() {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="md:hidden p-3 rounded-xl text-navy-600 hover:bg-navy-50 transition-colors"
+                        className="lg:hidden p-3 rounded-xl text-navy-600 hover:bg-navy-50 transition-colors"
                     >
                         <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             {mobileMenuOpen ? (
@@ -206,7 +207,7 @@ export default function Header() {
 
                 {/* Mobile Navigation */}
                 {mobileMenuOpen && (
-                    <div className="md:hidden py-8 border-t border-white/5 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="lg:hidden py-8 border-t border-white/5 animate-in fade-in slide-in-from-top-4 duration-500">
                         <div className="flex flex-col gap-5">
                             <Link
                                 href="/jobs"
@@ -232,24 +233,24 @@ export default function Header() {
 
                             <div className="h-px bg-navy-100 my-2"></div>
 
-                            {/* Mobile For Companies */}
+                            {/* Mobile Hiring Platform */}
                             <div className="space-y-4">
-                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-navy-300 px-2">For Companies</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-navy-300 px-2">Hiring Platform</p>
                                 <div className="flex flex-col gap-2">
                                     <Link href="/employer/post-job" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Post a Job</Link>
                                     <Link href="/employer/search-resumes" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Hire Specialists</Link>
-                                    <Link href="/employer/dashboard" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Company Portal</Link>
+                                    <Link href="/employer/dashboard" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Employer Dashboard</Link>
                                 </div>
                             </div>
 
                             <div className="h-px bg-navy-100 my-2"></div>
 
-                            {/* Mobile For Jobseekers */}
+                            {/* Mobile Find Roles */}
                             <div className="space-y-4">
-                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-cyber px-2">For Jobseekers</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-cyber px-2">Find Roles</p>
                                 <div className="flex flex-col gap-2">
                                     <Link href="/jobs" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Browse Roles</Link>
-                                    <Link href="/register?type=jobseeker" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Post Resume</Link>
+                                    <Link href="/register?type=jobseeker" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Get Discovered</Link>
                                     <Link href="/jobseeker/dashboard" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
                                 </div>
                             </div>
@@ -278,14 +279,14 @@ export default function Header() {
                                         className="text-text-muted hover:text-navy-900 transition-colors font-bold px-2 py-3 text-xl"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
-                                        Log In
+                                        {COPY.navigation.login}
                                     </Link>
                                     <Link
                                         href="/register"
                                         className="btn-primary w-full text-center mt-4 !py-4 text-lg"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
-                                        Create Account
+                                        {COPY.navigation.createAccount}
                                     </Link>
                                 </>
                             )}

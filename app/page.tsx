@@ -1,3 +1,6 @@
+'use client';
+
+import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -7,56 +10,111 @@ import ResumeSpotlight from '@/components/ResumeSpotlight';
 import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import StatsTicker from '@/components/StatsTicker';
+import TestimonialsTrustBar from '@/components/TestimonialsTrustBar';
+import { COPY } from '@/content/copy';
+import { STATS } from '@/content/stats';
+import { IMAGES } from '@/content/images';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<'jobs' | 'talent'>('jobs');
+
   return (
-    <div className="min-h-screen flex flex-col bg-background-deep">
+    <div className="min-h-screen flex flex-col bg-background-deep transition-colors duration-500">
       <Header />
 
       <main className="flex-1">
         {/* New Split Hero Section */}
-        <section className="relative pt-12 pb-0 md:pt-20 overflow-hidden bg-white">
+        <section className={`relative pt-12 pb-0 md:pt-20 overflow-hidden transition-colors duration-700 ${activeTab === 'jobs' ? 'bg-white' : 'bg-[#0A0C10]'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
               {/* Left Column: Text & Search */}
               <div className="flex-1 text-center lg:text-left pt-10 pb-20 lg:pb-32">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-navy-900 rounded-full mb-10 animate-in fade-in slide-in-from-bottom-4 duration-500 border-2 border-accent-cyber/30 shadow-[0_20px_40px_-15px_rgba(0,255,148,0.2)]">
-                  <span className="flex h-2.5 w-2.5 relative">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyber opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-cyber"></span>
-                  </span>
-                  <span className="text-accent-cyber font-black text-xs uppercase tracking-[0.25em]">9 Million++ Resumes</span>
-                </div>
 
-                <h1 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700">
-                  Philippines’ #1 Marketplace for <span className="text-primary italic">Remote Work</span>
+                <h1 className={`text-4xl sm:text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700 ${activeTab === 'jobs' ? 'text-navy-900' : 'text-white'}`}>
+                  Philippines’ #1 <br className="xs:hidden" /> Marketplace for <br className="lg:hidden" /> <span className="text-primary italic">Remote Work</span>
                 </h1>
 
-                <p className="text-lg text-navy-600 mb-10 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                  Infinite Opportunities. Connecting Global Ambition with Filipino Excellence.
+                <p className={`text-lg mb-10 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000 ${activeTab === 'jobs' ? 'text-navy-600' : 'text-navy-300'}`}>
+                  {activeTab === 'jobs' ? `Join ${STATS.activeResumes} active professionals who updated today and get discovered by international tech leaders.` : `Instant access to ${STATS.activeResumes} active resumes trusted by ${STATS.globalClients} global clients. Filter by tech stack, experience, and salary.`}
                 </p>
 
-                {/* Selection Buttons - Simplified */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                  <Link
-                    href="/employer/post-job"
-                    className="flex-1 group bg-white text-navy-900 py-6 px-8 rounded-2xl border-2 border-navy-100 hover:border-primary-indigo hover:text-primary-indigo hover:-translate-y-1 transition-all duration-300 text-center shadow-sm hover:shadow-md"
-                  >
-                    <h3 className="text-xl font-black">Looking for talent?</h3>
-                  </Link>
+                {/* Tabbed Search Module */}
+                <div className="mb-10 animate-in fade-in slide-in-from-bottom-10 duration-1000 max-w-2xl mx-auto lg:mx-0">
+                  <div className="flex gap-2 mb-4">
+                    <button
+                      onClick={() => setActiveTab('jobs')}
+                      className={`px-6 py-2 rounded-t-xl font-black text-sm uppercase tracking-wider transition-all ${activeTab === 'jobs' ? 'bg-primary-indigo text-white' : 'bg-navy-50 text-navy-400 hover:bg-navy-100'}`}
+                    >
+                      Find Remote Jobs
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('talent')}
+                      className={`px-6 py-2 rounded-t-xl font-black text-sm uppercase tracking-wider transition-all ${activeTab === 'talent' ? 'bg-accent-cyber text-navy-900' : 'bg-navy-50 text-navy-400 hover:bg-navy-100'}`}
+                    >
+                      Search Candidates
+                    </button>
+                  </div>
 
-                  <Link
-                    href="/jobs"
-                    className="flex-1 group bg-white text-navy-900 py-6 px-8 rounded-2xl border-2 border-navy-100 hover:border-accent-cyber hover:text-accent-cyber hover:-translate-y-1 transition-all duration-300 text-center shadow-sm hover:shadow-md"
-                  >
-                    <h3 className="text-xl font-black">Looking for work?</h3>
-                  </Link>
+                  <div className={`p-2 rounded-3xl rounded-tl-none border-2 shadow-xl transition-all duration-300 ${activeTab === 'jobs' ? 'bg-white border-navy-100' : 'bg-navy-900 border-white/10'}`}>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      {activeTab === 'jobs' ? (
+                        <>
+                          <input
+                            type="text"
+                            placeholder="Keywords (eg. React, DevOps)"
+                            className="flex-1 px-6 py-4 bg-transparent outline-none text-navy-900 font-bold placeholder:text-navy-300"
+                          />
+                          <select className="px-6 py-4 bg-transparent outline-none text-navy-900 font-bold appearance-none border-l border-navy-100 sm:w-48">
+                            <option>All Categories</option>
+                            <option>Development</option>
+                            <option>Design</option>
+                            <option>Marketing</option>
+                          </select>
+                          <Link
+                            href="/jobs"
+                            className="bg-primary-indigo text-white px-8 py-4 rounded-2xl font-black hover:scale-[1.02] active:scale-95 transition-all text-center"
+                          >
+                            Browse Roles
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <input
+                            type="text"
+                            placeholder="Skill (eg. Python, AWS)"
+                            className="flex-1 px-6 py-4 bg-transparent outline-none text-white font-bold placeholder:text-navy-500"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Sal: $3000/mo"
+                            className="px-6 py-4 bg-transparent outline-none text-white font-bold placeholder:text-navy-500 border-l border-white/10 sm:w-48"
+                          />
+                          <Link
+                            href="/employer/search-resumes"
+                            className="bg-accent-cyber text-navy-900 px-8 py-4 rounded-2xl font-black hover:scale-[1.02] active:scale-95 transition-all text-center"
+                          >
+                            Search Talent
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex items-center justify-center lg:justify-start gap-4">
+                    <p className={`font-bold text-sm italic ${activeTab === 'jobs' ? 'text-navy-400' : 'text-navy-500'}`}>{COPY.hero.hiringTalent}</p>
+                    <Link
+                      href="/employer/post-job"
+                      className="text-primary-indigo font-black text-sm uppercase tracking-wider hover:underline"
+                    >
+                      {COPY.hero.postJobCta}
+                    </Link>
+                  </div>
                 </div>
               </div>
 
               {/* Right Column: Image with Inspo container */}
               <div className="flex-1 relative w-full lg:w-auto mt-10 lg:mt-0 animate-in fade-in slide-in-from-right-10 duration-1000">
-                <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] border-[12px] border-white">
+                <div className={`relative z-10 rounded-[2rem] overflow-hidden shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] border-[12px] transition-colors duration-700 ${activeTab === 'jobs' ? 'border-white' : 'border-navy-800'}`}>
                   <Image
                     src="/hero-filipino.png"
                     alt="Elite Filipino Remote Talent"
@@ -66,7 +124,7 @@ export default function Home() {
                     priority
                   />
                   {/* Floating badge from inspo */}
-                  <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl hidden md:block border border-navy-50">
+                  <div className={`absolute -bottom-6 -left-6 p-4 rounded-2xl shadow-xl hidden md:block border transition-colors duration-700 ${activeTab === 'jobs' ? 'bg-white border-navy-50' : 'bg-navy-900 border-white/5'}`}>
                     <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -88,32 +146,32 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Employer Card */}
               <div className="group bg-background-slate border border-white/5 p-10 rounded-3xl transition-all duration-500 hover:border-primary-indigo/50 hover:shadow-glow-indigo">
-                <h2 className="text-4xl font-black text-white mb-6">Source the Top 1%.</h2>
+                <h2 className="text-4xl font-black text-white mb-6">{COPY.dualGateway.employer.title}</h2>
                 <p className="text-lg text-text-muted font-medium mb-10 leading-relaxed">
-                  Instant access to the world’s largest pool of 9 Million++ Verified Resumes. Filter by tech stack, experience, and salary.
+                  Built from {STATS.activeResumes} active resumes and trusted by {STATS.globalClients} global clients across the Philippine tech ecosystem.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link href="/employer/search-resumes" className="btn-indigo">
-                    Search Resumes Free
+                    Search Candidates Free
                   </Link>
                   <Link href="/employer/post-job" className="btn-outline-white">
-                    Post a Job
+                    Post a Job – $199
                   </Link>
                 </div>
               </div>
 
               {/* Jobseeker Card */}
-              <div className="group bg-background-slate border border-white/5 p-10 rounded-3xl transition-all duration-500 hover:border-accent-cyber/30 hover:shadow-glow-cyan">
-                <h2 className="text-4xl font-black text-white mb-6">Go Global from Home.</h2>
+              <div className="group bg-background-slate border border-white/5 p-10 rounded-3xl transition-all duration-500 hover:border-accent-cyber/50 hover:shadow-[0_0_50px_rgba(202,244,113,0.1)]">
+                <h2 className="text-4xl font-black text-white mb-6">{COPY.dualGateway.jobseeker.title}</h2>
                 <p className="text-lg text-text-muted font-medium mb-10 leading-relaxed">
-                  Join 9 Million++ peers and get discovered by international tech leaders. No more hunting—let the work find you.
+                  Join {STATS.activeResumes} active professionals and get discovered by international tech leaders. No more hunting—let work find you.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link href="/register?type=jobseeker" className="btn-cyan">
-                    Upload Resume
+                    Get Discovered
                   </Link>
                   <Link href="/jobs" className="btn-outline-white">
-                    Browse 5k+ Jobs
+                    Browse Roles
                   </Link>
                 </div>
               </div>
@@ -132,6 +190,7 @@ export default function Home() {
         <ResumeSpotlight />
 
         {/* Section 5: Client & Talent Testimonials */}
+        <TestimonialsTrustBar />
         <Testimonials />
 
 
@@ -141,6 +200,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-20">
               <h2 className="text-5xl font-black text-white mb-6">Simple, Transparent Pricing</h2>
+              <div className="bg-primary-indigo/10 border border-primary-indigo/20 rounded-2xl p-4 max-w-2xl mx-auto mb-8">
+                <p className="text-primary-indigo font-bold italic">
+                  "{COPY.pricing.agencyComparison}"
+                </p>
+              </div>
               <p className="text-xl text-text-muted font-medium max-w-2xl mx-auto">Choose the plan that fits your hiring needs. No hidden fees.</p>
             </div>
 
@@ -187,11 +251,11 @@ export default function Home() {
               <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
               <div className="relative z-10 max-w-3xl mx-auto">
-                <h2 className="text-5xl md:text-7xl font-black text-white mb-10 leading-tight tracking-tighter italic">Join the Elite.</h2>
-                <p className="text-xl md:text-2xl text-white/90 mb-16 font-medium leading-relaxed">The premier community of remote professionals and global employers.</p>
+                <h2 className="text-5xl md:text-7xl font-black text-white mb-10 leading-tight tracking-tighter italic">{COPY.cta.title}</h2>
+                <p className="text-xl md:text-2xl text-white/90 mb-16 font-medium leading-relaxed">{COPY.cta.description}</p>
                 <div className="flex flex-col sm:flex-row justify-center gap-8">
-                  <Link href="/register" className="bg-white text-navy-900 !px-16 !py-6 text-xl rounded-2xl font-black hover:scale-105 transition-all shadow-xl">Get Started Now</Link>
-                  <Link href="/jobs" className="bg-navy-950/20 text-white border-2 border-white/30 !px-16 !py-6 text-xl rounded-2xl font-black hover:bg-white/10 transition-all">Browse All Jobs</Link>
+                  <Link href="/employer/post-job" className="bg-white text-navy-900 !px-16 !py-6 text-xl rounded-2xl font-black hover:scale-105 transition-all shadow-xl">{COPY.hero.postJobCta}</Link>
+                  <Link href="/jobs" className="bg-navy-950/20 text-white border-2 border-white/30 !px-16 !py-6 text-xl rounded-2xl font-black hover:bg-white/10 transition-all">Browse Roles</Link>
                 </div>
               </div>
             </div>

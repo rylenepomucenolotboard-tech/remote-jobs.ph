@@ -18,8 +18,8 @@ const HowItWorks = () => {
                 ),
             },
             {
-                title: 'Access the 9M++',
-                description: 'Filter and search through our database of 9 Million+ Verified Resumes using advanced AI-matching.',
+                title: 'Access 9 Million+ Active Resumes',
+                description: 'Filter and search through our database of 9 Million+ active resumes using advanced AI-matching.',
                 icon: (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -74,7 +74,7 @@ const HowItWorks = () => {
                     <h2 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 tracking-tight font-geist">
                         Your Global Connection in 3 Easy Steps
                     </h2>
-                    <p className="text-navy-600 text-xl max-w-2xl mx-auto font-medium">
+                    <p className="text-navy-600 text-xl max-w-[65ch] mx-auto font-medium leading-relaxed">
                         Whether you are building a team or a career, we make it seamless.
                     </p>
                 </div>
@@ -150,7 +150,7 @@ const HowItWorks = () => {
                         </div>
 
                         <Link href="/register?type=jobseeker" className="btn-mint w-full py-6 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition-all text-center">
-                            Join 9M+ Professionals
+                            Join 9 Million+ Professionals
                         </Link>
                     </div>
                 </div>

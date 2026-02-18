@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ClipboardList, Search, Plus } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase, Job } from '@/lib/supabase';
@@ -115,8 +116,9 @@ export default function EmployerDashboard() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-8">
                         <h1>Employer Dashboard</h1>
-                        <Link href="/employer/post-job" className="btn-primary text-base px-6 py-3">
-                            + Post New Job
+                        <Link href="/employer/post-job" className="btn-primary text-base px-6 py-3 flex items-center gap-2">
+                            <Plus size={20} strokeWidth={2.5} />
+                            Post New Job
                         </Link>
                     </div>
 
@@ -202,11 +204,13 @@ export default function EmployerDashboard() {
                     </div>
 
                     <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link href="/employer/applications" className="btn-primary text-base px-6 py-3 text-center">
-                            📋 Manage Applications
+                        <Link href="/employer/applications" className="btn-primary text-base px-6 py-3 text-center flex items-center justify-center gap-2">
+                            <ClipboardList size={20} strokeWidth={2} />
+                            Manage Applications
                         </Link>
-                        <Link href="/employer/search-resumes" className="btn-secondary text-base px-6 py-3 text-center">
-                            🔍 Search Resumes
+                        <Link href="/employer/search-resumes" className="btn-secondary text-base px-6 py-3 text-center flex items-center justify-center gap-2">
+                            <Search size={20} strokeWidth={2} />
+                            Search Resumes
                         </Link>
                     </div>
                 </div>

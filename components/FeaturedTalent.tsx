@@ -1,11 +1,12 @@
+import { Trophy } from 'lucide-react';
 import CandidateCard from './CandidateCard';
 
 export default function FeaturedTalent() {
     return (
         <section className="py-20">
             <div className="flex items-center gap-4 mb-12">
-                <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center text-2xl">
-                    🏆
+                <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center text-accent">
+                    <Trophy size={24} strokeWidth={1.5} />
                 </div>
                 <div>
                     <h2 className="text-4xl font-black text-navy-950">Featured Elite Talent</h2>

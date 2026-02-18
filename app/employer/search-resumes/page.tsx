@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { GraduationCap, Phone, Search, RefreshCw, User } from 'lucide-react';
 import { supabase, Resume } from '@/lib/supabase';
 
 export default function SearchResumesPage() {
@@ -12,6 +13,8 @@ export default function SearchResumesPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [minExperience, setMinExperience] = useState('');
+    const [syncing, setSyncing] = useState(false);
+    const [syncMessage, setSyncMessage] = useState('');
 
     useEffect(() => {
         checkAuth();
@@ -62,6 +65,32 @@ export default function SearchResumesPage() {
         }
     };
 
+    const handleSync = async () => {
+        setSyncing(true);
+        setSyncMessage('Initiating sync with Kinetic Staff...');
+        try {
+            const response = await fetch('/api/sync/candidates', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ keyword: searchTerm || 'Developer' })
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                setSyncMessage('Sync structure initialized. (Note: Server-side scraping pending API credentials)');
+                // Refresh list
+                fetchResumes();
+            } else {
+                setSyncMessage('Sync error: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            setSyncMessage('Failed to trigger sync');
+            console.error(error);
+        } finally {
+            setTimeout(() => setSyncing(false), 3000);
+        }
+    };
+
     const filteredResumes = resumes.filter((resume) => {
         const matchesSearch =
             !searchTerm ||
@@ -88,8 +117,8 @@ export default function SearchResumesPage() {
 
                     {/* Search Filters */}
                     <div className="card mb-8">
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div>
+                        <div className="flex flex-col md:flex-row items-end gap-6">
+                            <div className="flex-1">
                                 <label className="block text-lg font-semibold mb-2">Search by Skills or Name</label>
                                 <input
                                     type="text"
@@ -99,8 +128,8 @@ export default function SearchResumesPage() {
                                     className="input-field"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-lg font-semibold mb-2">Minimum Experience (years)</label>
+                            <div className="md:w-1/4">
+                                <label className="block text-lg font-semibold mb-2">Experience (years)</label>
                                 <input
                                     type="number"
                                     placeholder="e.g. 3"
@@ -110,7 +139,26 @@ export default function SearchResumesPage() {
                                     min="0"
                                 />
                             </div>
+                            <div className="shrink-0 pt-2">
+                                <button
+                                    onClick={handleSync}
+                                    disabled={syncing}
+                                    className={`btn-primary !py-3 !px-6 flex items-center gap-3 ${syncing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                    {syncing ? (
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    )}
+                                    {syncing ? 'Syncing...' : 'Sync Kinetic'}
+                                </button>
+                            </div>
                         </div>
+                        {syncMessage && (
+                            <p className="mt-4 text-sm font-bold text-primary-indigo animate-pulse">{syncMessage}</p>
+                        )}
                     </div>
 
                     {/* Resumes List */}
@@ -152,14 +200,16 @@ export default function SearchResumesPage() {
                                             )}
 
                                             {resume.education && (
-                                                <p className="text-base text-gray-700 mb-2">
-                                                    🎓 {resume.education}
+                                                <p className="text-base text-gray-700 mb-2 flex items-center gap-2">
+                                                    <GraduationCap size={18} className="text-navy-400" strokeWidth={2} />
+                                                    {resume.education}
                                                 </p>
                                             )}
 
                                             {resume.profiles?.phone && (
-                                                <p className="text-base text-gray-600">
-                                                    📞 {resume.profiles.phone}
+                                                <p className="text-base text-gray-600 flex items-center gap-2">
+                                                    <Phone size={18} className="text-navy-400" strokeWidth={2} />
+                                                    {resume.profiles.phone}
                                                 </p>
                                             )}
                                         </div>

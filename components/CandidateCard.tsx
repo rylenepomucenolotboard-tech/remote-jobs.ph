@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Star } from 'lucide-react';
 
 interface CandidateCardProps {
     name: string;
@@ -30,8 +31,9 @@ export default function CandidateCard({ name, title, skills, isRemoteReady = tru
                                 </span>
                             )}
                             {isTopRated && (
-                                <span className="px-2.5 py-1 bg-accent-cyber/10 text-accent-cyber text-[10px] font-black uppercase tracking-tighter rounded-full border border-accent-cyber/20">
-                                    ⭐ Top Rated
+                                <span className="px-2.5 py-1 bg-accent-cyber/10 text-accent-cyber text-[10px] font-black uppercase tracking-tighter rounded-full border border-accent-cyber/20 flex items-center gap-1">
+                                    <Star size={12} strokeWidth={2.5} fill="currentColor" />
+                                    Top Rated
                                 </span>
                             )}
                         </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import { Home, Mail, Phone, Clock, Eye, Briefcase, DollarSign, MapPin, CheckCircle, Heart, Share2, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase, Job } from '@/lib/supabase';
@@ -141,8 +142,50 @@ export default function JobDetailPage() {
         );
     }
 
+    const jobPostingSchema = job ? {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": job.title,
+        "description": job.description,
+        "datePosted": job.created_at,
+        "validThrough": new Date(new Date(job.created_at).getTime() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+        "employmentType": job.job_type === 'full-time' ? "FULL_TIME" : "PART_TIME",
+        "hiringOrganization": {
+            "@type": "Organization",
+            "name": job.profiles?.company_name || "RemoteJobs.ph Client",
+            "sameAs": "https://remotejobs-ph.vercel.app"
+        },
+        "jobLocation": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "PH"
+            }
+        },
+        "baseSalary": job.salary_range ? {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": {
+                "@type": "QuantitativeValue",
+                "value": job.salary_range,
+                "unitText": "MONTH"
+            }
+        } : undefined,
+        "applicantLocationRequirements": {
+            "@type": "Country",
+            "name": "Philippines"
+        },
+        "jobLocationType": "TELECOMMUTE"
+    } : null;
+
     return (
         <div className="min-h-screen flex flex-col bg-navy-50">
+            {jobPostingSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+                />
+            )}
             <Header />
 
             <main className="flex-1 py-12">
@@ -181,7 +224,10 @@ export default function JobDetailPage() {
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-xs uppercase tracking-wider text-navy-400 font-bold mb-1">Location</span>
-                                        <span className="text-navy-900 font-bold">🏠 Remote</span>
+                                        <span className="text-navy-900 font-bold flex items-center gap-1.5">
+                                            <Home size={14} strokeWidth={2} />
+                                            Remote
+                                        </span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-xs uppercase tracking-wider text-navy-400 font-bold mb-1">Job Type</span>
@@ -279,11 +325,11 @@ export default function JobDetailPage() {
                                                     onClick={() => setIsSaved(!isSaved)}
                                                     className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-navy-100 rounded-xl hover:border-pink-200 hover:bg-pink-50 transition-all duration-300 group"
                                                 >
-                                                    <svg className={`w-6 h-6 ${isSaved ? 'text-pink-500 fill-pink-500' : 'text-navy-400 group-hover:text-pink-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                                    <Heart className={`w-6 h-6 ${isSaved ? 'text-pink-500 fill-pink-500' : 'text-navy-400 group-hover:text-pink-400'}`} strokeWidth={2} />
                                                     <span className={`font-bold text-sm uppercase tracking-wide ${isSaved ? 'text-pink-600' : 'text-navy-600'}`}>{isSaved ? 'Saved' : 'Save Job'}</span>
                                                 </button>
                                                 <button className="flex items-center justify-center px-4 py-3 border-2 border-navy-100 rounded-xl hover:border-primary/20 hover:bg-primary/5 transition-all duration-300 text-navy-600">
-                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+                                                    <Share2 className="w-6 h-6" strokeWidth={2} />
                                                 </button>
                                             </div>
                                         </>
@@ -291,11 +337,11 @@ export default function JobDetailPage() {
 
                                     <div className="bg-navy-50 rounded-xl p-5 border border-navy-100">
                                         <div className="flex items-center gap-3 text-navy-500 text-sm mb-3">
-                                            <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            <Clock className="w-5 h-5 opacity-50" strokeWidth={2} />
                                             <span>Posted {new Date(job.created_at).toLocaleDateString()}</span>
                                         </div>
                                         <div className="flex items-center gap-3 text-navy-500 text-sm">
-                                            <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                            <Eye className="w-5 h-5 opacity-50" strokeWidth={2} />
                                             <span>240 views</span>
                                         </div>
                                     </div>
@@ -320,7 +366,7 @@ export default function JobDetailPage() {
                                         className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all duration-300"
                                     >
                                         <span>View all jobs at {job.profiles?.company_name?.split(' ')[0] || 'Company'}</span>
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                        <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
                                     </Link>
                                 </div>
                             </div>
