@@ -34,5 +34,13 @@ export const COPY = {
     cta: {
         title: "Join the Elite.",
         description: "The premier community of remote professionals and global employers."
+    },
+    dualGateway: {
+        employer: {
+            title: "Source the Top 1%.",
+        },
+        jobseeker: {
+            title: "Go Global from Home.",
+        }
     }
 };
