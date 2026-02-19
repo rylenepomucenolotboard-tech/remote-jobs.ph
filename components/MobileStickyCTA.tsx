@@ -34,7 +34,7 @@ const MobileStickyCTA = () => {
                     href="/employer/post-job"
                     className="flex-1 text-center py-3 bg-primary-indigo text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg"
                 >
-                    Post a Job — $199
+                    Post a Job
                 </Link>
             </div>
         </div>

@@ -69,7 +69,7 @@ export default function Header() {
 
                     {/* Navigation Block (All right-aligned) */}
                     <div className="hidden lg:flex items-center gap-10 ml-auto text-center">
-                        <Link href="/jobs" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
+                        <Link href="/how-it-works" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
                             See How It Works
                         </Link>
                         <Link href="/pricing" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
@@ -210,7 +210,7 @@ export default function Header() {
                     <div className="lg:hidden py-8 border-t border-white/5 animate-in fade-in slide-in-from-top-4 duration-500">
                         <div className="flex flex-col gap-5">
                             <Link
-                                href="/jobs"
+                                href="/how-it-works"
                                 className="text-text-muted hover:text-white transition-colors font-bold px-2 py-3 text-xl"
                                 onClick={() => setMobileMenuOpen(false)}
                             >

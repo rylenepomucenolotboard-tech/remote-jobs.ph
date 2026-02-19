@@ -5,7 +5,7 @@ export const COPY = {
         ctaEmployer: "Hire a Filipino Developer in 12 Days",
         ctaJobseeker: "Get Discovered by Global Employers Today",
         hiringTalent: "Hiring talent?",
-        postJobCta: "Post a Job – $199"
+        postJobCta: "Post a Job"
     },
     navigation: {
         employerDashboard: "Employer Dashboard",

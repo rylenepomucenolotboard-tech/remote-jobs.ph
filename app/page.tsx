@@ -155,7 +155,7 @@ export default function Home() {
                     Search Candidates Free
                   </Link>
                   <Link href="/employer/post-job" className="btn-outline-white">
-                    Post a Job – $199
+                    Post a Job
                   </Link>
                 </div>
               </div>
