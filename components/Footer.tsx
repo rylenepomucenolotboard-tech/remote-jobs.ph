@@ -29,7 +29,7 @@ export default function Footer() {
                             Platform
                         </h4>
                         <ul className="space-y-5 text-text-muted font-medium">
-                            <li><Link href="/how-it-works" className="hover:text-white transition-colors">How it Works</Link></li>
+                            <li><Link href="/how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
                             <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
                             <li><Link href="/results" className="hover:text-white transition-colors">Real Results</Link></li>
                         </ul>

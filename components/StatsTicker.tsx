@@ -1,5 +1,6 @@
+'use client';
+
 import React, { useEffect, useState, useRef } from 'react';
-import { STATS } from '@/content/stats';
 
 interface CountUpProps {
     end: number;
@@ -60,10 +61,10 @@ const CountUp: React.FC<CountUpProps> = ({ end, duration = 4000, suffix = '' }) 
 
 const StatsTicker = () => {
     const stats = [
-        { label: 'Roles Filled', value: parseInt(STATS.rolesFilledTotal.replace(/\D/g, '')), suffix: '+' },
-        { label: 'Global Clients', value: parseInt(STATS.globalClients.replace(/\D/g, '')), suffix: '+' },
-        { label: 'Active Resumes', value: parseInt(STATS.activeResumes.replace(/\D/g, '')), suffix: ' Million+' },
-        { label: 'Avg. Salary Growth', value: parseInt(STATS.avgSalaryGrowth.replace(/\D/g, '')), suffix: '%' },
+        { label: 'Roles Filled', value: 15000, suffix: '+' },
+        { label: 'Global Clients', value: 1182, suffix: '+' },
+        { label: 'Active Resumes', value: 9, suffix: ' Million+' },
+        { label: 'Avg. Salary Growth', value: 35, suffix: '%' },
     ];
 
     return (

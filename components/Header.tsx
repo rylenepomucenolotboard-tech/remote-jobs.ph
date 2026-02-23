@@ -70,7 +70,7 @@ export default function Header() {
                     {/* Navigation Block (All right-aligned) */}
                     <div className="hidden lg:flex items-center gap-10 ml-auto text-center">
                         <Link href="/how-it-works" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
-                            See How It Works
+                            How It Works
                         </Link>
                         <Link href="/pricing" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
                             Pricing
@@ -214,7 +214,7 @@ export default function Header() {
                                 className="text-text-muted hover:text-white transition-colors font-bold px-2 py-3 text-xl"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                How it Works
+                                How It Works
                             </Link>
                             <Link
                                 href="/pricing"

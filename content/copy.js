@@ -26,8 +26,8 @@ export const COPY = {
     },
     pricing: {
         title: "Simple, Transparent Pricing",
-        agencyComparison: "Trusted by 1,182+ companies. The average agency recruitment fee in the Philippines is $3,000–$8,000 per hire. Our Pro plan costs $499.",
-        starter: "Starter",
+        agencyComparison: "Trusted by 1,182+ companies. The average agency placement fee is $3,000–$8,000 per hire. Our Pro plan costs $79/mo — no placement fees, no salary markups.",
+        starter: "Basic",
         pro: "Pro",
         enterprise: "Enterprise"
     },

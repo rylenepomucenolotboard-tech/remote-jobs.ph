@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -15,8 +15,22 @@ import { COPY } from '@/content/copy';
 import { STATS } from '@/content/stats';
 import { IMAGES } from '@/content/images';
 
+const STORIES = [
+  { name: "Dominic R.", role: "Senior Helpdesk", quote: "Now I have both — my career and my family." },
+  { name: "Mycah A.", role: "Program Admin", quote: "No time wasted traveling means time for the life I actually want." },
+  { name: "Marco V.", role: "E-Learning Dev", quote: "I've learned more here than in all my previous jobs combined." }
+];
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'jobs' | 'talent'>('jobs');
+  const [storyIndex, setStoryIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStoryIndex(i => (i + 1) % STORIES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background-deep transition-colors duration-500">
@@ -112,29 +126,69 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Column: Image with Inspo container */}
-              <div className="flex-1 relative w-full lg:w-auto mt-10 lg:mt-0 animate-in fade-in slide-in-from-right-10 duration-1000">
-                <div className={`relative z-10 rounded-[2rem] overflow-hidden shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] border-[12px] transition-colors duration-700 ${activeTab === 'jobs' ? 'border-white' : 'border-navy-800'}`}>
-                  <Image
-                    src="/hero-filipino.png"
-                    alt="Elite Filipino Remote Talent"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
-                    priority
-                  />
-                  {/* Floating badge from inspo */}
-                  <div className={`absolute -bottom-6 -left-6 p-4 rounded-2xl shadow-xl hidden md:block border transition-colors duration-700 ${activeTab === 'jobs' ? 'bg-white border-navy-50' : 'bg-navy-900 border-white/5'}`}>
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+              {/* Right Column: Dynamic Features */}
+              <div className="flex-1 relative w-full lg:w-auto mt-10 lg:mt-0 animate-in fade-in slide-in-from-right-10 duration-1000 flex flex-col gap-6 lg:ml-10">
+
+                {/* Success Stories Carousel */}
+                <div className={`relative z-10 rounded-3xl p-6 lg:p-8 shadow-2xl transition-colors duration-700 ${activeTab === 'jobs' ? 'bg-white border border-navy-50' : 'bg-[#0A0C10] border border-white/5'}`}>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex -space-x-2">
+                      <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs shadow-sm ${activeTab === 'jobs' ? 'bg-navy-50 border-white text-navy-900' : 'bg-white/10 border-navy-900 text-white'}`}>⭐</div>
+                      <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs shadow-sm ${activeTab === 'jobs' ? 'bg-navy-100 border-white text-navy-900' : 'bg-white/20 border-navy-900 text-white'}`}>🚀</div>
+                    </div>
+                    <div className={`text-xs font-black uppercase tracking-wider ${activeTab === 'jobs' ? 'text-primary-indigo' : 'text-accent-cyber'}`}>Featured Success Stories</div>
+                  </div>
+
+                  <div className="relative min-h-[120px]">
+                    <div className="transition-opacity duration-500">
+                      <div className={`text-xl lg:text-[22px] font-black italic leading-tight mb-6 ${activeTab === 'jobs' ? 'text-navy-900' : 'text-white'}`}>"{STORIES[storyIndex].quote}"</div>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${activeTab === 'jobs' ? 'bg-navy-50 text-navy-900' : 'bg-white/10 text-white'}`}>{STORIES[storyIndex].name[0]}</div>
+                        <div>
+                          <div className={`text-sm font-black ${activeTab === 'jobs' ? 'text-navy-900' : 'text-white'}`}>{STORIES[storyIndex].name}</div>
+                          <div className={`text-xs font-bold uppercase tracking-widest ${activeTab === 'jobs' ? 'text-navy-400' : 'text-navy-500'}`}>{STORIES[storyIndex].role}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Manual Controls */}
+                  <div className="flex gap-2 mt-8">
+                    {STORIES.map((_, i) => (
+                      <div key={i} onClick={() => setStoryIndex(i)} className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${i === storyIndex ? (activeTab === 'jobs' ? 'w-8 bg-primary-indigo' : 'w-8 bg-accent-cyber') : (activeTab === 'jobs' ? 'w-3 bg-navy-100' : 'w-3 bg-white/10 hover:bg-white/20')}`} />
+                    ))}
+                  </div>
                 </div>
-                {/* Decorative blob behind image */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[100px] -z-10"></div>
+
+                {/* AI Video Placeholder */}
+                <div className={`relative z-10 rounded-3xl overflow-hidden shadow-2xl group cursor-pointer aspect-video flex items-center justify-center transition-all duration-700 ${activeTab === 'jobs' ? 'bg-navy-900' : 'bg-[#050608] border border-white/5'}`}>
+                  {/* Background grid */}
+                  <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                  {/* Play Button Overlay */}
+                  <div className={`absolute z-20 w-16 h-16 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 ${activeTab === 'jobs' ? 'bg-primary-indigo text-white shadow-[0_0_30px_rgba(99,102,241,0.5)]' : 'bg-accent-cyber text-navy-900 shadow-[0_0_30px_rgba(202,244,113,0.3)]'}`}>
+                    <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+
+                  {/* UI Mockup Hint */}
+                  <div className="absolute bottom-6 left-6 right-6 z-10 hidden sm:block">
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex justify-between items-center transition-opacity group-hover:opacity-0 duration-300">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-2.5 h-2.5 rounded-full animate-pulse ${activeTab === 'jobs' ? 'bg-primary-indigo shadow-[0_0_10px_#6366f1]' : 'bg-accent-cyber shadow-[0_0_10px_#CAF471]'}`} />
+                        <span className="text-xs font-black text-white uppercase tracking-wider">AI Resume Matching Demo</span>
+                      </div>
+                      <span className="text-[10px] text-white/50 font-bold uppercase tracking-widest bg-white/5 px-2.5 py-1 rounded-md">1:24</span>
+                    </div>
+                  </div>
+
+                  {/* Decorative blob behind play button */}
+                  <div className={`absolute w-32 h-32 rounded-full blur-[40px] opacity-40 transition-colors ${activeTab === 'jobs' ? 'bg-primary-indigo' : 'bg-accent-cyber'}`}></div>
+                </div>
+
+                {/* Decorative blob behind the right column */}
+                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px] -z-10 transition-colors duration-700 ${activeTab === 'jobs' ? 'bg-primary/5' : 'bg-accent-cyber/5'}`}></div>
               </div>
             </div>
           </div>
@@ -210,9 +264,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { name: 'Starter', price: '$199', features: ['1 Job Post', '30 Days Visibility', 'Social Media Blast'], spotlight: false },
-                { name: 'Pro', price: '$499', features: ['3 Job Posts', '60 Days Visibility', 'Featured Badge', 'Resume Database Access', 'Priority Support'], spotlight: true },
-                { name: 'Enterprise', price: 'Custom', features: ['Unlimited Posts', 'Dedicated Account Manager', 'Custom Branding', 'API Access'], priceLabel: 'Contact Us', spotlight: false },
+                { name: 'Basic', price: 'No upfront cost', note: 'Pay only when you hire', features: ['Post up to 3 jobs / month', 'Browse 9 Million+ active resumes', '24–48 hr job post approval', 'Up to 20 applications per job', 'AI matching', 'View full candidate profiles'], spotlight: false },
+                { name: 'Pro', price: '$79', priceSuffix: ' / mo', features: ['Post up to 3 jobs / month', 'Instant job post approval', 'Up to 300 applications per job', 'AI matching — tells you who to hire', 'Contact up to 75 candidates / month', 'Email match notifications', 'Money-back guarantee'], spotlight: true },
+                { name: 'Team', price: '$199', priceSuffix: ' / mo', features: ['Post up to 10 jobs / month', 'Instant job post approval', 'Up to 300 applications per job', 'AI matching — tells you who to hire', 'Contact up to 500 candidates / month', 'Email match notifications', 'Money-back guarantee'], spotlight: false },
               ].map((tier, i) => (
                 <div key={i} className={`card-slate relative flex flex-col p-10 ${tier.spotlight ? 'border-primary-indigo/50 shadow-[0px_0px_60px_#6366f133] md:scale-110 z-10' : ''}`}>
                   {tier.spotlight && (
@@ -222,25 +276,30 @@ export default function Home() {
                   )}
                   <h3 className="text-2xl font-black text-white mb-2">{tier.name}</h3>
                   <div className="mb-8">
-                    <span className="text-5xl font-black text-white">{tier.price}</span>
-                    {tier.name !== 'Enterprise' && <span className="text-text-muted font-bold"> / post</span>}
+                    <div className="flex items-baseline">
+                      <span className={tier.name === 'Basic' ? 'text-4xl font-black text-white inline-block mt-2' : 'text-5xl font-black text-white'}>{tier.price}</span>
+                      {tier.priceSuffix && <span className="text-text-muted font-bold ml-1">{tier.priceSuffix}</span>}
+                    </div>
+                    {tier.note && <div className="text-text-muted text-xs font-bold mt-2 uppercase tracking-widest">{tier.note}</div>}
                   </div>
                   <ul className="space-y-4 mb-10 flex-1">
                     {tier.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-text-muted font-bold">
-                        <svg className="w-5 h-5 text-accent-cyber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <li key={idx} className="flex items-start gap-3 text-text-muted font-bold">
+                        <svg className="w-5 h-5 text-accent-cyber flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
-                        {feature}
+                        <span className="leading-snug">{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <button className={tier.spotlight ? 'btn-primary w-full' : 'btn-outline-white w-full'}>
-                    {tier.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
-                  </button>
+                  <Link href="/employer/post-job" className={tier.spotlight ? 'btn-primary w-full text-center' : 'btn-outline-white w-full text-center'}>
+                    Get Started
+                  </Link>
                 </div>
               ))}
             </div>
+
+
           </div>
         </section>
 
