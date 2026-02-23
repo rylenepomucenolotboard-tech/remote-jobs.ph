@@ -206,127 +206,109 @@ export default function ResultsPage() {
   const activeStory = filteredStories[carouselIndex];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background-deep text-white transition-colors duration-500 font-sans">
+    <div className="min-h-[100dvh] flex flex-col bg-background-deep text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden">
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 2xl:py-32 flex flex-col justify-center">
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-          {/* Left: Text & Stats */}
-          <div className="flex-1 text-center md:text-left relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="text-accent-cyber font-bold uppercase tracking-widest text-sm mb-6">{STRINGS.HEADER.eyebrow}</div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-10 text-balance shadow-black/20 drop-shadow-xl">{STRINGS.HEADER.headline}</h1>
 
-            <div className="flex flex-wrap shadow-2xl border border-white/5 bg-[#0f1c30] rounded-2xl p-6 md:p-8 gap-8 md:gap-12 mt-8">
+          {/* Left: Huge Stacked Text & Blocky Stats (Inspired by reference screens) */}
+          <div className="w-full lg:w-5/12 text-left relative z-10 animate-in fade-in slide-in-from-left-8 duration-700">
+            {/* The background radial for brand alignment */}
+            <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-cyber/5 rounded-full blur-[120px] pointer-events-none" />
+
+            <h1 className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] font-black text-white leading-[0.82] tracking-tighter mb-10 uppercase drop-shadow-xl">
+              <span className="block mb-3">Success</span>
+              <span className="block text-accent-cyber">Stories<span className="text-white">.</span></span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-navy-300 font-medium mb-12 max-w-sm leading-snug border-l-4 border-primary-indigo/30 pl-5">
+              The premier ecosystem connecting global tech leaders with elite Filipino remote talent.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 lg:gap-6">
               {STRINGS.HEADER.stats.map((s, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <span className="text-3xl md:text-4xl font-black text-accent-cyber leading-none">{s.num}</span>
-                  <span className="text-xs font-bold text-navy-300 uppercase tracking-widest">{s.label}</span>
+                <div key={i} className="flex flex-col gap-2 bg-[#0A0C10] border border-white/5 rounded-[1.5rem] p-6 lg:p-8 shadow-2xl hover:border-white/10 transition-colors">
+                  <span className="text-4xl lg:text-5xl font-black text-white leading-none">{s.num}</span>
+                  <span className="text-[11px] font-black text-navy-400 uppercase tracking-widest">{s.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: The Carousel Card */}
-          <div className="w-full lg:w-[600px] bg-[#0A0C10] rounded-[2rem] p-6 md:p-10 shadow-2xl border border-white/5 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-10 duration-1000 relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-            <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+          {/* Right: The Curved Carousel Card (Inspired by reference screens + dark UI) */}
+          <div className="w-full lg:w-7/12 aspect-square md:aspect-[4/3] lg:aspect-[4/3.5] bg-[#0c1526] rounded-[2.5rem] p-8 md:p-12 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.8)] border border-white/5 flex flex-col relative overflow-hidden animate-in fade-in slide-in-from-right-8 duration-1000" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8 pb-6 border-b border-white/10 relative z-10">
-              <div className="flex bg-white/5 p-1 rounded-xl border border-white/5">
-                {["All", "Talent", "Employer"].map(f => (
-                  <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${filter === f ? 'bg-primary-indigo text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]' : 'text-navy-300 hover:bg-white/10 hover:text-white'}`}>
-                    {f}
-                  </button>
-                ))}
+            {/* Organic Curved Shape (Mimicking the photo cutout in the reference) */}
+            <div className="absolute bottom-0 right-0 w-[80%] h-[75%] bg-primary-indigo/20 rounded-tl-[160px] blur-sm transition-all duration-1000" />
+            <div className="absolute bottom-0 right-0 w-[75%] h-[70%] bg-primary-indigo rounded-tl-[140px] z-[1] transition-all duration-700 shadow-[-20px_-20px_40px_rgba(0,0,0,0.5)] border-t border-l border-white/10" />
+            <div className="absolute bottom-0 right-0 w-[72%] h-[68%] bg-[#060b18] rounded-tl-[130px] z-[2] transition-all duration-700 border-t border-l border-white/5" />
+
+            <div key={animKey} className={`flex-1 flex flex-col relative animate-in fade-in ${direction} duration-700 z-10 h-full`}>
+
+              <div className="flex justify-between items-center mb-auto">
+                {/* Reference style pill box */}
+                <div className="bg-white text-navy-900 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
+                  Verified Review
+                </div>
+                <div className="bg-white/5 border border-white/10 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
+                  STORY {carouselIndex + 1} OF {filteredStories.length}
+                </div>
               </div>
-              <div className="text-[10px] font-black text-navy-400 tracking-widest px-3 py-1.5 border border-white/10 rounded-lg bg-white/5">
-                STORY {carouselIndex + 1} OF {filteredStories.length}
+
+              <div className="relative mt-12 mb-auto max-w-lg lg:max-w-xl z-10 pointer-events-none">
+                <h2 className="text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tight [text-wrap:balance]">
+                  "{activeStory.quote}"
+                </h2>
+                <div className="text-sm md:text-base font-medium text-navy-300 mt-6 leading-relaxed border-l-2 border-accent-cyber/30 pl-5">
+                  {activeStory.context}
+                </div>
               </div>
+
+              {/* Profile Details sitting in the curve */}
+              <div className="absolute bottom-4 md:bottom-8 right-0 md:right-4 z-20 text-right flex flex-col items-end">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-accent-cyber rounded-full mb-4 md:mb-5 flex items-center justify-center shadow-[0_0_40px_rgba(202,244,113,0.3)] border-[4px] border-[#0A0C10]">
+                  <span className="text-2xl md:text-4xl font-black text-navy-900 leading-none pb-1">{activeStory.name.charAt(0)}</span>
+                </div>
+                <div className="text-xl md:text-2xl font-black text-white">{activeStory.name}</div>
+                <div className="text-[10px] md:text-xs font-black uppercase tracking-widest text-primary-indigo mt-1">{activeStory.role}</div>
+                <div className="text-[10px] font-bold text-navy-400 uppercase tracking-widest mt-1">{activeStory.location}</div>
+              </div>
+
             </div>
 
-            <div className="flex-1 flex flex-col relative min-h-[380px] z-10">
-              <div key={animKey} className={`flex-1 flex flex-col gap-6 animate-in fade-in ${direction} duration-500`}>
-
-                {/* Story Content & Quote */}
-                <div className="flex-1 flex flex-col relative">
-                  <div className="text-[100px] font-serif text-white/5 leading-none absolute -top-10 -left-6 -z-10 select-none">"</div>
-                  <div className="text-xl md:text-2xl font-black italic text-white leading-snug mb-4 relative z-10">
-                    "{activeStory.quote}"
-                  </div>
-                  <div className="text-sm font-medium text-navy-300 leading-relaxed border-l-2 border-accent-cyber/30 pl-4 mb-6">
-                    {activeStory.context}
-                  </div>
-                </div>
-
-                {/* Separator */}
-                <div className="w-full h-px bg-gradient-to-r from-white/10 to-transparent my-2" />
-
-                {/* Profile Meta & Tags */}
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="text-xl font-black text-white">{activeStory.name}</div>
-                      <div className="px-2.5 py-1 rounded-md border border-accent-cyber/20 bg-accent-cyber/10 text-accent-cyber text-[9px] font-black uppercase tracking-widest">
-                        {activeStory.type}
-                      </div>
-                    </div>
-                    <div className="text-xs font-black uppercase tracking-wide text-primary-indigo mb-1">{activeStory.role}</div>
-                    <div className="text-[11px] font-bold text-navy-400">{activeStory.location}</div>
-                  </div>
-
-                  <div className="flex flex-col sm:items-end gap-2 text-left sm:text-right">
-                    <div className="bg-white/5 px-2.5 py-1.5 rounded-md border border-white/10 text-[10px] font-bold text-navy-300 uppercase tracking-widest w-fit sm:w-auto">
-                      {activeStory.tag}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold text-navy-500 tracking-wider uppercase">{activeStory.source}</span>
-                      <div className="text-gold text-xs tracking-widest">★★★★★</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Progress Bar & Indicators */}
-              <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-6">
-                <div className="flex gap-2">
-                  <button onClick={handlePrev} className="w-10 h-10 rounded-full border border-white/10 text-white hover:bg-white/10 flex items-center justify-center transition-all bg-white/5 backdrop-blur-sm font-bold">→</button>
-                  <button onClick={handleNext} className="w-10 h-10 rounded-full border border-white/10 text-white hover:bg-white/10 flex items-center justify-center transition-all bg-white/5 backdrop-blur-sm font-bold">→</button>
-                </div>
-                <div className="flex-1 h-1 bg-white/5 rounded-full relative overflow-hidden">
-                  <div className="absolute top-0 left-0 bottom-0 bg-primary-indigo transition-all duration-75" style={{ width: `${progress}%` }} />
-                </div>
-                <div className="flex gap-2">
-                  {filteredStories.map((_, i) => (
-                    <div key={i} onClick={() => setIndex(i)} className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${i === carouselIndex ? 'w-6 bg-primary-indigo shadow-[0_0_10px_rgba(99,102,241,0.5)]' : 'w-2 bg-white/20 hover:bg-white/40'}`} />
-                  ))}
-                </div>
-              </div>
+            {/* Navigation buttons matching inspiration wireframe circles */}
+            <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 flex gap-4">
+              <button onClick={handlePrev} className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-navy-900 transition-all font-black text-xl hover:scale-105 active:scale-95 shadow-lg backdrop-blur-md">←</button>
+              <button onClick={handleNext} className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-navy-900 transition-all font-black text-xl hover:scale-105 active:scale-95 shadow-lg backdrop-blur-md">→</button>
             </div>
           </div>
         </div>
 
-        {/* 3. Bottom CTA Grid/Panel Matching */}
-        <section className="mt-20 md:mt-24 relative z-10 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="bg-gradient-to-br from-primary-indigo to-accent-cyber rounded-[2rem] md:rounded-[3rem] p-12 md:p-20 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_30px_100px_-20px_rgba(99,102,241,0.4)]">
+        {/* Bottom CTA Customization requested by user */}
+        <section className="mt-24 md:mt-32 relative z-10 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-[2rem] md:rounded-[3rem] p-12 md:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_30px_100px_-20px_rgba(1,108,249,0.4)]">
             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
 
-            <div className="relative z-10 flex-1">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tighter italic">{STRINGS.CTA.headline}</h2>
-              <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed max-w-2xl">{STRINGS.CTA.sub}</p>
+            <div className="relative z-10 flex-1 text-center md:text-left">
+              <h2 className="text-[2.5rem] md:text-5xl lg:text-[4rem] font-black text-white mb-6 leading-tight tracking-tighter uppercase line-clamp-2 md:line-clamp-none">
+                Create Your Own Success Story.
+              </h2>
+              <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed max-w-2xl mx-auto md:mx-0">
+                Join 15,000+ top-tier professionals building generational remote careers.
+              </p>
             </div>
 
-            <div className="relative z-10 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              <button className="bg-white text-navy-900 px-8 py-5 text-lg rounded-2xl font-black hover:scale-105 transition-all shadow-xl uppercase tracking-wider">{STRINGS.CTA.btn1}</button>
-              <button className="bg-navy-950/20 text-white border-2 border-white/30 px-8 py-5 text-lg rounded-2xl font-black hover:bg-white/10 transition-all uppercase tracking-wider">{STRINGS.CTA.btn2}</button>
+            <div className="relative z-10 flex flex-col gap-4 w-full md:w-auto shrink-0">
+              <button className="bg-accent-cyber text-navy-900 px-10 py-5 text-lg rounded-2xl font-black hover:scale-105 transition-all shadow-[0_0_30px_rgba(202,244,113,0.3)] uppercase tracking-wider text-center">{STRINGS.CTA.btn1}</button>
+              <button className="bg-white/10 text-white border-2 border-white/30 px-10 py-5 text-lg rounded-2xl font-black hover:bg-white/20 transition-all uppercase tracking-wider text-center backdrop-blur-md">{STRINGS.CTA.btn2}</button>
             </div>
           </div>
         </section>
 
       </main>
 
-      {/* Mandatory Base Brand Border */}
-      <div className="border-t border-white/5" />
       <Footer />
     </div>
   );
