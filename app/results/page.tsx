@@ -235,7 +235,7 @@ export default function ResultsPage() {
             Customer success stories
           </h1>
           <p className="text-lg md:text-xl text-navy-300 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-            Check out how RemoteJobs.ph helps professionals and organizations of all sizes achieve their global expansion goals.
+            Check out how RemoteJobs.ph helped professionals and organizations of all sizes achieve their global expansion goals.
           </p>
         </div>
 
