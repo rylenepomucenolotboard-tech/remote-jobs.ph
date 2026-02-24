@@ -224,10 +224,14 @@ export default function ResultsPage() {
   const activeStory = filteredStories[carouselIndex];
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-background-deep text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden">
+    <div className="min-h-[100dvh] flex flex-col bg-[#0c1526] text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden relative">
+
+      {/* Subtle Brand Radial Glow (Mandated by Brand Guidelines to lift darkness) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary-indigo opacity-10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center relative z-10">
 
         {/* Top Typography Section - Centered */}
         <div className="text-center relative z-10 w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -278,12 +282,15 @@ export default function ResultsPage() {
           </div>
 
           {/* Photo Layout: Pure CSS Silhouette Pop-Out */}
-          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative pointer-events-none mt-12 lg:mt-0">
-            <div key={`${animKey}-avatar`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '300ms' }}>
+          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative mt-12 lg:mt-0">
+            <div key={`${animKey}-avatar`} className="animate-cinematic-drift relative w-[170px] h-[170px] md:mt-8" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
 
               <div className="css-avatar-base">
                 {/* Radial base glow anchoring it to canvas */}
                 <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
+
+                {/* The Visible Contrast Container (bg: card2, border: border2) */}
+                <div className="absolute inset-0 rounded-full bg-[#132035] border border-blue-400/20 shadow-2xl z-0 pointer-events-none"></div>
 
                 {/* The Pop-Out Geometry */}
                 {activeStory.image ? (
@@ -291,14 +298,39 @@ export default function ResultsPage() {
                     <img
                       src={activeStory.image}
                       alt={activeStory.name}
-                      className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
+                      className="w-[170px] h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
                     />
                   </div>
                 ) : (
-                  <div className="css-avatar-person">
-                    <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}></div>
-                    <div className={`css-avatar-body bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
-                  </div>
+                  <>
+                    {/* Layer 2: Clipped Circle Container */}
+                    <div className="absolute inset-0 rounded-full overflow-hidden z-10 border-transparent pointer-events-none">
+                      <div className="css-avatar-silhouette">
+                        <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
+                          <div className="css-avatar-highlight"></div>
+                        </div>
+                        <div className={`css-avatar-neck bg-gradient-to-b ${getAvatarGradient(carouselIndex).base}`}></div>
+                        <div className={`css-avatar-torso bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}>
+                          <div className={`css-avatar-shoulder-l bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                          <div className={`css-avatar-shoulder-r bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Layer 3: Overflow Silhouette (Popping Out Above Boundary) */}
+                    <div className="absolute inset-x-0 bottom-0 h-full overflow-visible z-20 pointer-events-none">
+                      <div className="css-avatar-silhouette">
+                        <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
+                          <div className="css-avatar-highlight"></div>
+                        </div>
+                        <div className={`css-avatar-neck bg-gradient-to-b ${getAvatarGradient(carouselIndex).base}`}></div>
+                        <div className={`css-avatar-torso bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}>
+                          <div className={`css-avatar-shoulder-l bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                          <div className={`css-avatar-shoulder-r bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
 
