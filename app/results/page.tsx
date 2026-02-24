@@ -240,9 +240,9 @@ export default function ResultsPage() {
         </div>
 
         {/* High-End Editorial Borderless Carousel (Phase 23) */}
-        <div 
-          className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24 pb-24" 
-          onMouseEnter={() => setIsHovered(true)} 
+        <div
+          className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24 pb-24"
+          onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Main Body: Enormous Quote */}
@@ -250,7 +250,7 @@ export default function ResultsPage() {
             <div key={`${animKey}-text`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]">
               {/* Massive subtle quote mark behind text */}
               <div className="text-[180px] md:text-[240px] font-sans text-white/5 leading-none absolute -top-16 md:-top-24 -left-8 md:-left-16 -z-10 select-none">"</div>
-              
+
               <h2 className="text-4xl md:text-5xl lg:text-[72px] font-sans font-medium italic text-white leading-[1.05] tracking-tight mb-12 relative z-10 text-balance drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
                 "{activeStory.quote}"
               </h2>
@@ -280,16 +280,26 @@ export default function ResultsPage() {
           {/* Photo Layout: Pure CSS Silhouette Pop-Out */}
           <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative pointer-events-none mt-12 lg:mt-0">
             <div key={`${animKey}-avatar`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '300ms' }}>
-              
+
               <div className="css-avatar-base">
-                 {/* Radial base glow anchoring it to canvas */}
-                 <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
-                 
-                 {/* The Pop-Out Silhouette Geometry */}
-                 <div className="css-avatar-person">
-                   <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}></div>
-                   <div className={`css-avatar-body bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
-                 </div>
+                {/* Radial base glow anchoring it to canvas */}
+                <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
+
+                {/* The Pop-Out Geometry */}
+                {activeStory.image ? (
+                  <div className="absolute inset-x-[-10%] bottom-[-10px] h-[260px] z-10 flex flex-col items-center justify-end overflow-visible pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700">
+                    <img
+                      src={activeStory.image}
+                      alt={activeStory.name}
+                      className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
+                    />
+                  </div>
+                ) : (
+                  <div className="css-avatar-person">
+                    <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}></div>
+                    <div className={`css-avatar-body bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                  </div>
+                )}
               </div>
 
             </div>
