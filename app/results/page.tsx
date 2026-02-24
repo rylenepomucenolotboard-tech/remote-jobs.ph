@@ -209,106 +209,97 @@ export default function ResultsPage() {
     <div className="min-h-[100dvh] flex flex-col bg-background-deep text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden">
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 2xl:py-32 flex flex-col justify-center">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center">
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+        {/* Top Typography Section - Centered */}
+        <div className="text-center relative z-10 w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight mb-6">
+            Customer success stories
+          </h1>
+          <p className="text-lg md:text-xl text-navy-300 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
+            Check out how RemoteJobs.ph helps professionals and organizations of all sizes achieve their global expansion goals.
+          </p>
+        </div>
 
-          {/* Left: Huge Stacked Text & Blocky Stats (Inspired by reference screens) */}
-          <div className="w-full lg:w-5/12 text-left relative z-10 animate-in fade-in slide-in-from-left-8 duration-700">
-            {/* The background radial for brand alignment */}
-            <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-cyber/5 rounded-full blur-[120px] pointer-events-none" />
+        {/* Floating Circle Carousel Section (LinkedIn Inspiration) */}
+        <div className="relative w-full max-w-6xl mx-auto mt-8 md:mt-16 flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-8 pb-16" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
-            <h1 className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] font-black text-white leading-[0.82] tracking-tighter mb-10 uppercase drop-shadow-xl">
-              <span className="block mb-3">Success</span>
-              <span className="block text-accent-cyber">Stories<span className="text-white">.</span></span>
-            </h1>
+          {/* Left Side: The Quote Content */}
+          <div className="w-full md:w-5/12 relative z-20 flex flex-col justify-center animate-in fade-in slide-in-from-left-12 duration-1000">
+            <div className="text-[120px] font-serif text-accent-cyber/20 leading-none absolute -top-12 -left-8 -z-10 select-none">"</div>
+            <div key={`${animKey}-content`} className={`animate-in fade-in ${direction} duration-500`}>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white leading-snug mb-8 relative z-10 text-balance shadow-black/20 drop-shadow-lg">
+                "{activeStory.quote}"
+              </h2>
 
-            <p className="text-xl md:text-2xl text-navy-300 font-medium mb-12 max-w-sm leading-snug border-l-4 border-primary-indigo/30 pl-5">
-              The premier ecosystem connecting global tech leaders with elite Filipino remote talent.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 lg:gap-6">
-              {STRINGS.HEADER.stats.map((s, i) => (
-                <div key={i} className="flex flex-col gap-2 bg-[#0A0C10] border border-white/5 rounded-[1.5rem] p-6 lg:p-8 shadow-2xl hover:border-white/10 transition-colors">
-                  <span className="text-4xl lg:text-5xl font-black text-white leading-none">{s.num}</span>
-                  <span className="text-[11px] font-black text-navy-400 uppercase tracking-widest">{s.label}</span>
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-black text-white">{activeStory.name}</div>
+                <div className="text-sm font-medium text-navy-300">{activeStory.role} at {activeStory.source}</div>
+                <div className="text-xs font-bold text-accent-cyber tracking-widest uppercase mt-4 mb-8">
+                  {activeStory.tag}
                 </div>
-              ))}
+              </div>
+
+              {/* Minimalist Dot Indicators */}
+              <div className="flex gap-2">
+                {filteredStories.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setIndex(i)}
+                    className={`h-3 rounded-full transition-all duration-300 ${i === carouselIndex ? 'w-8 bg-accent-cyber shadow-[0_0_10px_rgba(202,244,113,0.5)]' : 'w-3 bg-white/20 hover:bg-white/40'}`}
+                    aria-label={`Go to story ${i + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Right: The Curved Carousel Card (Inspired by reference screens + dark UI) */}
-          <div className="w-full lg:w-7/12 aspect-square md:aspect-[4/3] lg:aspect-[4/3.5] bg-[#0c1526] rounded-[2.5rem] p-8 md:p-12 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.8)] border border-white/5 flex flex-col relative overflow-hidden animate-in fade-in slide-in-from-right-8 duration-1000" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+          {/* Right Side: The Massive Floating Circles Array */}
+          <div className="w-full md:w-7/12 relative min-h-[400px] md:min-h-[500px] flex items-center justify-center lg:justify-end pr-0 lg:pr-12 pointer-events-none">
 
-            {/* Organic Curved Shape (Mimicking the photo cutout in the reference) */}
-            <div className="absolute bottom-0 right-0 w-[80%] h-[75%] bg-primary-indigo/20 rounded-tl-[160px] blur-sm transition-all duration-1000" />
-            <div className="absolute bottom-0 right-0 w-[75%] h-[70%] bg-primary-indigo rounded-tl-[140px] z-[1] transition-all duration-700 shadow-[-20px_-20px_40px_rgba(0,0,0,0.5)] border-t border-l border-white/10" />
-            <div className="absolute bottom-0 right-0 w-[72%] h-[68%] bg-[#060b18] rounded-tl-[130px] z-[2] transition-all duration-700 border-t border-l border-white/5" />
+            {/* The Primary Anchor Circle */}
+            <div className="absolute right-0 md:right-12 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[450px] md:h-[450px] bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-full shadow-[0_30px_100px_-20px_rgba(1,108,249,0.5)] z-0 transition-transform duration-1000 ease-out animate-pulse-slow" />
 
-            <div key={animKey} className={`flex-1 flex flex-col relative animate-in fade-in ${direction} duration-700 z-10 h-full`}>
-
-              <div className="flex justify-between items-center mb-auto">
-                {/* Reference style pill box */}
-                <div className="bg-white text-navy-900 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
-                  Verified Review
-                </div>
-                <div className="bg-white/5 border border-white/10 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
-                  STORY {carouselIndex + 1} OF {filteredStories.length}
-                </div>
-              </div>
-
-              <div className="relative mt-12 mb-auto max-w-lg lg:max-w-xl z-10 pointer-events-none">
-                <h2 className="text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tight [text-wrap:balance]">
-                  "{activeStory.quote}"
-                </h2>
-                <div className="text-sm md:text-base font-medium text-navy-300 mt-6 leading-relaxed border-l-2 border-accent-cyber/30 pl-5">
-                  {activeStory.context}
-                </div>
-              </div>
-
-              {/* Profile Details sitting in the curve */}
-              <div className="absolute bottom-4 md:bottom-8 right-0 md:right-4 z-20 text-right flex flex-col items-end">
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-accent-cyber rounded-full mb-4 md:mb-5 flex items-center justify-center shadow-[0_0_40px_rgba(202,244,113,0.3)] border-[4px] border-[#0A0C10]">
-                  <span className="text-2xl md:text-4xl font-black text-navy-900 leading-none pb-1">{activeStory.name.charAt(0)}</span>
-                </div>
-                <div className="text-xl md:text-2xl font-black text-white">{activeStory.name}</div>
-                <div className="text-[10px] md:text-xs font-black uppercase tracking-widest text-primary-indigo mt-1">{activeStory.role}</div>
-                <div className="text-[10px] font-bold text-navy-400 uppercase tracking-widest mt-1">{activeStory.location}</div>
-              </div>
-
+            {/* Staggered Secondary Circles (Background Avatars) */}
+            <div className="absolute right-[-20px] top-[10%] w-[120px] h-[120px] bg-accent-cyber/20 border border-accent-cyber/30 rounded-full blur-[2px] z-0 flex items-center justify-center overflow-hidden opacity-50">
+              <span className="text-3xl font-black text-navy-900 opacity-20">R</span>
+            </div>
+            <div className="absolute right-[40%] bottom-[-10px] w-[150px] h-[150px] bg-white/5 border border-white/10 rounded-full blur-[1px] z-0 flex items-center justify-center overflow-hidden opacity-40">
+              <span className="text-4xl font-black text-white opacity-20">S</span>
             </div>
 
-            {/* Navigation buttons matching inspiration wireframe circles */}
-            <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 flex gap-4">
-              <button onClick={handlePrev} className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-navy-900 transition-all font-black text-xl hover:scale-105 active:scale-95 shadow-lg backdrop-blur-md">←</button>
-              <button onClick={handleNext} className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-navy-900 transition-all font-black text-xl hover:scale-105 active:scale-95 shadow-lg backdrop-blur-md">→</button>
+            {/* The Primary Active Avatar Overlapping */}
+            <div key={`${animKey}-avatar`} className={`absolute right-[10%] md:right-[20%] top-1/2 -translate-y-1/2 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full z-10 flex items-center justify-center shadow-2xl animate-in fade-in zoom-in-95 duration-500`}>
+              <div className="w-full h-full bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 overflow-hidden relative group pointer-events-auto">
+                {/* Abstract background pattern for the avatar */}
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
+                <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
+              </div>
             </div>
+          </div>
+
+        </div>
+
+        {/* Integrated CTA Below the Carousel */}
+        <div className="mt-8 mb-24 relative z-20 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300 w-full text-center flex flex-col items-center">
+          <button className="bg-primary-indigo text-white px-12 py-5 text-lg md:text-xl rounded-full font-black hover:scale-105 transition-all shadow-[0_20px_50px_-10px_rgba(1,108,249,0.5)] uppercase tracking-widest border border-white/10 hover:bg-[#014eb3]">
+            Create Your Own Success Story
+          </button>
+          <div className="mt-6 flex flex-wrap justify-center gap-6 opacity-70">
+            {STRINGS.HEADER.stats.map((s, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <span className="font-black text-accent-cyber">{s.num}</span>
+                <span className="text-xs font-bold text-white uppercase tracking-widest">{s.label}</span>
+                {i < STRINGS.HEADER.stats.length - 1 && <span className="text-white/20 mx-2">|</span>}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Bottom CTA Customization requested by user */}
-        <section className="mt-24 md:mt-32 relative z-10 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-[2rem] md:rounded-[3rem] p-12 md:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_30px_100px_-20px_rgba(1,108,249,0.4)]">
-            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
-
-            <div className="relative z-10 flex-1 text-center md:text-left">
-              <h2 className="text-[2.5rem] md:text-5xl lg:text-[4rem] font-black text-white mb-6 leading-tight tracking-tighter uppercase line-clamp-2 md:line-clamp-none">
-                Create Your Own Success Story.
-              </h2>
-              <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed max-w-2xl mx-auto md:mx-0">
-                Join 15,000+ top-tier professionals building generational remote careers.
-              </p>
-            </div>
-
-            <div className="relative z-10 flex flex-col gap-4 w-full md:w-auto shrink-0">
-              <button className="bg-accent-cyber text-navy-900 px-10 py-5 text-lg rounded-2xl font-black hover:scale-105 transition-all shadow-[0_0_30px_rgba(202,244,113,0.3)] uppercase tracking-wider text-center">{STRINGS.CTA.btn1}</button>
-              <button className="bg-white/10 text-white border-2 border-white/30 px-10 py-5 text-lg rounded-2xl font-black hover:bg-white/20 transition-all uppercase tracking-wider text-center backdrop-blur-md">{STRINGS.CTA.btn2}</button>
-            </div>
-          </div>
-        </section>
-
       </main>
 
+      {/* Mandatory Base Brand Border */}
+      <div className="border-t border-white/5" />
       <Footer />
     </div>
   );
