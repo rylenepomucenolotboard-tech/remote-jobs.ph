@@ -102,3 +102,29 @@
     clip-path: ellipse(150% 100% at 50% 100%);
   }
 }
+
+@layer utilities {
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 8s ease-in-out infinite 2s;
+  }
+
+  .animate-float-fast {
+    animation: float 6s ease-in-out infinite 1s;
+  }
+}

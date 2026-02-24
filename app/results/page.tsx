@@ -264,26 +264,35 @@ export default function ResultsPage() {
           <div className="w-full md:w-7/12 relative min-h-[400px] md:min-h-[500px] flex items-center justify-center lg:justify-end pr-0 lg:pr-12 pointer-events-none">
 
             {/* The Primary Anchor Circle */}
-            <div className="absolute right-0 md:right-12 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[450px] md:h-[450px] bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-full shadow-[0_30px_100px_-20px_rgba(1,108,249,0.5)] z-0 transition-transform duration-1000 ease-out animate-pulse-slow" />
+            <div className="absolute right-0 md:right-12 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[450px] md:h-[450px] bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-full shadow-[0_30px_100px_-20px_rgba(1,108,249,0.5)] z-0 transition-transform duration-1000 ease-out animate-float-slow" />
 
             {/* Staggered Secondary Circles (Background Avatars) */}
-            <div className="absolute right-[-20px] top-[10%] w-[120px] h-[120px] bg-accent-cyber/20 border border-accent-cyber/30 rounded-full blur-[2px] z-0 flex items-center justify-center overflow-hidden opacity-50">
+            <div className="absolute right-[-20px] top-[10%] w-[120px] h-[120px] bg-accent-cyber/20 border border-accent-cyber/30 rounded-full blur-[2px] z-0 flex items-center justify-center overflow-hidden opacity-50 animate-float-delayed">
               <span className="text-3xl font-black text-navy-900 opacity-20">R</span>
             </div>
-            <div className="absolute right-[40%] bottom-[-10px] w-[150px] h-[150px] bg-white/5 border border-white/10 rounded-full blur-[1px] z-0 flex items-center justify-center overflow-hidden opacity-40">
+            <div className="absolute right-[40%] bottom-[-10px] w-[150px] h-[150px] bg-white/5 border border-white/10 rounded-full blur-[1px] z-0 flex items-center justify-center overflow-hidden opacity-40 animate-float-fast">
               <span className="text-4xl font-black text-white opacity-20">S</span>
             </div>
 
-            {/* The Primary Active Avatar Overlapping */}
-            <div key={`${animKey}-avatar`} className={`absolute right-[10%] md:right-[20%] top-1/2 -translate-y-1/2 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full z-10 flex items-center justify-center shadow-2xl animate-in fade-in zoom-in-95 duration-500 overflow-hidden`}>
-              {activeStory.image ? (
-                <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-full pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700" />
-              ) : (
-                <div className="w-full h-full bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 overflow-hidden relative group pointer-events-auto">
-                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
-                  <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
-                </div>
-              )}
+            {/* The Primary Active Avatar Overlapping (Pop-Out Architecture) */}
+            <div className="absolute right-[10%] md:right-[20%] top-1/2 -translate-y-[55%] w-[250px] md:w-[320px] z-10 pointer-events-none animate-float-slow">
+              <div key={`${animKey}-avatar`} className="w-full relative flex flex-col items-center justify-end animate-in fade-in zoom-in-95 duration-500 h-[290px] md:h-[390px]">
+
+                {/* Background Circle Base */}
+                <div className="absolute bottom-0 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full shadow-2xl z-0" />
+
+                {/* Foreground Popped-Out Image/Avatar */}
+                {activeStory.image ? (
+                  <div className="w-[85%] md:w-[88%] h-full pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700 relative z-10 bottom-[8px]">
+                    <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-2xl border-[6px] border-background-deep" />
+                  </div>
+                ) : (
+                  <div className="w-[204px] h-[204px] md:w-[304px] md:h-[304px] absolute bottom-[8px] bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 pointer-events-auto overflow-hidden z-10">
+                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
+                    <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
