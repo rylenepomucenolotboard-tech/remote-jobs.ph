@@ -25,6 +25,18 @@ const STRINGS = {
 
 const STORIES = [
   {
+    type: "Employer",
+    name: "Anonymous Founder",
+    role: "CEO, Customer Service Business",
+    location: "International",
+    kicker: "Expanding to new departments",
+    quote: "Efficient, professional, quality service — at an unbeatable price.",
+    context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
+    source: "Verified Client",
+    tag: "Value",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
+  },
+  {
     type: "Talent",
     name: "Dominic R.",
     role: "Senior Helpdesk Engineer",
@@ -83,18 +95,6 @@ const STORIES = [
     source: "LinkedIn · Verified Client",
     tag: "Quality",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    type: "Employer",
-    name: "Anonymous Founder",
-    role: "CEO, Customer Service Business",
-    location: "International",
-    kicker: "Expanding to new departments",
-    quote: "Efficient, professional, quality service — at an unbeatable price.",
-    context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
-    source: "Verified Client",
-    tag: "Value",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
   },
 ];
 
@@ -278,16 +278,13 @@ export default function ResultsPage() {
             <div className="absolute right-[10%] md:right-[20%] top-1/2 -translate-y-[55%] w-[250px] md:w-[320px] z-10 pointer-events-none animate-float-slow">
               <div key={`${animKey}-avatar`} className="w-full relative flex flex-col items-center justify-end animate-in fade-in zoom-in-95 duration-500 h-[290px] md:h-[390px]">
 
-                {/* Background Circle Base */}
-                <div className="absolute bottom-0 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full shadow-2xl z-0" />
-
                 {/* Foreground Popped-Out Image/Avatar */}
                 {activeStory.image ? (
                   <div className="w-[85%] md:w-[88%] h-full pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700 relative z-10 bottom-[8px]">
-                    <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-2xl border-[6px] border-background-deep" />
+                    <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-2xl" />
                   </div>
                 ) : (
-                  <div className="w-[204px] h-[204px] md:w-[304px] md:h-[304px] absolute bottom-[8px] bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 pointer-events-auto overflow-hidden z-10">
+                  <div className="w-[204px] h-[204px] md:w-[304px] md:h-[304px] absolute bottom-[8px] bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 pointer-events-auto overflow-hidden z-10 drop-shadow-2xl">
                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
                     <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
                   </div>
