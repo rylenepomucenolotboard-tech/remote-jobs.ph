@@ -107,6 +107,18 @@ const PLACEHOLDERS = [
 ];
 
 export default function ResultsPage() {
+  const getAvatarGradient = (index: number) => {
+    const gradients = [
+      { base: 'from-primary-indigo to-blue-400', glow: 'bg-primary-indigo' },
+      { base: 'from-accent-mint to-teal-300', glow: 'bg-accent-mint' },
+      { base: 'from-amber-400 to-orange-300', glow: 'bg-amber-500' },
+      { base: 'from-rose-500 to-pink-300', glow: 'bg-rose-500' },
+      { base: 'from-purple-500 to-fuchsia-300', glow: 'bg-purple-500' },
+      { base: 'from-accent-cyber to-emerald-300', glow: 'bg-accent-cyber' },
+    ];
+    return gradients[index % gradients.length];
+  };
+
   const [filter, setFilter] = useState("All");
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -227,32 +239,37 @@ export default function ResultsPage() {
           </p>
         </div>
 
-        {/* Floating Circle Carousel Section (LinkedIn Inspiration) */}
-        <div className="relative w-full max-w-6xl mx-auto mt-8 md:mt-16 flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-8 pb-16" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-
-          {/* Left Side: The Quote Content */}
-          <div className="w-full md:w-5/12 relative z-20 flex flex-col justify-center animate-in fade-in slide-in-from-left-12 duration-1000">
-            <div className="text-[120px] font-serif text-accent-cyber/20 leading-none absolute -top-12 -left-8 -z-10 select-none">"</div>
-            <div key={`${animKey}-content`} className={`animate-in fade-in ${direction} duration-500`}>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white leading-snug mb-8 relative z-10 text-balance shadow-black/20 drop-shadow-lg">
+        {/* High-End Editorial Borderless Carousel (Phase 23) */}
+        <div 
+          className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24 pb-24" 
+          onMouseEnter={() => setIsHovered(true)} 
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Main Body: Enormous Quote */}
+          <div className="w-full lg:w-3/4 flex flex-col justify-center relative z-20">
+            <div key={`${animKey}-text`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]">
+              {/* Massive subtle quote mark behind text */}
+              <div className="text-[180px] md:text-[240px] font-sans text-white/5 leading-none absolute -top-16 md:-top-24 -left-8 md:-left-16 -z-10 select-none">"</div>
+              
+              <h2 className="text-4xl md:text-5xl lg:text-[72px] font-sans font-medium italic text-white leading-[1.05] tracking-tight mb-12 relative z-10 text-balance drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
                 "{activeStory.quote}"
               </h2>
 
-              <div className="flex flex-col gap-1">
-                <div className="text-lg font-black text-white">{activeStory.name}</div>
-                <div className="text-sm font-medium text-navy-300">{activeStory.role} at {activeStory.source}</div>
-                <div className="text-xs font-bold text-accent-cyber tracking-widest uppercase mt-4 mb-8">
-                  {activeStory.tag}
-                </div>
+              <div className="flex flex-col md:flex-row md:items-center gap-3 text-navy-200">
+                <div className="text-2xl font-black text-white">{activeStory.name}</div>
+                <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-accent-cyber opacity-80"></div>
+                <div className="text-lg font-medium tracking-wide">{activeStory.role} {activeStory.source ? `at ${activeStory.source}` : ''}</div>
+                <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20"></div>
+                <div className="text-sm font-semibold text-accent-cyber tracking-widest uppercase">{activeStory.tag}</div>
               </div>
 
               {/* Minimalist Dot Indicators */}
-              <div className="flex gap-2">
+              <div className="flex gap-3 mt-16">
                 {filteredStories.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setIndex(i)}
-                    className={`h-3 rounded-full transition-all duration-300 ${i === carouselIndex ? 'w-8 bg-accent-cyber shadow-[0_0_10px_rgba(202,244,113,0.5)]' : 'w-3 bg-white/20 hover:bg-white/40'}`}
+                    className={`h-1.5 rounded-full transition-all duration-700 ease-out ${i === carouselIndex ? 'w-16 bg-white shadow-[0_0_15px_rgba(255,255,255,0.4)]' : 'w-6 bg-white/20 hover:bg-white/40'}`}
                     aria-label={`Go to story ${i + 1}`}
                   />
                 ))}
@@ -260,36 +277,21 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* Right Side: The Massive Floating Circles Array */}
-          <div className="w-full md:w-7/12 relative min-h-[400px] md:min-h-[500px] flex items-center justify-center lg:justify-end pr-0 lg:pr-12 pointer-events-none">
-
-            {/* The Primary Anchor Circle */}
-            <div className="absolute right-0 md:right-12 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[450px] md:h-[450px] bg-gradient-to-br from-primary-indigo to-[#014eb3] rounded-full shadow-[0_30px_100px_-20px_rgba(1,108,249,0.5)] z-0 transition-transform duration-1000 ease-out animate-float-slow" />
-
-            {/* Staggered Secondary Circles (Background Avatars) */}
-            <div className="absolute right-[-20px] top-[10%] w-[120px] h-[120px] bg-accent-cyber/20 border border-accent-cyber/30 rounded-full blur-[2px] z-0 flex items-center justify-center overflow-hidden opacity-50 animate-float-delayed">
-              <span className="text-3xl font-black text-navy-900 opacity-20">R</span>
-            </div>
-            <div className="absolute right-[40%] bottom-[-10px] w-[150px] h-[150px] bg-white/5 border border-white/10 rounded-full blur-[1px] z-0 flex items-center justify-center overflow-hidden opacity-40 animate-float-fast">
-              <span className="text-4xl font-black text-white opacity-20">S</span>
-            </div>
-
-            {/* The Primary Active Avatar Overlapping (Pop-Out Architecture) */}
-            <div className="absolute right-[10%] md:right-[20%] top-1/2 -translate-y-[55%] w-[250px] md:w-[320px] z-10 pointer-events-none animate-float-slow">
-              <div key={`${animKey}-avatar`} className="w-full relative flex flex-col items-center justify-end animate-in fade-in zoom-in-95 duration-500 h-[290px] md:h-[390px]">
-
-                {/* Foreground Popped-Out Image/Avatar */}
-                {activeStory.image ? (
-                  <div className="w-[85%] md:w-[88%] h-full pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700 relative z-10 bottom-[8px]">
-                    <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-2xl" />
-                  </div>
-                ) : (
-                  <div className="w-[204px] h-[204px] md:w-[304px] md:h-[304px] absolute bottom-[8px] bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 pointer-events-auto overflow-hidden z-10 drop-shadow-2xl">
-                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
-                    <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
-                  </div>
-                )}
+          {/* Photo Layout: Pure CSS Silhouette Pop-Out */}
+          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative pointer-events-none mt-12 lg:mt-0">
+            <div key={`${animKey}-avatar`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '300ms' }}>
+              
+              <div className="css-avatar-base">
+                 {/* Radial base glow anchoring it to canvas */}
+                 <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
+                 
+                 {/* The Pop-Out Silhouette Geometry */}
+                 <div className="css-avatar-person">
+                   <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}></div>
+                   <div className={`css-avatar-body bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                 </div>
               </div>
+
             </div>
           </div>
 

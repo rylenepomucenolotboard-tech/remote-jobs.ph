@@ -127,4 +127,46 @@
   .animate-float-fast {
     animation: float 6s ease-in-out infinite 1s;
   }
+
+  @keyframes cinematic-drift {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-cinematic-drift {
+    animation: cinematic-drift 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+}
+
+@layer components {
+
+  /* CSS-only Portrait Silhouette */
+  .css-avatar-base {
+    @apply relative w-[180px] h-[180px] rounded-full;
+  }
+
+  .css-avatar-glow {
+    @apply absolute -inset-6 rounded-full blur-2xl opacity-40 z-0;
+  }
+
+  .css-avatar-person {
+    @apply absolute inset-0 z-10 flex flex-col items-center justify-end overflow-visible;
+  }
+
+  .css-avatar-head {
+    @apply w-[64px] h-[74px] rounded-full z-20 absolute top-[-20px];
+    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .css-avatar-body {
+    @apply w-[140px] h-[110px] rounded-t-[70px] z-10 absolute bottom-0;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.4);
+  }
 }
