@@ -34,6 +34,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop"
   },
   {
     type: "Talent",
@@ -45,6 +46,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop"
   },
   {
     type: "Talent",
@@ -56,6 +58,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
   },
   {
     type: "Employer",
@@ -67,6 +70,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop"
   },
   {
     type: "Employer",
@@ -78,6 +82,7 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop"
   },
   {
     type: "Employer",
@@ -89,6 +94,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
   },
 ];
 
@@ -269,12 +275,15 @@ export default function ResultsPage() {
             </div>
 
             {/* The Primary Active Avatar Overlapping */}
-            <div key={`${animKey}-avatar`} className={`absolute right-[10%] md:right-[20%] top-1/2 -translate-y-1/2 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full z-10 flex items-center justify-center shadow-2xl animate-in fade-in zoom-in-95 duration-500`}>
-              <div className="w-full h-full bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 overflow-hidden relative group pointer-events-auto">
-                {/* Abstract background pattern for the avatar */}
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
-                <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
-              </div>
+            <div key={`${animKey}-avatar`} className={`absolute right-[10%] md:right-[20%] top-1/2 -translate-y-1/2 w-[220px] h-[220px] md:w-[320px] md:h-[320px] bg-[#0A0C10] border-[8px] border-background-deep rounded-full z-10 flex items-center justify-center shadow-2xl animate-in fade-in zoom-in-95 duration-500 overflow-hidden`}>
+              {activeStory.image ? (
+                <img src={activeStory.image} alt={activeStory.name} className="w-full h-full object-cover rounded-full pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700" />
+              ) : (
+                <div className="w-full h-full bg-accent-cyber rounded-full flex flex-col items-center justify-center text-navy-900 overflow-hidden relative group pointer-events-auto">
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]" />
+                  <span className="text-[100px] md:text-[140px] font-black leading-none pb-2 relative z-10">{activeStory.name.charAt(0)}</span>
+                </div>
+              )}
             </div>
           </div>
 
