@@ -37,7 +37,6 @@ const HowItWorksPage = () => {
         { question: 'Do I need to actively apply to jobs?', answer: 'No. Once your profile is live you can get discovered by global employers. Receive instant alerts the moment an employer selects you for an interview or a role.' },
         { question: 'What kind of salary growth can I expect?', answer: 'Professionals on RemoteJobs.ph see an average salary growth of 35%. Results vary by skill set and experience level.' },
         { question: 'Can I browse and apply while waiting to be discovered?', answer: 'Yes. Explore thousands of high-paying remote roles and apply with a single click at any time from the Jobs page.' },
-        { question: 'What if I do not have a portfolio or GitHub?', answer: 'A portfolio or GitHub is not required to create a profile. Your profile is built around your skills, experience, and availability. Employers search by role, tech stack, and active status — a strong, complete profile with clear skill tags is more important than external links. You can always add portfolio links later.' },
     ];
 
     const steps = {
