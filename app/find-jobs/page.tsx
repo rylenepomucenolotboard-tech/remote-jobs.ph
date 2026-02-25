@@ -1,152 +1,300 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
-const jobCategories = [
-    { title: 'Software Engineering', count: '12,400+', icon: '💻' },
-    { title: 'Product & Design', count: '4,200+', icon: '🎨' },
-    { title: 'Data & Analytics', count: '3,800+', icon: '📊' },
-    { title: 'Marketing & Growth', count: '5,100+', icon: '📈' },
-    { title: 'Customer Success', count: '6,700+', icon: '🤝' },
-    { title: 'Finance & Accounting', count: '2,900+', icon: '💼' },
+// Mock Data
+const MOCK_JOBS = [
+    { id: 1, title: 'Visual Designer', company: 'Deloitte', location: 'Chicago IL', experience: '3 to 5 Years', type: 'Full-Time', salary: '$57k - $62k', posted: '3 mins ago', logo: 'D' },
+    { id: 2, title: 'Product Designer', company: 'Grubhub', location: 'Chicago IL', experience: '3 to 5 Years', type: 'Full-Time', salary: '$44k - $52k', posted: '17 mins ago', logo: 'G' },
+    { id: 3, title: 'Designer', company: 'Fray Design Group, INC', location: 'Chicago IL', experience: '0 to 1 Year', type: 'Paid Internship', salary: '$14k', posted: '20 mins ago', logo: 'F' },
+    { id: 4, title: 'UX Designer', company: 'Mintel', location: 'Chicago IL', experience: '6 to 7 Years', type: 'Full-Time', salary: '$49k - $51k', posted: '32 mins ago', logo: 'M' },
 ];
 
-const stats = [
-    { value: '9M+', label: 'Active Professionals' },
-    { value: '15,000+', label: 'Roles Filled' },
-    { value: '35%', label: 'Avg. Salary Growth' },
-    { value: '12 Days', label: 'Avg. Time-to-Hire' },
+const POPULAR_COMPANIES = [
+    { name: 'Workday', jobs: 129, logo: 'W' },
+    { name: 'Salesforce', jobs: 84, logo: 'S' },
+    { name: 'Marriott International', jobs: 73, logo: 'M' },
+    { name: 'CarMax', jobs: 62, logo: 'C' },
+    { name: 'SAP America Inc.', jobs: 39, logo: 'SAP' },
+    { name: 'Deloitte', jobs: 26, logo: 'D' },
+    { name: 'Accenture', jobs: 107, logo: 'A' },
+    { name: 'Alliance Data', jobs: 35, logo: 'AD' },
+];
+
+const JOB_TYPES = [
+    { label: 'All', count: 284, active: true },
+    { label: 'Full Time', count: 146 },
+    { label: 'Part Time', count: 32 },
+    { label: 'Contract', count: 18 },
+    { label: 'Internship', count: 81 },
+    { label: 'Freelance', count: 7 },
+];
+
+const LOCATIONS = [
+    { label: 'Chicago, IL', count: 284, active: true },
+    { label: 'Niles, IL', count: 46 },
+    { label: 'Oak Brook, IL', count: 39 },
+    { label: 'Northbrook, IL', count: 37 },
+    { label: 'Skokie, IL', count: 34 },
+];
+
+const COMPANIES = [
+    { label: 'All', count: 284, active: true },
+    { label: 'Abbott', count: 32 },
+    { label: 'Drivative Solutions', count: 18 },
+    { label: 'Cars.com', count: 29 },
+    { label: 'Caterpillar Inc.', count: 27 },
 ];
 
 const FindJobsPage = () => {
     return (
-        <div className="min-h-screen flex flex-col bg-white">
+        <div className="min-h-screen flex flex-col bg-[#f4f7f6]">
             <Header />
             <main className="flex-1">
 
-                {/* HERO */}
-                <section className="relative pt-20 pb-32 bg-white overflow-hidden">
-                    <div className="absolute top-0 right-0 w-1/2 h-full bg-accent-cyber/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="max-w-3xl">
-                            <h1 className="text-5xl md:text-8xl font-black text-navy-900 mb-8 leading-[0.9] tracking-tighter italic">
-                                <span className="block">Find Your</span>
-                                <span className="block text-primary-indigo">Dream Job.</span>
-                                <span className="block">Go Global.</span>
-                            </h1>
-                            <p className="text-navy-600 text-xl md:text-2xl mb-12 max-w-[40ch] font-medium leading-relaxed">
-                                Browse thousands of high-paying remote roles from global companies — and get discovered while you sleep.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link href="/jobs" className="bg-accent-cyber text-navy-900 px-10 py-5 rounded-2xl font-black hover:scale-[1.02] transition-all text-center shadow-lg">
-                                    Browse All Jobs
-                                </Link>
-                                <Link href="/register?type=jobseeker" className="bg-navy-900 text-white px-10 py-5 rounded-2xl font-black hover:bg-navy-950 transition-all text-center">
-                                    Get Discovered Free
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/* HERO SEARCH SECTION */}
+                <section className="bg-navy-950 pt-20 pb-20 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto">
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center md:text-left">Find your dream job</h1>
 
-                {/* STATS */}
-                <section className="py-12 border-y border-navy-100 bg-navy-50/50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-wrap justify-between items-center gap-12">
-                            {stats.map((stat, i) => (
-                                <div key={i} className="flex flex-col">
-                                    <span className="text-3xl font-black text-navy-900 leading-none mb-1">{stat.value}</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-navy-600">{stat.label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* JOB CATEGORIES */}
-                <section className="py-32 bg-navy-50/50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-20">
-                            <span className="inline-block px-4 py-2 bg-navy-900 text-accent-cyber rounded-full text-[10px] font-black uppercase tracking-widest mb-6 shadow-md">Browse by Category</span>
-                            <h2 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 tracking-tighter italic">
-                                Every Role.<br /><span className="text-primary-indigo">Every Industry.</span>
-                            </h2>
-                            <p className="text-navy-600 text-xl max-w-[50ch] mx-auto font-medium leading-relaxed">
-                                From startups to Fortune 500s — thousands of remote roles waiting for elite Filipino talent.
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {jobCategories.map((cat, i) => (
-                                <Link key={i} href="/jobs" className="group bg-white border-none rounded-[2rem] p-8 shadow-sm hover:bg-navy-900 hover:shadow-2xl hover:shadow-navy-900/20 transition-all duration-300 flex flex-col justify-center min-h-[160px]">
-                                    <h3 className="text-xl font-black text-navy-900 group-hover:text-white mb-2 transition-colors duration-300">{cat.title}</h3>
-                                    <p className="text-primary-indigo group-hover:text-accent-cyber font-black text-sm transition-colors duration-300">{cat.count} open roles</p>
-                                </Link>
-                            ))}
-                        </div>
-
-                        <div className="mt-16 text-center">
-                            <Link href="/jobs" className="bg-navy-900 text-white px-14 py-5 rounded-2xl font-black text-lg hover:bg-navy-950 transition-all shadow-xl inline-block">
-                                View All Jobs
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-
-                {/* HOW IT WORKS FOR JOB SEEKERS */}
-                <section className="py-32 bg-navy-50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-20">
-                            <span className="inline-block px-4 py-2 bg-navy-900 text-accent-cyber rounded-full text-[10px] font-black uppercase tracking-widest mb-6 shadow-md">How It Works</span>
-                            <h2 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 tracking-tighter italic">
-                                Land a Global Role<br /><span className="text-primary-indigo">in 3 Steps.</span>
-                            </h2>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {[
-                                { step: '01', title: 'Build Your Profile', desc: 'Create a free profile that puts your skills in front of global hiring managers. No resume required.' },
-                                { step: '02', title: 'Apply or Get Found', desc: 'Browse thousands of remote roles and apply with one click — or let employers discover you directly.' },
-                                { step: '03', title: 'Get Hired', desc: 'Receive instant notifications when an employer selects you. Avg. time-to-hire is just 12 days.' },
-                            ].map((item, i) => (
-                                <div key={i} className="group bg-white border border-navy-100 rounded-[2.5rem] p-12 hover:border-accent-cyber/30 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
-                                    <div className="absolute -top-6 -right-6 text-[10rem] font-black text-navy-900/[0.03] italic leading-none">{item.step}</div>
-                                    <div className="relative z-10">
-                                        <div className="w-14 h-14 bg-primary-indigo/10 rounded-2xl flex items-center justify-center text-primary-indigo font-black text-xl mb-8 group-hover:bg-primary-indigo group-hover:text-white transition-all duration-500">
-                                            {item.step}
-                                        </div>
-                                        <h3 className="text-2xl font-black text-navy-900 mb-4">{item.title}</h3>
-                                        <p className="text-navy-500 font-medium leading-relaxed">{item.desc}</p>
+                        <div className="flex flex-col md:flex-row gap-4 max-w-5xl">
+                            {/* Search Keyword Input */}
+                            <div className="flex-1 bg-white rounded-xl p-2 flex items-center shadow-lg">
+                                <div className="flex-1 px-4">
+                                    <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Search job title, keywords or company</label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="text"
+                                            placeholder="Designer"
+                                            className="w-full bg-transparent border-none text-navy-900 font-bold focus:ring-0 p-0"
+                                            defaultValue="Designer"
+                                        />
+                                        <svg className="w-5 h-5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+                            </div>
 
-                {/* CTA */}
-                <section className="py-32 bg-white">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="bg-gradient-to-br from-navy-900 to-primary-indigo rounded-[60px] p-16 md:p-24 text-center relative overflow-hidden shadow-2xl">
-                            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                            <div className="relative z-10 max-w-2xl mx-auto">
-                                <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter italic leading-tight">Your Global Career Starts Here.</h2>
-                                <p className="text-white/80 text-xl font-medium mb-12">Join 9M+ professionals already on RemoteJobs.ph. Free forever.</p>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                    <Link href="/register?type=jobseeker" className="bg-accent-cyber text-navy-900 px-12 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-xl">
-                                        Create Free Profile
-                                    </Link>
-                                    <Link href="/jobs" className="bg-white/10 border border-white/20 text-white px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/20 transition-all">
-                                        Browse Jobs
-                                    </Link>
+                            {/* Location Input */}
+                            <div className="flex-1 bg-white rounded-xl p-2 flex items-center shadow-lg">
+                                <div className="flex-1 px-4">
+                                    <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Location</label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="text"
+                                            placeholder="Chicago, IL"
+                                            className="w-full bg-transparent border-none text-navy-900 font-bold focus:ring-0 p-0"
+                                            defaultValue="Chicago, IL"
+                                        />
+                                        <svg className="w-5 h-5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
+
+                            {/* Search Button */}
+                            <button className="bg-primary-indigo text-white px-10 py-4 rounded-xl font-bold hover:bg-primary-indigo/90 transition-colors shadow-lg shadow-primary-indigo/30 text-lg md:text-xl shrink-0">
+                                Search
+                            </button>
                         </div>
                     </div>
                 </section>
 
+                {/* MAIN GRID LAYOUT */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+                        {/* LEFT COLUMN: FILTERS */}
+                        <div className="lg:col-span-3 hidden lg:block space-y-10">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-xl font-bold text-navy-900">Filters</h2>
+                                <button className="text-sm font-bold text-gray-400 hover:text-navy-900 transition-colors">Clear All</button>
+                            </div>
+
+                            {/* Job Type Filter */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-[11px] font-black uppercase text-gray-400 tracking-wider">Job Type</h3>
+                                    <button className="text-[11px] font-bold text-gray-400 hover:text-navy-900">Clear</button>
+                                </div>
+                                <ul className="space-y-3">
+                                    {JOB_TYPES.map((item, i) => (
+                                        <li key={i}>
+                                            <button className={`text-sm font-semibold flex items-center justify-between w-full text-left transition-colors ${item.active ? 'text-primary-indigo' : 'text-navy-900 hover:text-primary-indigo'}`}>
+                                                <span>{item.label}</span>
+                                                {item.active ? <span>({item.count})</span> : <span className="text-gray-400 font-medium">({item.count})</span>}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Location Filter */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-[11px] font-black uppercase text-gray-400 tracking-wider">Location</h3>
+                                    <button className="text-[11px] font-bold text-gray-400 hover:text-navy-900">Clear</button>
+                                </div>
+                                <ul className="space-y-3">
+                                    {LOCATIONS.map((item, i) => (
+                                        <li key={i}>
+                                            <button className={`text-sm font-semibold flex items-center justify-between w-full text-left transition-colors ${item.active ? 'text-primary-indigo' : 'text-navy-900 hover:text-primary-indigo'}`}>
+                                                <span>{item.label}</span>
+                                                {item.active ? <span>({item.count})</span> : <span className="text-gray-400 font-medium">({item.count})</span>}
+                                            </button>
+                                        </li>
+                                    ))}
+                                    <li><button className="text-xs font-bold text-gray-400 hover:text-navy-900 flex items-center gap-1 mt-2">More <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg></button></li>
+                                </ul>
+                            </div>
+
+                            {/* Company Filter */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-[11px] font-black uppercase text-gray-400 tracking-wider">Company</h3>
+                                    <button className="text-[11px] font-bold text-gray-400 hover:text-navy-900">Clear</button>
+                                </div>
+                                <ul className="space-y-3">
+                                    {COMPANIES.map((item, i) => (
+                                        <li key={i}>
+                                            <button className={`text-sm font-semibold flex items-center justify-between w-full text-left transition-colors ${item.active ? 'text-primary-indigo' : 'text-navy-900 hover:text-primary-indigo'}`}>
+                                                <span>{item.label}</span>
+                                                {item.active ? <span>({item.count})</span> : <span className="text-gray-400 font-medium">({item.count})</span>}
+                                            </button>
+                                        </li>
+                                    ))}
+                                    <li><button className="text-xs font-bold text-gray-400 hover:text-navy-900 flex items-center gap-1 mt-2">More <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg></button></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* MIDDLE COLUMN: JOB LISTINGS */}
+                        <div className="lg:col-span-6 space-y-6">
+
+                            {/* Upload Resume Banner */}
+                            <div className="bg-indigo-50 border border-primary-indigo/20 rounded-2xl p-6 flex items-center gap-4 cursor-pointer hover:bg-indigo-100/50 transition-colors">
+                                <div className="bg-white p-3 rounded-lg text-primary-indigo shadow-sm shrink-0">
+                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-navy-900 text-lg">Upload your resume</h3>
+                                    <p className="text-primary-indigo/80 text-sm font-medium">We'll match you with the best jobs. Right job, Right away!</p>
+                                </div>
+                            </div>
+
+                            {/* Results & Sort */}
+                            <div className="flex items-center justify-between text-sm py-2">
+                                <span className="text-gray-500 font-medium">284 results found</span>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-gray-400 font-medium">Sort By:</span>
+                                    <button className="font-bold text-navy-900 flex items-center gap-1">
+                                        Date Posted
+                                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Job Cards */}
+                            <div className="space-y-4">
+                                {MOCK_JOBS.map((job) => (
+                                    <div key={job.id} className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow">
+
+                                        {/* Card Header */}
+                                        <div className="flex gap-4 mb-6">
+                                            <div className="w-12 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center font-bold text-navy-900 text-xl shrink-0">
+                                                {job.logo}
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg font-bold text-navy-900 group-hover:text-primary-indigo transition-colors cursor-pointer">{job.title}</h3>
+                                                <p className="text-sm font-semibold text-gray-500">{job.company} · {job.location}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Grid Stats */}
+                                        <div className="grid grid-cols-3 gap-4 mb-6">
+                                            <div>
+                                                <span className="block text-[10px] uppercase font-bold text-gray-400 mb-1 tracking-wider">Experience</span>
+                                                <span className="font-bold text-navy-900 text-sm">{job.experience}</span>
+                                            </div>
+                                            <div>
+                                                <span className="block text-[10px] uppercase font-bold text-gray-400 mb-1 tracking-wider">Job Type</span>
+                                                <span className="font-bold text-navy-900 text-sm">{job.type}</span>
+                                            </div>
+                                            <div>
+                                                <span className="block text-[10px] uppercase font-bold text-gray-400 mb-1 tracking-wider">Salary</span>
+                                                <span className="font-bold text-navy-900 text-sm">{job.salary} <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold ml-1">per year</span></span>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Footer */}
+                                        <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                                            <span className="text-xs font-bold text-gray-400 transition-colors">Posted {job.posted}</span>
+                                            <button className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-navy-900 transition-colors">
+                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
+                                                Save Job
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* RIGHT COLUMN: WIDGETS */}
+                        <div className="lg:col-span-3 space-y-10">
+
+                            {/* Subscribe Widget */}
+                            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                                <h3 className="text-xl font-bold text-navy-900 mb-1 leading-snug">Be the first to see new jobs in <span className="text-primary-indigo">Chicago, IL</span></h3>
+
+                                <div className="mt-6 mb-4">
+                                    <div className="border border-gray-200 rounded-xl px-4 py-2 hover:border-primary-indigo/50 transition-colors focus-within:border-primary-indigo focus-within:ring-1 focus-within:ring-primary-indigo">
+                                        <label className="block text-[10px] font-bold text-gray-400 mb-0.5">Email</label>
+                                        <input
+                                            type="email"
+                                            placeholder="your@email.com"
+                                            className="w-full bg-transparent border-none text-navy-900 font-semibold p-0 focus:ring-0 text-sm"
+                                            defaultValue="steve.scaife34@gmail.com"
+                                        />
+                                    </div>
+                                </div>
+                                <button className="w-full bg-indigo-50 text-primary-indigo border border-indigo-100 font-bold py-3.5 rounded-xl hover:bg-primary-indigo hover:text-white transition-all text-sm mb-4">
+                                    Subscribe Now
+                                </button>
+                                <button className="text-xs font-semibold text-gray-400 hover:text-navy-900 transition-colors">Not interested. Hide now</button>
+                            </div>
+
+                            {/* Popular Companies Widget */}
+                            <div>
+                                <h3 className="text-lg font-bold text-navy-900 mb-6">Popular in <span className="text-primary-indigo">Chicago</span></h3>
+                                <ul className="space-y-5">
+                                    {POPULAR_COMPANIES.map((company, i) => (
+                                        <li key={i} className="flex items-center gap-4 cursor-pointer group">
+                                            <div className="w-10 h-10 rounded-lg bg-white border border-gray-100 flex items-center justify-center font-bold text-navy-900 text-xs shrink-0 group-hover:border-primary-indigo/30 transition-colors">
+                                                {company.logo}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold text-navy-900 group-hover:text-primary-indigo transition-colors">{company.name}</h4>
+                                                <p className="text-xs font-semibold text-gray-400">{company.jobs} Jobs</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <button className="text-sm font-bold text-primary-indigo hover:text-navy-900 transition-colors mt-6 flex items-center gap-1">
+                                    See all jobs <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
             </main>
             <Footer />
         </div>
