@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "/talent-mycah.png"
+    image: "/talent-mycah.jpg"
   },
   {
     type: "Talent",
