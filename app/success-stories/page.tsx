@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "https://pngimg.com/uploads/man/man_PNG6533.png"
+    image: "https://pngimg.com/uploads/businessman/businessman_PNG6566.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "https://pngimg.com/uploads/girl/girl_PNG69.png"
+    image: "https://pngimg.com/uploads/business_woman/business_woman_PNG10587.png"
   },
   {
     type: "Talent",
@@ -70,7 +70,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "https://pngimg.com/uploads/man/man_PNG6528.png"
+    image: "https://pngimg.com/uploads/businessman/businessman_PNG6579.png"
   },
   {
     type: "Employer",
