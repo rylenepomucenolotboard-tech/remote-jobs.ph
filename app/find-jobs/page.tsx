@@ -34,7 +34,7 @@ const FindJobsPage = () => {
                         <div className="max-w-3xl">
                             <h1 className="text-5xl md:text-8xl font-black text-navy-900 mb-8 leading-[0.9] tracking-tighter italic">
                                 <span className="block">Find Your</span>
-                                <span className="block text-accent-cyber">Dream Job.</span>
+                                <span className="block text-primary-indigo">Dream Job.</span>
                                 <span className="block">Go Global.</span>
                             </h1>
                             <p className="text-navy-600 text-xl md:text-2xl mb-12 max-w-[40ch] font-medium leading-relaxed">
@@ -59,7 +59,7 @@ const FindJobsPage = () => {
                             {stats.map((stat, i) => (
                                 <div key={i} className="flex flex-col">
                                     <span className="text-3xl font-black text-navy-900 leading-none mb-1">{stat.value}</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-navy-400">{stat.label}</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-navy-600">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -70,9 +70,9 @@ const FindJobsPage = () => {
                 <section className="py-32 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-20">
-                            <span className="inline-block px-4 py-2 bg-accent-cyber/10 text-accent-cyber border border-accent-cyber/20 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">Browse by Category</span>
+                            <span className="inline-block px-4 py-2 bg-navy-900 text-accent-cyber rounded-full text-[10px] font-black uppercase tracking-widest mb-6 shadow-md">Browse by Category</span>
                             <h2 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 tracking-tighter italic">
-                                Every Role.<br /><span className="text-accent-cyber">Every Industry.</span>
+                                Every Role.<br /><span className="text-primary-indigo">Every Industry.</span>
                             </h2>
                             <p className="text-navy-600 text-xl max-w-[50ch] mx-auto font-medium leading-relaxed">
                                 From startups to Fortune 500s — thousands of remote roles waiting for elite Filipino talent.
@@ -83,7 +83,7 @@ const FindJobsPage = () => {
                             {jobCategories.map((cat, i) => (
                                 <Link key={i} href="/jobs" className="group bg-navy-50/50 border border-navy-100 rounded-[2rem] p-8 hover:bg-navy-900 hover:border-navy-900 hover:shadow-2xl hover:shadow-navy-900/20 transition-all duration-300 flex flex-col justify-center min-h-[160px]">
                                     <h3 className="text-xl font-black text-navy-900 group-hover:text-white mb-2 transition-colors duration-300">{cat.title}</h3>
-                                    <p className="text-accent-cyber font-black text-sm transition-colors duration-300">{cat.count} open roles</p>
+                                    <p className="text-primary-indigo group-hover:text-accent-cyber font-black text-sm transition-colors duration-300">{cat.count} open roles</p>
                                 </Link>
                             ))}
                         </div>
@@ -100,9 +100,9 @@ const FindJobsPage = () => {
                 <section className="py-32 bg-navy-50">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-20">
-                            <span className="inline-block px-4 py-2 bg-accent-cyber/10 text-accent-cyber border border-accent-cyber/20 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">How It Works</span>
+                            <span className="inline-block px-4 py-2 bg-navy-900 text-accent-cyber rounded-full text-[10px] font-black uppercase tracking-widest mb-6 shadow-md">How It Works</span>
                             <h2 className="text-5xl md:text-7xl font-black text-navy-900 mb-6 tracking-tighter italic">
-                                Land a Global Role<br /><span className="text-accent-cyber">in 3 Steps.</span>
+                                Land a Global Role<br /><span className="text-primary-indigo">in 3 Steps.</span>
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -114,7 +114,7 @@ const FindJobsPage = () => {
                                 <div key={i} className="group bg-white border border-navy-100 rounded-[2.5rem] p-12 hover:border-accent-cyber/30 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
                                     <div className="absolute -top-6 -right-6 text-[10rem] font-black text-navy-900/[0.03] italic leading-none">{item.step}</div>
                                     <div className="relative z-10">
-                                        <div className="w-14 h-14 bg-accent-cyber/10 rounded-2xl flex items-center justify-center text-accent-cyber font-black text-xl mb-8 group-hover:bg-accent-cyber group-hover:text-navy-900 transition-all duration-500">
+                                        <div className="w-14 h-14 bg-primary-indigo/10 rounded-2xl flex items-center justify-center text-primary-indigo font-black text-xl mb-8 group-hover:bg-primary-indigo group-hover:text-white transition-all duration-500">
                                             {item.step}
                                         </div>
                                         <h3 className="text-2xl font-black text-navy-900 mb-4">{item.title}</h3>
