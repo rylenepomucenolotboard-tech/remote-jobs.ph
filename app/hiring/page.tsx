@@ -12,9 +12,6 @@ const HiringPlatformPage = () => {
             <main className="flex-1">
                 <section className="relative pt-20 pb-32 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <span className="inline-block px-4 py-2 bg-primary-indigo/10 text-primary-indigo border border-primary-indigo/20 rounded-full text-[10px] font-black uppercase tracking-widest mb-8">
-                            Hiring Platform
-                        </span>
                         <h1 className="text-5xl md:text-8xl font-black text-navy-900 mb-8 leading-[0.9] tracking-tighter italic">
                             <span className="block">Source the</span>
                             <span className="block text-primary-indigo">Top 1%.</span>
