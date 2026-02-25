@@ -67,7 +67,7 @@ const FindJobsPage = () => {
                 </section>
 
                 {/* JOB CATEGORIES */}
-                <section className="py-32 bg-white">
+                <section className="py-32 bg-navy-50/50">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-20">
                             <span className="inline-block px-4 py-2 bg-navy-900 text-accent-cyber rounded-full text-[10px] font-black uppercase tracking-widest mb-6 shadow-md">Browse by Category</span>
@@ -81,7 +81,7 @@ const FindJobsPage = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {jobCategories.map((cat, i) => (
-                                <Link key={i} href="/jobs" className="group bg-navy-50/50 border border-navy-100 rounded-[2rem] p-8 hover:bg-navy-900 hover:border-navy-900 hover:shadow-2xl hover:shadow-navy-900/20 transition-all duration-300 flex flex-col justify-center min-h-[160px]">
+                                <Link key={i} href="/jobs" className="group bg-white border-none rounded-[2rem] p-8 shadow-sm hover:bg-navy-900 hover:shadow-2xl hover:shadow-navy-900/20 transition-all duration-300 flex flex-col justify-center min-h-[160px]">
                                     <h3 className="text-xl font-black text-navy-900 group-hover:text-white mb-2 transition-colors duration-300">{cat.title}</h3>
                                     <p className="text-primary-indigo group-hover:text-accent-cyber font-black text-sm transition-colors duration-300">{cat.count} open roles</p>
                                 </Link>
