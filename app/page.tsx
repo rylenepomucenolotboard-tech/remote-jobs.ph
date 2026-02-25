@@ -9,7 +9,6 @@ import GlobalTalentMap from '@/components/GlobalTalentMap';
 import ResumeSpotlight from '@/components/ResumeSpotlight';
 import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
-import StatsTicker from '@/components/StatsTicker';
 import TestimonialsTrustBar from '@/components/TestimonialsTrustBar';
 import { COPY } from '@/content/copy';
 import { STATS } from '@/content/stats';
@@ -320,8 +319,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* Section 6: Animated Stats Ticker (Counting) */}
-        <StatsTicker />
+        {/* Section Removed: StatsTicker moved to global Footer */}
       </main>
 
       <Footer />
