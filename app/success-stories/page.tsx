@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
+    image: "/images/australian_client.png"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop"
+    image: "/images/portraits/dominic-r.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop"
+    image: "/images/portraits/mycah-a.png"
   },
   {
     type: "Talent",
@@ -70,7 +70,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
+    image: "/images/portraits/marco-v.png"
   },
   {
     type: "Employer",
@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop"
+    image: "/images/portraits/ops-director.png"
   },
   {
     type: "Employer",
@@ -94,8 +94,8 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop"
-  },
+    image: "/images/portraits/stuart-w.png"
+  }
 ];
 
 const PLACEHOLDERS = [
@@ -183,6 +183,16 @@ export default function ResultsPage() {
     return () => clearInterval(pInterval);
   }, []);
 
+  // Auto-rotate the testimonial carousel every 5 seconds
+  useEffect(() => {
+    if (isHovered) return;
+    const cInterval = setInterval(() => {
+      setCarouselIndex((c) => (c + 1) % filteredStories.length);
+      setAnimKey((k) => k + 1);
+    }, 5000);
+    return () => clearInterval(cInterval);
+  }, [isHovered, filteredStories.length]);
+
   const handleMatch = async () => {
     if (!jobReq.trim()) return;
     setAiState("loading");
@@ -224,10 +234,14 @@ export default function ResultsPage() {
   const activeStory = filteredStories[carouselIndex];
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-background-deep text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden">
+    <div className="min-h-[100dvh] flex flex-col bg-[#0c1526] text-white transition-colors duration-500 font-sans selection:bg-accent-cyber selection:text-navy-900 overflow-x-hidden relative">
+
+      {/* Subtle Brand Radial Glow (Mandated by Brand Guidelines to lift darkness) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary-indigo opacity-10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center relative z-10">
 
         {/* Top Typography Section - Centered */}
         <div className="text-center relative z-10 w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -277,30 +291,65 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* Photo Layout: Pure CSS Silhouette Pop-Out */}
-          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative pointer-events-none mt-12 lg:mt-0">
-            <div key={`${animKey}-avatar`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '300ms' }}>
+          {/* Photo Layout: Source Cutout Two-Image Assembly */}
+          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative mt-12 lg:mt-0 shrink-0">
+            {/* SVG mask definition for native structural background cutout */}
+            <svg width="0" height="0" className="absolute">
+              <defs>
+                <clipPath id="portraitClip" clipPathUnits="objectBoundingBox">
+                  <ellipse cx="0.5" cy="0.28" rx="0.22" ry="0.25" />
+                  <ellipse cx="0.5" cy="0.72" rx="0.38" ry="0.42" />
+                </clipPath>
+              </defs>
+            </svg>
 
-              <div className="css-avatar-base">
-                {/* Radial base glow anchoring it to canvas */}
+            <div key={`${animKey}-avatar`} className="animate-cinematic-drift relative shrink-0 w-[260px] h-[360px] md:w-[320px] md:h-[440px] md:mt-8" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
+
+              {/* ATMOSPHERIC GLOW */}
+              <div className={`absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full z-0 pointer-events-none transition-colors duration-700 bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
                 <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
+              </div>
 
-                {/* The Pop-Out Geometry */}
-                {activeStory.image ? (
-                  <div className="absolute inset-x-[-10%] bottom-[-10px] h-[260px] z-10 flex flex-col items-center justify-end overflow-visible pointer-events-auto filter contrast-125 saturate-50 hover:saturate-100 transition-all duration-700">
+              {activeStory.image ? (
+                <>
+                  {/* CIRCLE — clips lower body inside it */}
+                  <div className="absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden bg-transparent z-10 border border-white/20 shadow-2xl pointer-events-none">
                     <img
                       src={activeStory.image}
                       alt={activeStory.name}
-                      className="w-full h-full object-cover rounded-t-[140px] rounded-b-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
+                      style={{ clipPath: "url(#portraitClip)" }}
+                      className="absolute bottom-[-10px] md:bottom-[-20px] left-[50%] -translate-x-[50%] object-cover object-top pointer-events-auto w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
                     />
                   </div>
-                ) : (
-                  <div className="css-avatar-person">
-                    <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}></div>
-                    <div className={`css-avatar-body bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+
+                  {/* OVERFLOW HEAD — same transparent PNG, above circle */}
+                  <div className="absolute bottom-[210px] md:bottom-[260px] left-[50%] -translate-x-[50%] w-[260px] md:w-[320px] h-[100px] md:h-[120px] overflow-hidden z-20 pointer-events-none">
+                    <img
+                      src={activeStory.image}
+                      aria-hidden="true"
+                      style={{ clipPath: "url(#portraitClip)" }}
+                      className="absolute bottom-[-220px] md:bottom-[-280px] left-[50%] -translate-x-[50%] object-cover object-top w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
+                    />
                   </div>
-                )}
-              </div>
+
+                  {/* BOTTOM DISSOLVE */}
+                  <div className="absolute bottom-0 left-[50%] -translate-x-[50%] w-[260px] md:w-[320px] h-[80px] md:h-[120px] rounded-b-full bg-gradient-to-t from-[#0c1526] to-transparent z-30 pointer-events-none" />
+                </>
+              ) : (
+                <div className="absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden bg-transparent z-10 border-transparent border pointer-events-none">
+                  <div className="css-avatar-silhouette scale-y-125 scale-x-150 md:scale-y-[1.6] md:scale-x-[1.9] origin-bottom absolute bottom-[-10px] left-1/2 -translate-x-1/2">
+                    <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
+                      <div className="css-avatar-highlight"></div>
+                    </div>
+                    <div className={`css-avatar-neck bg-gradient-to-b ${getAvatarGradient(carouselIndex).base}`}></div>
+                    <div className={`css-avatar-torso bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}>
+                      <div className={`css-avatar-shoulder-l bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                      <div className={`css-avatar-shoulder-r bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
 
             </div>
           </div>
