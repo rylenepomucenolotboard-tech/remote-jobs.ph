@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "/premium_photo-1682096592504-5bc960bea6d7.avif"
+    image: "/talent-anonymous founder2.png"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "/istockphoto-1372353160-612x612.jpg"
+    image: "/talent-dominic.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "/talent-mycah.jpg"
+    image: "/talent-mycah2.png"
   },
   {
     type: "Talent",
