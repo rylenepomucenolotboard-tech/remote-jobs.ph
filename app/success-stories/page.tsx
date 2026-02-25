@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "https://png.pngtree.com/png-vector/20230918/ourmid/pngtree-man-in-shirt-smiles-and-gives-thumbs-up-to-show-approval-png-image_10132891.png"
+    image: "/hero-image.png"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "https://png.pngtree.com/png-vector/20231108/ourmid/pngtree-businessman-avatar-character-png-image_10526732.png"
+    image: "/hero-filipino.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "https://png.pngtree.com/png-vector/20240204/ourmid/pngtree-professional-corporate-women-png-image_11603504.png"
+    image: "/hero-remote-work.png"
   },
   {
     type: "Talent",
@@ -70,7 +70,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "https://png.pngtree.com/png-clipart/20230925/original/pngtree-business-man-isolated-png-image_12891632.png"
+    image: "/hero-filipino.png"
   },
   {
     type: "Employer",
@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10214150.png"
+    image: "/hero-remote-work.png"
   },
   {
     type: "Employer",
@@ -94,7 +94,7 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "https://png.pngtree.com/png-clipart/20231215/original/pngtree-smiling-businessman-standing-in-studio-png-image_13849767.png"
+    image: "/hero-image.png"
   }
 ];
 
