@@ -243,115 +243,62 @@ export default function ResultsPage() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-center relative z-10">
 
-        {/* Top Typography Section - Centered */}
-        <div className="text-center relative z-10 w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight mb-6">
-            Customer success stories
-          </h1>
-          <p className="text-lg md:text-xl text-navy-300 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-            Check out how RemoteJobs.ph helped professionals and organizations of all sizes achieve their global expansion goals.
-          </p>
-        </div>
+        {/* Removed redundant top typography section as the peg incorporates the header into the card itself */}
 
-        {/* High-End Editorial Borderless Carousel (Phase 23) */}
+        {/* High-End Editorial Borderless Carousel Matching the Peg */}
         <div
-          className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24 pb-24"
+          className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 pb-24"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Main Body: Enormous Quote */}
-          <div className="w-full lg:w-3/4 flex flex-col justify-center relative z-20">
-            <div key={`${animKey}-text`} className="animate-cinematic-drift opacity-0 [animation-fill-mode:forwards]">
-              {/* Massive subtle quote mark behind text */}
-              <div className="text-[180px] md:text-[240px] font-sans text-white/5 leading-none absolute -top-16 md:-top-24 -left-8 md:-left-16 -z-10 select-none">"</div>
+          {/* Main Card with overflow hidden to clip everything to the stylish dark rectangle */}
+          <div className="relative w-full bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col md:flex-row min-h-[500px] lg:min-h-[560px] overflow-hidden">
 
-              <h2 className="text-4xl md:text-5xl lg:text-[72px] font-sans font-medium italic text-white leading-[1.05] tracking-tight mb-12 relative z-10 text-balance drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
-                "{activeStory.quote}"
-              </h2>
+            {/* The Gray Circle Backdrop */}
+            {/* It sits positioned at the bottom right and is naturally clipped by the parent's overflow-hidden */}
+            <div key={`${animKey}-circle`} className="absolute right-[-20%] bottom-[-40%] w-[120vw] md:w-[70vw] lg:w-[800px] lg:h-[800px] aspect-square rounded-full bg-[#dcdcdc] animate-in fade-in zoom-in duration-1000 z-0"></div>
 
-              <div className="flex flex-col md:flex-row md:items-center gap-3 text-navy-200">
-                <div className="text-2xl font-black text-white">{activeStory.name}</div>
-                <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-accent-cyber opacity-80"></div>
-                <div className="text-lg font-medium tracking-wide">{activeStory.role} {activeStory.source ? `at ${activeStory.source}` : ''}</div>
-                <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/20"></div>
-                <div className="text-sm font-semibold text-accent-cyber tracking-widest uppercase">{activeStory.tag}</div>
-              </div>
+            {/* LEFT COLUMN: Text Content */}
+            <div className="w-full md:w-[55%] lg:w-[50%] p-10 md:p-16 flex flex-col justify-center relative z-20">
+              <div key={`${animKey}-text`} className="animate-in slide-in-from-left-8 fade-in duration-700 [animation-fill-mode:forwards]">
+                <h2 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight mb-8">
+                  What Our Customers<br />Have to Say
+                </h2>
+                <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed mb-12 max-w-[40ch]">
+                  {activeStory.quote} {activeStory.context}
+                </p>
 
-              {/* Minimalist Dot Indicators */}
-              <div className="flex gap-3 mt-16">
-                {filteredStories.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setIndex(i)}
-                    className={`h-1.5 rounded-full transition-all duration-700 ease-out ${i === carouselIndex ? 'w-16 bg-white shadow-[0_0_15px_rgba(255,255,255,0.4)]' : 'w-6 bg-white/20 hover:bg-white/40'}`}
-                    aria-label={`Go to story ${i + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Photo Layout: Source Cutout Two-Image Assembly */}
-          <div className="w-full lg:w-1/4 flex justify-center lg:justify-end relative mt-12 lg:mt-0 shrink-0">
-            {/* SVG mask definition for native structural background cutout */}
-            <svg width="0" height="0" className="absolute">
-              <defs>
-                <clipPath id="portraitClip" clipPathUnits="objectBoundingBox">
-                  <ellipse cx="0.5" cy="0.28" rx="0.22" ry="0.25" />
-                  <ellipse cx="0.5" cy="0.72" rx="0.38" ry="0.42" />
-                </clipPath>
-              </defs>
-            </svg>
-
-            <div key={`${animKey}-avatar`} className="animate-cinematic-drift relative shrink-0 w-[260px] h-[360px] md:w-[320px] md:h-[440px] md:mt-8" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
-
-              {/* ATMOSPHERIC GLOW */}
-              <div className={`absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full z-0 pointer-events-none transition-colors duration-700 bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
-                <div className={`css-avatar-glow ${getAvatarGradient(carouselIndex).glow}`}></div>
-              </div>
-
-              {activeStory.image ? (
-                <>
-                  {/* CIRCLE — clips lower body inside it */}
-                  <div className="absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden bg-transparent z-10 border border-white/20 shadow-2xl pointer-events-none">
-                    <img
-                      src={activeStory.image}
-                      alt={activeStory.name}
-                      className="absolute bottom-[-10px] md:bottom-[-20px] left-[50%] -translate-x-[50%] object-cover object-top pointer-events-auto w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
-                    />
-                  </div>
-
-                  {/* OVERFLOW HEAD — same transparent PNG, above circle */}
-                  <div className="absolute bottom-[210px] md:bottom-[260px] left-[50%] -translate-x-[50%] w-[260px] md:w-[320px] h-[100px] md:h-[120px] overflow-hidden z-20 pointer-events-none">
-                    <img
-                      src={activeStory.image}
-                      aria-hidden="true"
-                      className="absolute bottom-[-220px] md:bottom-[-280px] left-[50%] -translate-x-[50%] object-cover object-top w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
-                    />
-                  </div>
-
-                  {/* BOTTOM DISSOLVE */}
-                  <div className="absolute bottom-0 left-[50%] -translate-x-[50%] w-[260px] md:w-[320px] h-[80px] md:h-[120px] rounded-b-full bg-gradient-to-t from-[#0c1526] to-transparent z-30 pointer-events-none" />
-                </>
-              ) : (
-                <div className="absolute bottom-[0px] left-[50%] -translate-x-[50%] w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden bg-transparent z-10 border-transparent border pointer-events-none">
-                  <div className="css-avatar-silhouette scale-y-125 scale-x-150 md:scale-y-[1.6] md:scale-x-[1.9] origin-bottom absolute bottom-[-10px] left-1/2 -translate-x-1/2">
-                    <div className={`css-avatar-head bg-gradient-to-br ${getAvatarGradient(carouselIndex).base}`}>
-                      <div className="css-avatar-highlight"></div>
-                    </div>
-                    <div className={`css-avatar-neck bg-gradient-to-b ${getAvatarGradient(carouselIndex).base}`}></div>
-                    <div className={`css-avatar-torso bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}>
-                      <div className={`css-avatar-shoulder-l bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
-                      <div className={`css-avatar-shoulder-r bg-gradient-to-tr ${getAvatarGradient(carouselIndex).base}`}></div>
-                    </div>
-                  </div>
+                <div className="flex flex-col gap-1 mt-auto">
+                  <div className="text-sm md:text-base font-bold text-white">{activeStory.name}</div>
+                  <div className="text-xs md:text-sm text-white/60 font-medium">{activeStory.location}</div>
                 </div>
-              )}
 
-
+                {/* Minimalist Dot Indicators */}
+                <div className="flex gap-2.5 mt-12">
+                  {filteredStories.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setIndex(i)}
+                      className={`h-1.5 rounded-full transition-all duration-700 ease-out ${i === carouselIndex ? 'w-10 bg-white shadow-[0_0_10px_rgba(255,255,255,0.4)]' : 'w-4 bg-white/30 hover:bg-white/50'}`}
+                      aria-label={`Go to story ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
 
+            {/* RIGHT COLUMN: The Portrait Image */}
+            {/* Anchored to the bottom right. Pops OUT of the gray circle, but clipped by the card's overflow-hidden */}
+            <div className="absolute bottom-0 right-[0%] lg:right-[5%] w-[80%] md:w-[50%] lg:w-[45%] h-[90%] pointer-events-none z-10 flex items-end justify-center">
+              <img
+                key={`${animKey}-avatar`}
+                src={activeStory.image}
+                alt={activeStory.name}
+                className="w-full h-full object-contain object-bottom animate-in slide-in-from-right-8 fade-in duration-700 [animation-fill-mode:forwards]"
+              />
+            </div>
+
+          </div>
         </div>
 
         {/* Integrated CTA Below the Carousel */}
