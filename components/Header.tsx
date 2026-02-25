@@ -75,7 +75,7 @@ export default function Header() {
                         <Link href="/pricing" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
                             Pricing
                         </Link>
-                        <Link href="/results" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
+                        <Link href="/success-stories" className="text-navy-600 hover:text-primary-indigo transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase">
                             Success Stories
                         </Link>
 
@@ -224,7 +224,7 @@ export default function Header() {
                                 Pricing
                             </Link>
                             <Link
-                                href="/results"
+                                href="/success-stories"
                                 className="text-text-muted hover:text-white transition-colors font-bold px-2 py-3 text-xl"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
