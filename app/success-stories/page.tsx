@@ -254,9 +254,15 @@ export default function ResultsPage() {
           {/* Main Card with overflow hidden to clip everything to the stylish dark rectangle */}
           <div className="relative w-full bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col md:flex-row min-h-[500px] lg:min-h-[560px] overflow-hidden">
 
-            {/* The Gray Circle Backdrop */}
-            {/* It sits positioned at the bottom right and is naturally clipped by the parent's overflow-hidden */}
-            <div key={`${animKey}-circle`} className="absolute right-[-20%] bottom-[-40%] w-[120vw] md:w-[70vw] lg:w-[800px] lg:h-[800px] aspect-square rounded-full bg-[#dcdcdc] animate-in fade-in zoom-in duration-1000 z-0"></div>
+            {/* The Gray Circle with Image INSIDE */}
+            <div key={`${animKey}-circle`} className="absolute right-[-15%] bottom-[-30%] w-[120vw] md:w-[70vw] lg:w-[750px] lg:h-[750px] aspect-square rounded-full bg-[#dcdcdc] animate-in fade-in zoom-in duration-1000 z-0 overflow-hidden">
+              <img
+                key={`${animKey}-avatar-inner`}
+                src={activeStory.image}
+                alt={activeStory.name}
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] h-[90%] object-cover object-top animate-in slide-in-from-right-8 fade-in duration-700 [animation-fill-mode:forwards]"
+              />
+            </div>
 
             {/* LEFT COLUMN: Text Content */}
             <div className="w-full md:w-[55%] lg:w-[50%] p-10 md:p-16 flex flex-col justify-center relative z-20">
@@ -287,17 +293,7 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: The Portrait Image */}
-            {/* Anchored to the bottom right. Pops OUT of the gray circle, but clipped by the card's overflow-hidden */}
-            <div className="absolute bottom-0 right-[0%] lg:right-[5%] w-[80%] md:w-[50%] lg:w-[45%] h-[90%] pointer-events-none z-10 flex items-end justify-center">
-              <img
-                key={`${animKey}-avatar`}
-                src={activeStory.image}
-                alt={activeStory.name}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-contain object-bottom animate-in slide-in-from-right-8 fade-in duration-700 [animation-fill-mode:forwards]"
-              />
-            </div>
+
 
           </div>
         </div>
