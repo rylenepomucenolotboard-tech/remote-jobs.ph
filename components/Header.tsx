@@ -118,10 +118,10 @@ export default function Header() {
                             </div>
                         </div>
 
-                        {/* Find Roles Dropdown */}
+                        {/* Find Jobs Dropdown */}
                         <div className="relative group">
                             <button className="flex items-center gap-1.5 text-navy-600 hover:text-accent-cyber transition-colors font-bold text-[10px] xl:text-xs tracking-wide uppercase cursor-pointer">
-                                Find Roles
+                                Find Jobs
                                 <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -129,6 +129,7 @@ export default function Header() {
                             <div className="absolute top-full right-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
                                 <div className="bg-white border border-navy-100 rounded-2xl p-3 shadow-2xl min-w-[200px]">
                                     <Link href="/hiring" className="flex items-center gap-3 p-3 rounded-xl hover:bg-navy-50 text-navy-600 hover:text-primary-indigo transition-all font-bold text-xs border-b border-navy-50 mb-1">Hiring Platform Overview</Link>
+                                    <Link href="/find-jobs" className="flex items-center gap-3 p-3 rounded-xl hover:bg-navy-50 text-navy-600 hover:text-accent-cyber transition-all font-bold text-xs border-b border-navy-50 mb-1">Find Jobs Overview</Link>
                                     <Link href="/jobs" className="flex items-center gap-3 p-3 rounded-xl hover:bg-navy-50 text-navy-600 hover:text-accent-cyber transition-all font-bold text-xs">
                                         <div className="w-8 h-8 rounded-lg bg-accent-cyber/10 flex items-center justify-center text-accent-cyber">
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -248,9 +249,9 @@ export default function Header() {
 
                             <div className="h-px bg-navy-100 my-2"></div>
 
-                            {/* Mobile Find Roles */}
+                            {/* Mobile Find Jobs */}
                             <div className="space-y-4">
-                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-cyber px-2">Find Roles</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-cyber px-2">Find Jobs</p>
                                 <div className="flex flex-col gap-2">
                                     <Link href="/jobs" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Browse Roles</Link>
                                     <Link href="/register?type=jobseeker" className="text-navy-900 font-bold px-2 py-2 text-lg" onClick={() => setMobileMenuOpen(false)}>Get Discovered</Link>
