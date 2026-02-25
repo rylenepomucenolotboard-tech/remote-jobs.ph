@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "/images/australian_client.png"
+    image: "https://png.pngtree.com/png-vector/20230918/ourmid/pngtree-man-in-shirt-smiles-and-gives-thumbs-up-to-show-approval-png-image_10132891.png"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "/images/portraits/dominic-r.png"
+    image: "https://png.pngtree.com/png-vector/20231108/ourmid/pngtree-businessman-avatar-character-png-image_10526732.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "/images/portraits/mycah-a.png"
+    image: "https://png.pngtree.com/png-vector/20240204/ourmid/pngtree-professional-corporate-women-png-image_11603504.png"
   },
   {
     type: "Talent",
@@ -70,7 +70,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "/images/portraits/marco-v.png"
+    image: "https://png.pngtree.com/png-clipart/20230925/original/pngtree-business-man-isolated-png-image_12891632.png"
   },
   {
     type: "Employer",
@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "/images/portraits/ops-director.png"
+    image: "https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10214150.png"
   },
   {
     type: "Employer",
@@ -94,7 +94,7 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "/images/portraits/stuart-w.png"
+    image: "https://png.pngtree.com/png-clipart/20231215/original/pngtree-smiling-businessman-standing-in-studio-png-image_13849767.png"
   }
 ];
 
@@ -317,7 +317,6 @@ export default function ResultsPage() {
                     <img
                       src={activeStory.image}
                       alt={activeStory.name}
-                      style={{ clipPath: "url(#portraitClip)" }}
                       className="absolute bottom-[-10px] md:bottom-[-20px] left-[50%] -translate-x-[50%] object-cover object-top pointer-events-auto w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
                     />
                   </div>
@@ -327,7 +326,6 @@ export default function ResultsPage() {
                     <img
                       src={activeStory.image}
                       aria-hidden="true"
-                      style={{ clipPath: "url(#portraitClip)" }}
                       className="absolute bottom-[-220px] md:bottom-[-280px] left-[50%] -translate-x-[50%] object-cover object-top w-[221px] h-[364px] md:w-[272px] md:h-[448px]"
                     />
                   </div>
