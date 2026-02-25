@@ -255,7 +255,7 @@ export default function ResultsPage() {
           <div className="relative w-full bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col md:flex-row min-h-[500px] lg:min-h-[560px] overflow-hidden">
 
             {/* The Gray Circle with Image INSIDE */}
-            <div key={`${animKey}-circle`} className="absolute right-[-15%] bottom-[-30%] w-[120vw] md:w-[70vw] lg:w-[750px] lg:h-[750px] aspect-square rounded-full bg-[#dcdcdc] animate-in fade-in zoom-in duration-1000 z-0 overflow-hidden">
+            <div key={`${animKey}-circle`} className="absolute right-[-15%] bottom-[-30%] w-[120vw] md:w-[70vw] lg:w-[750px] lg:h-[750px] aspect-square rounded-full bg-white animate-in fade-in zoom-in duration-1000 z-0 overflow-hidden">
               <img
                 key={`${animKey}-avatar-inner`}
                 src={activeStory.image}
