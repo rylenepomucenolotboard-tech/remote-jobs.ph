@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "/premium_photo-1661265914030-b06f820680a6.avif"
+    image: "/talent-ops director.png"
   },
   {
     type: "Employer",
