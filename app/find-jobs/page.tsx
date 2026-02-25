@@ -81,10 +81,9 @@ const FindJobsPage = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {jobCategories.map((cat, i) => (
-                                <Link key={i} href="/jobs" className="group bg-white border border-navy-100 rounded-[2rem] p-8 hover:border-accent-cyber/40 hover:shadow-2xl hover:shadow-navy-900/10 transition-all duration-300">
-                                    <div className="text-4xl mb-4">{cat.icon}</div>
-                                    <h3 className="text-xl font-black text-navy-900 mb-2">{cat.title}</h3>
-                                    <p className="text-accent-cyber font-black text-sm">{cat.count} open roles</p>
+                                <Link key={i} href="/jobs" className="group bg-navy-50/50 border border-navy-100 rounded-[2rem] p-8 hover:bg-navy-900 hover:border-navy-900 hover:shadow-2xl hover:shadow-navy-900/20 transition-all duration-300 flex flex-col justify-center min-h-[160px]">
+                                    <h3 className="text-xl font-black text-navy-900 group-hover:text-white mb-2 transition-colors duration-300">{cat.title}</h3>
+                                    <p className="text-accent-cyber font-black text-sm transition-colors duration-300">{cat.count} open roles</p>
                                 </Link>
                             ))}
                         </div>
