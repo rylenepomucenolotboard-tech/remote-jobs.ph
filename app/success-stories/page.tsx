@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "https://pngimg.com/uploads/man/man_PNG6531.png"
+    image: "/premium_photo-1682096592504-5bc960bea6d7.avif"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "https://pngimg.com/uploads/businessman/businessman_PNG6571.png"
+    image: "/istockphoto-1372353160-612x612.jpg"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "https://pngimg.com/uploads/business_woman/business_woman_PNG10584.png"
+    image: "/premium_photo-1661593195372-874ca9d29713.avif"
   },
   {
     type: "Talent",
@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "https://pngimg.com/uploads/girl/girl_PNG100.png"
+    image: "/premium_photo-1661265914030-b06f820680a6.avif"
   },
   {
     type: "Employer",
@@ -94,7 +94,7 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "https://pngimg.com/uploads/man/man_PNG6505.png"
+    image: "/photo-1758518729337-32f9c88a1434.avif"
   }
 ];
 
