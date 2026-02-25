@@ -34,7 +34,7 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xNV9waG90b19vZl9hX3BvcnRyYWl0X29mX2JsYWNrX2J1c2luZXNzd29tYW5faV80MDExOTQyNi1mYmFjLTQ4YjgtOWZhYS01NTY2MTNiYjBlNjkucG5n.png"
+    image: "https://pngimg.com/uploads/man/man_PNG6531.png"
   },
   {
     type: "Talent",
@@ -46,7 +46,7 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8yX3Bob3RvX29mX2FfcG9ydHJhaXRfb2ZfYV9zbWlsaW5nX21hbl93aXRoX18yNmIyZTVkMi0xZTY3LTRhNTAtOTUxYy01NTI1OWRlMTBhOGIucG5n.png"
+    image: "https://pngimg.com/uploads/man/man_PNG6533.png"
   },
   {
     type: "Talent",
@@ -58,7 +58,7 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA4L2pvYjEwNjktMjE1LXAucG5n.png"
+    image: "https://pngimg.com/uploads/girl/girl_PNG69.png"
   },
   {
     type: "Talent",
@@ -70,7 +70,7 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xX3Bob3RvX29mX2FfcG9ydHJhaXRfb2ZfYV9ibGFja19idXNpbmVzc21hbl9faThkOTQ4NGFkLTNlODAtNDFkMC1hYzQ4LTEyZjk2YWMwYWFhNS5wbmc.png"
+    image: "https://pngimg.com/uploads/man/man_PNG6528.png"
   },
   {
     type: "Employer",
@@ -82,7 +82,7 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8yOF9waG90b19vZl95b3VuZ19pbmRpYW5fd29tYW5fYXNpYW5fZXhlY3V0aXZlX184NGIzNGE4OS00MTQxLTRjNjUtOTgyZC05ZGRiY2FjOWQwZTMucG5n.png"
+    image: "https://pngimg.com/uploads/girl/girl_PNG100.png"
   },
   {
     type: "Employer",
@@ -94,7 +94,7 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA4L2pvYjExMjAtMTEzLXAucG5n.png"
+    image: "https://pngimg.com/uploads/man/man_PNG6505.png"
   }
 ];
 
@@ -294,6 +294,7 @@ export default function ResultsPage() {
                 key={`${animKey}-avatar`}
                 src={activeStory.image}
                 alt={activeStory.name}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain object-bottom animate-in slide-in-from-right-8 fade-in duration-700 [animation-fill-mode:forwards]"
               />
             </div>
