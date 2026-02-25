@@ -34,7 +34,6 @@ const STORIES = [
     context: "Top-tier CS team. Fraction of local cost. Already scaling more.",
     source: "Verified Client",
     tag: "Value",
-    image: "/talent-anonymous founder2.png"
   },
   {
     type: "Talent",
@@ -46,7 +45,6 @@ const STORIES = [
     context: "13 years in Singapore. One remote role changed everything.",
     source: "Verified Contractor",
     tag: "IT / Cybersecurity",
-    image: "/talent-dominic.png"
   },
   {
     type: "Talent",
@@ -58,7 +56,6 @@ const STORIES = [
     context: "Four hours of daily commuting — gone. Work-life balance restored.",
     source: "Verified Contractor · LinkedIn",
     tag: "Program Admin",
-    image: "/talent-mycah2.png"
   },
   {
     type: "Talent",
@@ -70,7 +67,6 @@ const STORIES = [
     context: "Fast-paced UK client. Better pay. Still home in Davao.",
     source: "Indeed · Verified Review",
     tag: "EdTech",
-    image: "https://pngimg.com/uploads/businessman/businessman_PNG6579.png"
   },
   {
     type: "Employer",
@@ -82,7 +78,6 @@ const STORIES = [
     context: "Tight market. Multiple roles filled fast. Costs in check.",
     source: "Verified Client",
     tag: "Scale",
-    image: "/talent-ops director.png"
   },
   {
     type: "Employer",
@@ -94,7 +89,6 @@ const STORIES = [
     context: "Pre-vetted talent. Ongoing. Exactly what a real partner looks like.",
     source: "LinkedIn · Verified Client",
     tag: "Quality",
-    image: "/photo-1758518729337-32f9c88a1434.avif"
   }
 ];
 
@@ -245,56 +239,50 @@ export default function ResultsPage() {
 
         {/* Removed redundant top typography section as the peg incorporates the header into the card itself */}
 
-        {/* High-End Editorial Borderless Carousel Matching the Peg */}
+        {/* High-End Editorial Borderless Carousel without photos */}
         <div
           className="relative w-full max-w-6xl mx-auto mt-16 md:mt-24 pb-24"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Main Card with overflow hidden to clip everything to the stylish dark rectangle */}
-          <div className="relative w-full bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col md:flex-row min-h-[500px] lg:min-h-[560px] overflow-hidden">
+          {/* Main Card with centered typography */}
+          <div className="relative w-full bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center min-h-[400px] lg:min-h-[460px] overflow-hidden rounded-2xl border border-white/5">
 
-            {/* The Gray Circle with Image INSIDE */}
-            <div key={`${animKey}-circle`} className="absolute right-[-15%] bottom-[-30%] w-[120vw] md:w-[70vw] lg:w-[750px] lg:h-[750px] aspect-square rounded-full bg-white animate-in fade-in zoom-in duration-1000 z-0 overflow-hidden">
-              <img
-                key={`${animKey}-avatar-inner`}
-                src={activeStory.image}
-                alt={activeStory.name}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] h-[90%] object-cover object-top animate-in slide-in-from-right-8 fade-in duration-700 [animation-fill-mode:forwards]"
-              />
-            </div>
+            {/* Subtle background gradient for depth since photos are gone */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-indigo/5 to-transparent pointer-events-none" />
 
-            {/* LEFT COLUMN: Text Content */}
-            <div className="w-full md:w-[55%] lg:w-[50%] p-10 md:p-16 flex flex-col justify-center relative z-20">
-              <div key={`${animKey}-text`} className="animate-in slide-in-from-left-8 fade-in duration-700 [animation-fill-mode:forwards]">
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight mb-8">
-                  What Our Customers<br />Have to Say
+            {/* Centered Text Content */}
+            <div className="w-full max-w-4xl p-10 md:p-16 flex flex-col items-center text-center relative z-20">
+              <div key={`${animKey}-text`} className="animate-in fade-in zoom-in duration-700 [animation-fill-mode:forwards]">
+                <h2 className="text-3xl md:text-4xl font-bold text-white/50 leading-tight mb-8 uppercase tracking-widest">
+                  What Our Customers Say
                 </h2>
-                <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed mb-12 max-w-[40ch]">
-                  {activeStory.quote} {activeStory.context}
+                <p className="text-2xl md:text-3xl lg:text-4xl text-white font-medium italic leading-relaxed mb-12 max-w-[30ch]">
+                  "{activeStory.quote}"
                 </p>
 
-                <div className="flex flex-col gap-1 mt-auto">
-                  <div className="text-sm md:text-base font-bold text-white">{activeStory.name}</div>
-                  <div className="text-xs md:text-sm text-white/60 font-medium">{activeStory.location}</div>
+                <p className="text-lg md:text-xl text-navy-200 mb-12 max-w-[40ch] mx-auto opacity-80">
+                  {activeStory.context}
+                </p>
+
+                <div className="flex flex-col items-center gap-1">
+                  <div className="text-lg md:text-xl font-bold text-white">{activeStory.name}</div>
+                  <div className="text-sm md:text-base text-accent-cyber font-semibold tracking-wider uppercase">{activeStory.location}</div>
                 </div>
 
                 {/* Minimalist Dot Indicators */}
-                <div className="flex gap-2.5 mt-12">
+                <div className="flex gap-2.5 mt-12 justify-center">
                   {filteredStories.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setIndex(i)}
-                      className={`h-1.5 rounded-full transition-all duration-700 ease-out ${i === carouselIndex ? 'w-10 bg-white shadow-[0_0_10px_rgba(255,255,255,0.4)]' : 'w-4 bg-white/30 hover:bg-white/50'}`}
+                      className={`h-1.5 rounded-full transition-all duration-700 ease-out ${i === carouselIndex ? 'w-10 bg-white shadow-[0_0_10px_rgba(255,255,255,0.4)]' : 'w-4 bg-white/20 hover:bg-white/40'}`}
                       aria-label={`Go to story ${i + 1}`}
                     />
                   ))}
                 </div>
               </div>
             </div>
-
-
-
           </div>
         </div>
 
