@@ -1,0 +1,10 @@
+# IDE Context & Cursor Rules
+
+These rules ensure the IDE and the AI agent understand the core of the project.
+
+- Project Type: Next.js + React
+- Styling: Tailwind CSS
+- Language: TypeScript / JavaScript
+- UI Priority: Modern, accessible, smooth animations.
+
+*Add your specific IDE formatting or code style constraints here.*
