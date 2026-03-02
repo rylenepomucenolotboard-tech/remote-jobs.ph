@@ -72,6 +72,7 @@ function RegisterForm() {
                 // Create profile
                 const { error: profileError } = await supabase.from('profiles').insert({
                     id: authData.user.id,
+                    email: email, // New field to mirror email
                     user_type: userType,
                     full_name: fullName,
                     phone: phone || null,
