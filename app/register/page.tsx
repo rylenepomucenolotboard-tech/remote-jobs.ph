@@ -20,6 +20,8 @@ function RegisterForm() {
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+    const [isLeadOnly, setIsLeadOnly] = useState(false);
 
     // Employer Specific Fields
     const [companyName, setCompanyName] = useState('');
@@ -39,49 +41,59 @@ function RegisterForm() {
         setError('');
 
         try {
-            // Sign up user
+            // 1. Try to sign up user
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
             });
 
-            if (authError) throw authError;
+            let userId = authData.user?.id;
+            let leadMode = false;
 
-            if (authData.user) {
+            if (authError) {
+                // Check for rate limit or other non-fatal errors for lead capture
+                if (authError.status === 429 || authError.message.toLowerCase().includes('rate limit')) {
+                    console.warn('Auth rate limit hit, falling back to lead capture mode');
+                    userId = crypto.randomUUID();
+                    leadMode = true;
+                    setIsLeadOnly(true);
+                } else {
+                    throw authError;
+                }
+            }
+
+            if (userId) {
                 let resumeUrl = null;
 
-                // Handle Resume Upload if jobseeker
-                if (userType === 'jobseeker' && resumeFile) {
+                // 2. Handle Resume Upload (only if authenticated, otherwise skip or handle differently)
+                if (userType === 'jobseeker' && resumeFile && !leadMode) {
                     const fileExt = resumeFile.name.split('.').pop();
-                    const fileName = `${authData.user.id}-${Date.now()}.${fileExt}`;
+                    const fileName = `${userId}-${Date.now()}.${fileExt}`;
                     const filePath = `jobseekers/resumes/${fileName}`;
 
                     const { error: uploadError } = await supabase.storage
                         .from('submissions')
                         .upload(filePath, resumeFile);
 
-                    if (uploadError) throw uploadError;
-
-                    const { data: { publicUrl } } = supabase.storage
-                        .from('submissions')
-                        .getPublicUrl(filePath);
-
-                    resumeUrl = publicUrl;
+                    if (!uploadError) {
+                        const { data: { publicUrl } } = supabase.storage
+                            .from('submissions')
+                            .getPublicUrl(filePath);
+                        resumeUrl = publicUrl;
+                    }
                 }
 
-                // Create profile
+                // 3. Create profile/lead
                 const { error: profileError } = await supabase.from('profiles').insert({
-                    id: authData.user.id,
-                    email: email, // New field to mirror email
+                    id: userId,
+                    email: email,
                     user_type: userType,
                     full_name: fullName,
                     phone: phone || null,
-                    // Employer fields
                     company_name: userType === 'employer' ? companyName : null,
                     country: userType === 'employer' ? country : null,
                     role_hiring_for: userType === 'employer' ? roleHiringFor : null,
                     budget_message: userType === 'employer' ? budgetMessage : null,
-                    // Jobseeker fields
                     years_of_experience: userType === 'jobseeker' ? parseInt(yearsOfExperience) || 0 : null,
                     expected_salary: userType === 'jobseeker' ? expectedSalary : null,
                     role: userType === 'jobseeker' ? role : null,
@@ -90,8 +102,12 @@ function RegisterForm() {
 
                 if (profileError) throw profileError;
 
-                // Redirect to appropriate dashboard
-                router.push(userType === 'employer' ? '/employer/dashboard' : '/jobseeker/dashboard');
+                // 4. Handle Success
+                if (leadMode) {
+                    setSubmitted(true);
+                } else {
+                    router.push(userType === 'employer' ? '/employer/dashboard' : '/jobseeker/dashboard');
+                }
             }
         } catch (err: any) {
             setError(err.message || 'An error occurred during registration');
@@ -106,7 +122,34 @@ function RegisterForm() {
 
             <main className="flex-1 bg-gray-50 py-12 flex items-center justify-center">
                 <div className="max-w-4xl w-full px-4">
-                    {step === 1 ? (
+                    {submitted ? (
+                        <div className="max-w-2xl mx-auto bg-white rounded-[3rem] p-16 shadow-2xl text-center border border-navy-50 animate-in fade-in zoom-in duration-700">
+                            <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-10">
+                                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <h2 className="text-4xl font-black text-navy-900 mb-6">Submission Received!</h2>
+                            <p className="text-xl text-navy-500 mb-10 leading-relaxed font-medium">
+                                {isLeadOnly
+                                    ? "Thank you! We've captured your details. Our team will review your submission and reach out to you directly via email."
+                                    : "Thank you for joining RemoteJobs! You can now access your dashboard and start posting jobs."}
+                            </p>
+                            <div className="space-y-4">
+                                <Link
+                                    href="/"
+                                    className="block w-full btn-navy !py-5 text-lg font-black"
+                                >
+                                    Back to Home
+                                </Link>
+                                {isLeadOnly && (
+                                    <p className="text-sm text-navy-300 font-bold uppercase tracking-widest mt-8 italic">
+                                        Note: Our automated account creation is currently at capacity. Your lead is safely stored in our admin dashboard.
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    ) : step === 1 ? (
                         <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
                             <h1 className="text-5xl font-black text-navy-900 mb-4">How will you use RemoteJobs?</h1>
                             <p className="text-xl text-navy-500 mb-12 font-medium">Select your path to get started</p>
