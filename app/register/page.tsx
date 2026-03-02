@@ -124,17 +124,35 @@ function RegisterForm() {
                 <div className="max-w-4xl w-full px-4">
                     {submitted ? (
                         <div className="max-w-2xl mx-auto bg-white rounded-[3rem] p-16 shadow-2xl text-center border border-navy-50 animate-in fade-in zoom-in duration-700">
-                            <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-10">
+                            <div className={`w-24 h-24 ${isLeadOnly ? 'bg-amber-100 text-amber-600' : 'bg-green-100 text-green-600'} rounded-full flex items-center justify-center mx-auto mb-10`}>
                                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d={isLeadOnly ? "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" : "M5 13l4 4L19 7"} />
                                 </svg>
                             </div>
-                            <h2 className="text-4xl font-black text-navy-900 mb-6">Submission Received!</h2>
-                            <p className="text-xl text-navy-500 mb-10 leading-relaxed font-medium">
-                                {isLeadOnly
-                                    ? "Thank you! We've captured your details. Our team will review your submission and reach out to you directly via email."
-                                    : "Thank you for joining RemoteJobs! You can now access your dashboard and start posting jobs."}
-                            </p>
+
+                            {isLeadOnly ? (
+                                <>
+                                    <div className="inline-block bg-amber-500/10 text-amber-600 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-[0.2em] mb-6">
+                                        Manual Review Required
+                                    </div>
+                                    <h2 className="text-4xl font-black text-navy-900 mb-6">Inquiry Received!</h2>
+                                    <p className="text-xl text-navy-500 mb-10 leading-relaxed font-bold">
+                                        We've safely captured your registration details!
+                                        <br /><br />
+                                        <span className="text-navy-400 font-medium text-lg">
+                                            Due to high demand, our automated account creation is temporarily paused. Your lead is now in our Admin Dashboard, and we will contact you at <span className="text-navy-900">{email}</span> to finalize your access.
+                                        </span>
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <h2 className="text-4xl font-black text-navy-900 mb-6">Account Created!</h2>
+                                    <p className="text-xl text-navy-500 mb-10 leading-relaxed font-medium">
+                                        Thank you for joining RemoteJobs! You can now access your dashboard and start posting jobs.
+                                    </p>
+                                </>
+                            )}
+
                             <div className="space-y-4">
                                 <Link
                                     href="/"
@@ -142,11 +160,6 @@ function RegisterForm() {
                                 >
                                     Back to Home
                                 </Link>
-                                {isLeadOnly && (
-                                    <p className="text-sm text-navy-300 font-bold uppercase tracking-widest mt-8 italic">
-                                        Note: Our automated account creation is currently at capacity. Your lead is safely stored in our admin dashboard.
-                                    </p>
-                                )}
                             </div>
                         </div>
                     ) : step === 1 ? (
