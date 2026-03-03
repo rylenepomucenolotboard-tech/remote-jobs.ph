@@ -16,6 +16,9 @@ export default function JobseekerDashboard() {
     const [profile, setProfile] = useState<any>(null);
     const [applications, setApplications] = useState<any[]>([]);
     const [activeTab, setActiveTab] = useState('overview');
+    const [chatInput, setChatInput] = useState(');
+    const [chatMessages, setChatMessages] = useState<{role: string, content: string}[]>([]);
+    const [chatLoading, setChatLoading] = useState(false);
     useEffect(() => {
         const checkUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
@@ -204,6 +207,7 @@ export default function JobseekerDashboard() {
                             "Connect with recruiters directly",
                             "Set a reminder for your next interview"
                         ].map((prompt, i) => (
+                            <button key={i} onClick={() => handleChat(prompt)}
                             <button key={i} className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/30 transition-all flex items-center justify-between group">
                                 {prompt}
                                 <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" />
@@ -211,8 +215,8 @@ export default function JobseekerDashboard() {
                         ))}
                     </div>
                     <div className="relative">
-                        <textarea placeholder="Ask your AI recruiter..." className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
-                        <button className="absolute bottom-4 right-4 p-2 bg-navy-900 text-white rounded-xl hover:bg-indigo-600 transition-all active:scale-90"><Send size={16} /></button>
+                        <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), handleChat(chatInput))} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
+                        <button onClick={() => handleChat(chatInput)} className="absolute bottom-4 right-4 p-2 bg-navy-900 text-white rounded-xl hover:bg-indigo-600 transition-all active:scale-90"><Send size={16} /></button>
                     </div>
                     <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Anthropic</p>
                 </aside>
