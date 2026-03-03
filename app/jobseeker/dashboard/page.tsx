@@ -157,7 +157,6 @@ export default function JobseekerDashboard() {
                                 </div>
                             </div>
                         </div>
-EOF'cat >> ~/Documents/Antigravity/app/jobseeker/dashboard/page.tsx << 'EOF'
                         <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
                             <h3 className="text-xl font-black text-navy-900 mb-6">Upcoming Interviews</h3>
                             <div className="grid grid-cols-7 gap-3">
