@@ -54,7 +54,7 @@ export default function JobseekerDashboard() {
     return (
         <div className="min-h-screen bg-white flex flex-col">
             <Header />
-            <div className="flex-1 flex overflow-hidden">
+            <div className="flex-1 flex">
                 <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-slate-100 p-6 space-y-8">
                     <div className="space-y-1">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Navigation</p>
