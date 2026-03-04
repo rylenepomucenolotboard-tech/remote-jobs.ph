@@ -65,7 +65,7 @@ function RegisterForm() {
             if (userId) {
                 let resumeUrl = null;
 
-                // 2. Handle Resume Upload (only if authenticated, otherwise skip or handle differently)
+                // 2. Handle Resume Upload (only if authenticated, otherwise skip)
                 if (userType === 'jobseeker' && resumeFile && !leadMode) {
                     const fileExt = resumeFile.name.split('.').pop();
                     const fileName = `${userId}-${Date.now()}.${fileExt}`;
@@ -102,7 +102,45 @@ function RegisterForm() {
 
                 if (profileError) throw profileError;
 
-                // 4. Handle Success
+                // 4. Sync to GoHighLevel (fire-and-forget — never blocks the user)
+                const [ghlFirstName, ...rest] = fullName.trim().split(' ');
+                const ghlLastName = rest.join(' ');
+                if (userType === 'employer') {
+                    fetch('/api/submit-employer', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: ghlFirstName,
+                            lastName: ghlLastName,
+                            email,
+                            phone: phone || '',
+                            companyName,
+                            country,
+                            role1: roleHiringFor,
+                            budgetMessage: budgetMessage || '',
+                            website: '',
+                        }),
+                    }).catch(err => console.warn('[GHL employer sync]', err));
+                } else {
+                    fetch('/api/submit-jobseeker', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: ghlFirstName,
+                            lastName: ghlLastName,
+                            email,
+                            phone: phone || '',
+                            jobTitle: role,
+                            experience: yearsOfExperience,
+                            expectedSalary,
+                            skills: '',
+                            educationalAttainment: '',
+                            resumeUrl: resumeUrl || '',
+                        }),
+                    }).catch(err => console.warn('[GHL jobseeker sync]', err));
+                }
+
+                // 5. Handle Success
                 if (leadMode) {
                     setSubmitted(true);
                 } else {
@@ -242,48 +280,19 @@ function RegisterForm() {
                                     <div className="space-y-6">
                                         <div>
                                             <label className="block text-base font-black text-navy-900 mb-3">Full Name</label>
-                                            <input
-                                                type="text"
-                                                value={fullName}
-                                                onChange={(e) => setFullName(e.target.value)}
-                                                className="input-field-modern"
-                                                placeholder="e.g. John Doe"
-                                                required
-                                            />
+                                            <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="input-field-modern" placeholder="e.g. John Doe" required />
                                         </div>
                                         <div>
                                             <label className="block text-base font-black text-navy-900 mb-3">Email Address</label>
-                                            <input
-                                                type="email"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                className="input-field-modern"
-                                                placeholder="e.g. john@example.com"
-                                                required
-                                            />
+                                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input-field-modern" placeholder="e.g. john@example.com" required />
                                         </div>
                                         <div>
                                             <label className="block text-base font-black text-navy-900 mb-3">Phone Number</label>
-                                            <input
-                                                type="tel"
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                                className="input-field-modern"
-                                                placeholder="+63 900 000 0000"
-                                                required
-                                            />
+                                            <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="input-field-modern" placeholder="+63 900 000 0000" required />
                                         </div>
                                         <div>
                                             <label className="block text-base font-black text-navy-900 mb-3">Create Password</label>
-                                            <input
-                                                type="password"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                className="input-field-modern"
-                                                placeholder="Minimum 6 characters"
-                                                required
-                                                minLength={6}
-                                            />
+                                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field-modern" placeholder="Minimum 6 characters" required minLength={6} />
                                         </div>
                                     </div>
 
@@ -293,92 +302,39 @@ function RegisterForm() {
                                             <>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Company Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={companyName}
-                                                        onChange={(e) => setCompanyName(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="Acme Inc."
-                                                        required
-                                                    />
+                                                    <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="input-field-modern" placeholder="Acme Inc." required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Company Location (Country)</label>
-                                                    <input
-                                                        type="text"
-                                                        value={country}
-                                                        onChange={(e) => setCountry(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="e.g. United States"
-                                                        required
-                                                    />
+                                                    <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} className="input-field-modern" placeholder="e.g. United States" required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Role you are hiring for</label>
-                                                    <input
-                                                        type="text"
-                                                        value={roleHiringFor}
-                                                        onChange={(e) => setRoleHiringFor(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="e.g. Senior React Developer"
-                                                        required
-                                                    />
+                                                    <input type="text" value={roleHiringFor} onChange={(e) => setRoleHiringFor(e.target.value)} className="input-field-modern" placeholder="e.g. Senior React Developer" required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Budget Message (Optional)</label>
-                                                    <textarea
-                                                        value={budgetMessage}
-                                                        onChange={(e) => setBudgetMessage(e.target.value)}
-                                                        className="input-field-modern min-h-[120px]"
-                                                        placeholder="Tell us about your budget or requirements..."
-                                                    />
+                                                    <textarea value={budgetMessage} onChange={(e) => setBudgetMessage(e.target.value)} className="input-field-modern min-h-[120px]" placeholder="Tell us about your budget or requirements..." />
                                                 </div>
                                             </>
                                         ) : (
                                             <>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">What is your current or target role?</label>
-                                                    <input
-                                                        type="text"
-                                                        value={role}
-                                                        onChange={(e) => setRole(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="e.g. Frontend Engineer"
-                                                        required
-                                                    />
+                                                    <input type="text" value={role} onChange={(e) => setRole(e.target.value)} className="input-field-modern" placeholder="e.g. Frontend Engineer" required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Total Years of Experience</label>
-                                                    <input
-                                                        type="number"
-                                                        value={yearsOfExperience}
-                                                        onChange={(e) => setYearsOfExperience(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="e.g. 5"
-                                                        required
-                                                    />
+                                                    <input type="number" value={yearsOfExperience} onChange={(e) => setYearsOfExperience(e.target.value)} className="input-field-modern" placeholder="e.g. 5" required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Expected Monthly Salary ($)</label>
-                                                    <input
-                                                        type="text"
-                                                        value={expectedSalary}
-                                                        onChange={(e) => setExpectedSalary(e.target.value)}
-                                                        className="input-field-modern"
-                                                        placeholder="e.g. $3,000 - $5,000"
-                                                        required
-                                                    />
+                                                    <input type="text" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} className="input-field-modern" placeholder="e.g. $3,000 - $5,000" required />
                                                 </div>
                                                 <div>
                                                     <label className="block text-base font-black text-navy-900 mb-3">Attach Your Resume (PDF/Doc)</label>
                                                     <div className="relative group cursor-pointer">
-                                                        <input
-                                                            type="file"
-                                                            onChange={(e) => setResumeFile(e.target.files?.[0] || null)}
-                                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                                                            accept=".pdf,.doc,.docx"
-                                                            required
-                                                        />
+                                                        <input type="file" onChange={(e) => setResumeFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept=".pdf,.doc,.docx" required />
                                                         <div className={`p-6 rounded-2xl border-2 border-dashed transition-all flex items-center justify-center gap-4 ${resumeFile ? 'border-accent-cyber bg-accent-cyber/5 text-navy-900 font-black' : 'border-navy-100 bg-navy-50 text-navy-400 group-hover:border-accent-cyber/40 hover:bg-white'}`}>
                                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -395,8 +351,7 @@ function RegisterForm() {
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className={`w-full ${userType === 'employer' ? 'btn-indigo' : 'btn-cyan'
-                                            } !py-6 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)] !text-xl font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`w-full ${userType === 'employer' ? 'btn-indigo' : 'btn-cyan'} !py-6 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)] !text-xl font-black flex items-center justify-center gap-3 active:scale-[0.98] transition-all ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
                                         {loading ? (
                                             <>

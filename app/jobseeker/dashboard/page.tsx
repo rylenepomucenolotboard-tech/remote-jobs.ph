@@ -17,7 +17,7 @@ export default function JobseekerDashboard() {
     const [applications, setApplications] = useState<any[]>([]);
     const [activeTab, setActiveTab] = useState('overview');
     const [chatInput, setChatInput] = useState('');
-    const [chatMessages, setChatMessages] = useState<{role: string, content: string}[]>([]);
+    const [chatMessages, setChatMessages] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
     useEffect(() => {
         const checkUser = async () => {
@@ -48,7 +48,7 @@ export default function JobseekerDashboard() {
         }
         setChatLoading(false);
     };
-    const chartData = [{ day: 'Mon', apps: 12 },{ day: 'Tue', apps: 18 },{ day: 'Wed', apps: 15 },{ day: 'Thu', apps: 25 },{ day: 'Fri', apps: 32 },{ day: 'Sat', apps: 28 },{ day: 'Sun', apps: 35 }];
+    const chartData = [{ day: 'Mon', apps: 12 }, { day: 'Tue', apps: 18 }, { day: 'Wed', apps: 15 }, { day: 'Thu', apps: 25 }, { day: 'Fri', apps: 32 }, { day: 'Sat', apps: 28 }, { day: 'Sun', apps: 35 }];
     const maxApps = Math.max(...chartData.map(d => d.apps));
     if (loading) return <div className="flex items-center justify-center min-h-screen"><div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div></div>;
     return (
@@ -109,83 +109,83 @@ export default function JobseekerDashboard() {
                             </div>
                         )}
                         {activeTab === 'overview' && <div className="space-y-8">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h1 className="text-3xl font-black text-slate-900">Good morning, {profile?.full_name?.split(' ')[0] || 'there'}</h1>
-                                <p className="text-slate-500 font-medium">Here is your job search overview.</p>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-900 transition-all shadow-sm"><Bell size={20} /></button>
-                                <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-indigo-700 transition-all"><Plus size={18} /><span>New App</span></button>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                                <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><Briefcase size={22} /></div><span className="text-xs font-bold text-emerald-500 bg-emerald-50 px-2.5 py-1 rounded-full">+12%</span></div>
-                                <p className="text-3xl font-black text-slate-900">{applications.length}</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Total Applications</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                                <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><Users size={22} /></div><span className="text-xs font-bold text-slate-400">Target: 20</span></div>
-                                <p className="text-3xl font-black text-slate-900">8</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Shortlisted</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                                <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl"><CheckCircle size={22} /></div><span className="text-xs font-bold text-amber-600">Top 5%</span></div>
-                                <p className="text-3xl font-black text-slate-900">92%</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Success Rate</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-xl font-black text-slate-900">Job Analysis</h3>
-                                    <select className="bg-slate-50 text-xs font-bold text-slate-500 p-2 rounded-lg border-none outline-none"><option>Last 7 Days</option><option>Last 30 Days</option></select>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h1 className="text-3xl font-black text-slate-900">Good morning, {profile?.full_name?.split(' ')[0] || 'there'}</h1>
+                                    <p className="text-slate-500 font-medium">Here is your job search overview.</p>
                                 </div>
-                                <div className="h-56 w-full">
-                                    <svg viewBox="0 0 700 280" className="w-full h-full">
-                                        <line x1="0" y1="240" x2="700" y2="240" stroke="#f1f5f9" strokeWidth="2" />
-                                        <line x1="0" y1="160" x2="700" y2="160" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
-                                        <line x1="0" y1="80" x2="700" y2="80" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
-                                        <defs><linearGradient id="cg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#6366F1" stopOpacity="0.15" /><stop offset="100%" stopColor="#6366F1" stopOpacity="0" /></linearGradient></defs>
-                                        <path d={`M 50,${240 - (chartData[0].apps / maxApps * 200)} ${chartData.slice(1).map((d, i) => "L " + ((i + 1) * 100 + 50) + "," + (240 - (d.apps / maxApps * 200))).join(' ')}`} fill="none" stroke="#6366F1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d={`M 50,240 ${chartData.map((d, i) => "L " + (i * 100 + 50) + "," + (240 - (d.apps / maxApps * 200))).join(' ')} L 650,240 Z`} fill="url(#cg)" />
-                                        {chartData.map((d, i) => (<circle key={i} cx={i * 100 + 50} cy={240 - (d.apps / maxApps * 200)} r="5" fill="white" stroke="#6366F1" strokeWidth="3" />))}
-                                    </svg>
-                                    <div className="flex justify-between px-8 mt-2">{chartData.map(d => <span key={d.day} className="text-[10px] font-bold text-slate-400 uppercase">{d.day}</span>)}</div>
+                                <div className="flex items-center gap-3">
+                                    <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-900 transition-all shadow-sm"><Bell size={20} /></button>
+                                    <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-indigo-700 transition-all"><Plus size={18} /><span>New App</span></button>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                                    <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><Briefcase size={22} /></div><span className="text-xs font-bold text-emerald-500 bg-emerald-50 px-2.5 py-1 rounded-full">+12%</span></div>
+                                    <p className="text-3xl font-black text-slate-900">{applications.length}</p>
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Total Applications</p>
+                                </div>
+                                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                                    <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><Users size={22} /></div><span className="text-xs font-bold text-slate-400">Target: 20</span></div>
+                                    <p className="text-3xl font-black text-slate-900">8</p>
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Shortlisted</p>
+                                </div>
+                                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                                    <div className="flex items-center justify-between mb-4"><div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl"><CheckCircle size={22} /></div><span className="text-xs font-bold text-amber-600">Top 5%</span></div>
+                                    <p className="text-3xl font-black text-slate-900">92%</p>
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Success Rate</p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="text-xl font-black text-slate-900">Job Analysis</h3>
+                                        <select className="bg-slate-50 text-xs font-bold text-slate-500 p-2 rounded-lg border-none outline-none"><option>Last 7 Days</option><option>Last 30 Days</option></select>
+                                    </div>
+                                    <div className="h-56 w-full">
+                                        <svg viewBox="0 0 700 280" className="w-full h-full">
+                                            <line x1="0" y1="240" x2="700" y2="240" stroke="#f1f5f9" strokeWidth="2" />
+                                            <line x1="0" y1="160" x2="700" y2="160" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
+                                            <line x1="0" y1="80" x2="700" y2="80" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
+                                            <defs><linearGradient id="cg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#6366F1" stopOpacity="0.15" /><stop offset="100%" stopColor="#6366F1" stopOpacity="0" /></linearGradient></defs>
+                                            <path d={`M 50,${240 - (chartData[0].apps / maxApps * 200)} ${chartData.slice(1).map((d, i) => "L " + ((i + 1) * 100 + 50) + "," + (240 - (d.apps / maxApps * 200))).join(' ')}`} fill="none" stroke="#6366F1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d={`M 50,240 ${chartData.map((d, i) => "L " + (i * 100 + 50) + "," + (240 - (d.apps / maxApps * 200))).join(' ')} L 650,240 Z`} fill="url(#cg)" />
+                                            {chartData.map((d, i) => (<circle key={i} cx={i * 100 + 50} cy={240 - (d.apps / maxApps * 200)} r="5" fill="white" stroke="#6366F1" strokeWidth="3" />))}
+                                        </svg>
+                                        <div className="flex justify-between px-8 mt-2">{chartData.map(d => <span key={d.day} className="text-[10px] font-bold text-slate-400 uppercase">{d.day}</span>)}</div>
+                                    </div>
+                                </div>
+                                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                    <h3 className="text-xl font-black text-slate-900 mb-6">Application Requests</h3>
+                                    <div className="space-y-4">
+                                        {[{ name: 'Sheryl Wang', company: 'Nexus AI', date: '2h ago', score: 94 }, { name: 'John Doe', company: 'Global Tech', date: 'Yesterday', score: 88 }, { name: 'Maria Garcia', company: 'FinTech Hub', date: '3 days ago', score: 76 }].map((req, i) => (
+                                            <div key={i} className="flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <InitialsAvatar name={req.name} color={i === 0 ? "bg-amber-100 text-amber-600" : "bg-indigo-100 text-indigo-600"} />
+                                                    <div><p className="font-black text-slate-900 text-sm">{req.name}</p><p className="text-xs text-slate-400 font-bold">{req.company} - {req.date}</p></div>
+                                                </div>
+                                                <div className="relative w-12 h-12 flex items-center justify-center">
+                                                    <svg className="w-full h-full -rotate-90" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" stroke="#f1f5f9" strokeWidth="3" fill="transparent" /><circle cx="24" cy="24" r="20" stroke="#6366F1" strokeWidth="3" fill="transparent" strokeDasharray="126" strokeDashoffset={126 - (req.score / 100 * 126)} /></svg>
+                                                    <span className="absolute text-[10px] font-black text-slate-900">{req.score}%</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                                <h3 className="text-xl font-black text-slate-900 mb-6">Application Requests</h3>
-                                <div className="space-y-4">
-                                    {[{ name: 'Sheryl Wang', company: 'Nexus AI', date: '2h ago', score: 94 },{ name: 'John Doe', company: 'Global Tech', date: 'Yesterday', score: 88 },{ name: 'Maria Garcia', company: 'FinTech Hub', date: '3 days ago', score: 76 }].map((req, i) => (
-                                        <div key={i} className="flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all">
-                                            <div className="flex items-center gap-3">
-                                                <InitialsAvatar name={req.name} color={i === 0 ? "bg-amber-100 text-amber-600" : "bg-indigo-100 text-indigo-600"} />
-                                                <div><p className="font-black text-slate-900 text-sm">{req.name}</p><p className="text-xs text-slate-400 font-bold">{req.company} - {req.date}</p></div>
-                                            </div>
-                                            <div className="relative w-12 h-12 flex items-center justify-center">
-                                                <svg className="w-full h-full -rotate-90" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" stroke="#f1f5f9" strokeWidth="3" fill="transparent" /><circle cx="24" cy="24" r="20" stroke="#6366F1" strokeWidth="3" fill="transparent" strokeDasharray="126" strokeDashoffset={126 - (req.score / 100 * 126)} /></svg>
-                                                <span className="absolute text-[10px] font-black text-slate-900">{req.score}%</span>
-                                            </div>
+                                <h3 className="text-xl font-black text-slate-900 mb-6">Upcoming Interviews</h3>
+                                <div className="grid grid-cols-7 gap-3">
+                                    {[{ day: 'Mon', date: '12', active: false }, { day: 'Tue', date: '13', active: true, title: 'Tech Interview', time: '10:00 AM', avatar: 'GT' }, { day: 'Wed', date: '14', active: false }, { day: 'Thu', date: '15', active: true, title: 'HR Screen', time: '2:30 PM', avatar: 'MS' }, { day: 'Fri', date: '16', active: false }, { day: 'Sat', date: '17', active: false }, { day: 'Sun', date: '18', active: false }].map((item, i) => (
+                                        <div key={i} className={`p-4 rounded-2xl border transition-all ${item.active ? 'bg-indigo-600 text-white border-transparent shadow-lg' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+                                            <p className={`text-[10px] font-black uppercase tracking-wider ${item.active ? 'text-indigo-200' : 'text-slate-400'}`}>{item.day}</p>
+                                            <p className="text-xl font-black mb-2">{item.date}</p>
+                                            {item.active && (<div className="mt-2 space-y-1"><div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[9px] font-black">{item.avatar}</div><p className="text-[10px] font-black">{item.title}</p><p className="text-[10px] text-indigo-200">{item.time}</p></div>)}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                            <h3 className="text-xl font-black text-slate-900 mb-6">Upcoming Interviews</h3>
-                            <div className="grid grid-cols-7 gap-3">
-                                {[{ day: 'Mon', date: '12', active: false },{ day: 'Tue', date: '13', active: true, title: 'Tech Interview', time: '10:00 AM', avatar: 'GT' },{ day: 'Wed', date: '14', active: false },{ day: 'Thu', date: '15', active: true, title: 'HR Screen', time: '2:30 PM', avatar: 'MS' },{ day: 'Fri', date: '16', active: false },{ day: 'Sat', date: '17', active: false },{ day: 'Sun', date: '18', active: false }].map((item, i) => (
-                                    <div key={i} className={`p-4 rounded-2xl border transition-all ${item.active ? 'bg-indigo-600 text-white border-transparent shadow-lg' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
-                                        <p className={`text-[10px] font-black uppercase tracking-wider ${item.active ? 'text-indigo-200' : 'text-slate-400'}`}>{item.day}</p>
-                                        <p className="text-xl font-black mb-2">{item.date}</p>
-                                        {item.active && (<div className="mt-2 space-y-1"><div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[9px] font-black">{item.avatar}</div><p className="text-[10px] font-black">{item.title}</p><p className="text-[10px] text-indigo-200">{item.time}</p></div>)}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>}
+                        </div>}
                     </div>
                 </main>
                 <aside className="hidden xl:flex flex-col w-80 bg-white border-l border-slate-100 p-8 space-y-6">
@@ -202,7 +202,7 @@ export default function JobseekerDashboard() {
                                 <div key={i} className={`p-4 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-indigo-600 text-white ml-4' : 'bg-slate-50 border border-slate-100 text-slate-700 mr-4'}`}>{msg.content}</div>
                             ))
                         )}
-                        {chatLoading && (<div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl mr-4"><div className="flex gap-1"><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div></div></div>)}
+                        {chatLoading && (<div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl mr-4"><div className="flex gap-1"><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div></div></div>)}
                     </div>
                     <div className="space-y-3">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Suggested</p>
@@ -214,7 +214,7 @@ export default function JobseekerDashboard() {
                         ))}
                     </div>
                     <div className="relative">
-                        <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleChat(chatInput); }}} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
+                        <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleChat(chatInput); } }} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
                         <button onClick={() => handleChat(chatInput)} className="absolute bottom-4 right-4 p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all active:scale-90"><Send size={16} /></button>
                     </div>
                     <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Anthropic</p>
