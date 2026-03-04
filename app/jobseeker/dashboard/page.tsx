@@ -143,6 +143,23 @@ export default function JobseekerDashboard() {
             }
 
             alert('Resume uploaded successfully!');
+
+            // Sync updated profile to GHL in real-time (fire-and-forget)
+            fetch('/api/submit-jobseeker', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0] || '',
+                    lastName: user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || '',
+                    email: user.email || '',
+                    phone: user.user_metadata?.phone || '',
+                    jobTitle: user.user_metadata?.role || '',
+                    skills: skills,
+                    experience: experienceYears,
+                    educationalAttainment: education,
+                }),
+            }).catch(err => console.warn('[GHL jobseeker resume sync]', err));
+
             fetchResume(user.id);
         } catch (error: any) {
             alert(error.message || 'Failed to upload resume');
