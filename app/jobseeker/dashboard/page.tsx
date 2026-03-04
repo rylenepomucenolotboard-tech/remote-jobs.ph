@@ -6,8 +6,8 @@ import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 const InitialsAvatar = ({ name, size = "w-10 h-10", color = "bg-indigo-100 text-indigo-600" }: { name: string, size?: string, color?: string }) => {
-    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
-    return <div className={`flex items-center justify-center rounded-full font-bold ${size} ${color}`}>{initials}</div>;
+    const initials = name.split(' ').map((n: string) => n[0]).join('').toUpperCase().substring(0, 2);
+    return <div className={`flex items-center justify-center rounded-full font-bold text-sm ${size} ${color}`}>{initials}</div>;
 };
 export default function JobseekerDashboard() {
     const router = useRouter();
@@ -16,7 +16,7 @@ export default function JobseekerDashboard() {
     const [profile, setProfile] = useState<any>(null);
     const [applications, setApplications] = useState<any[]>([]);
     const [activeTab, setActiveTab] = useState('overview');
-    const [chatInput, setChatInput] = useState("");
+    const [chatInput, setChatInput] = useState('');
     const [chatMessages, setChatMessages] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
     const [resumeText, setResumeText] = useState("");
@@ -34,38 +34,27 @@ export default function JobseekerDashboard() {
         checkUser();
     }, [router]);
     const handleSignOut = async () => { await supabase.auth.signOut(); router.push('/'); };
+    const handleChat = async (message: string) => {
+        if (!message.trim()) return;
+        const newMessages = [...chatMessages, { role: 'user', content: message }];
+        setChatMessages(newMessages);
+        setChatInput('');
+        setChatLoading(true);
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: newMessages }),
+            });
+            const data = await res.json();
+            setChatMessages([...newMessages, { role: 'assistant', content: data.content }]);
+        } catch (e) {
+            setChatMessages([...newMessages, { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }]);
+        }
+        setChatLoading(false);
+    };
     const chartData = [{ day: 'Mon', apps: 12 }, { day: 'Tue', apps: 18 }, { day: 'Wed', apps: 15 }, { day: 'Thu', apps: 25 }, { day: 'Fri', apps: 32 }, { day: 'Sat', apps: 28 }, { day: 'Sun', apps: 35 }];
     const maxApps = Math.max(...chartData.map(d => d.apps));
-
-    const handleChat = async (message: string) => {
-        console.log("Chat triggered with:", message);
-        if (!message || message.trim() === "" || chatLoading) return;
-
-        const userMessage = { role: "user", content: message };
-        setChatMessages(prev => [...prev, userMessage]);
-        setChatInput("");
-        setChatLoading(true);
-
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: [...chatMessages, userMessage] }),
-            });
-
-            if (!response.ok) throw new Error("Failed to fetch");
-
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
-            setChatMessages(prev => [...prev, { role: "assistant", content: data.content }]);
-        } catch (error) {
-            console.error("Chat Error:", error);
-            setChatMessages(prev => [...prev, { role: "assistant", content: "I'm having trouble connecting right now. Please check your API key." }]);
-        } finally {
-            setChatLoading(false);
-        }
-    };
-
     if (loading) return <div className="flex items-center justify-center min-h-screen"><div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div></div>;
     return (
         <div className="min-h-screen bg-white flex flex-col">
@@ -75,20 +64,19 @@ export default function JobseekerDashboard() {
                     <div className="space-y-1">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Navigation</p>
                         <button onClick={() => setActiveTab('overview')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'overview' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}>
-                            <LayoutDashboard size={20} />Overview
+                            <LayoutDashboard size={20} /><span>Overview</span>
                         </button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Briefcase size={20} />Applications</button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Calendar size={20} />Interviews</button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><MessageSquare size={20} />Messages</button>
+                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Briefcase size={20} /><span>Applications</span></button>
+                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Calendar size={20} /><span>Interviews</span></button>
+                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><MessageSquare size={20} /><span>Messages</span></button>
                     </div>
                     <div className="space-y-1">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Account</p>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><User size={20} />Profile</button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Settings size={20} />Settings</button>
-                        <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-red-500 hover:bg-red-50 transition-all"><LogOut size={20} />Logout</button>
+                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><User size={20} /><span>Profile</span></button>
+                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Settings size={20} /><span>Settings</span></button>
+                        <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-red-500 hover:bg-red-50 transition-all"><LogOut size={20} /><span>Logout</span></button>
                     </div>
-                    <div className="mt-auto p-4 bg-indigo-900 rounded-2xl text-white relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:scale-125 transition-transform"><TrendingUp size={60} /></div>
+                    <div className="mt-auto p-4 bg-indigo-900 rounded-2xl text-white relative overflow-hidden">
                         <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-1">Career Growth</p>
                         <h4 className="text-sm font-bold mb-3">Upgrade to Premium</h4>
                         <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-bold transition-all">View Plans</button>
@@ -98,45 +86,45 @@ export default function JobseekerDashboard() {
                     <div className="max-w-5xl mx-auto space-y-8">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h1 className="text-3xl font-black text-navy-900">Good morning, {profile?.full_name?.split(' ')[0] || 'there'} 👋</h1>
+                                <h1 className="text-3xl font-black text-slate-900">Good morning, {profile?.full_name?.split(' ')[0] || 'there'} 👋</h1>
                                 <p className="text-slate-500 font-medium">Here's your job search overview.</p>
                             </div>
                             <div className="flex items-center gap-3">
-                                <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-navy-900 transition-all shadow-sm"><Bell size={20} /></button>
-                                <button className="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-navy-800 transition-all shadow-lg active:scale-95"><Plus size={18} />New App</button>
+                                <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-900 transition-all shadow-sm"><Bell size={20} /></button>
+                                <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-indigo-700 transition-all shadow-lg active:scale-95"><Plus size={18} /><span>New App</span></button>
                             </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><Briefcase size={22} /></div>
                                     <span className="text-xs font-bold text-emerald-500 bg-emerald-50 px-2.5 py-1 rounded-full">+12%</span>
                                 </div>
-                                <p className="text-3xl font-black text-navy-900">{applications.length}</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">Total Applications</p>
+                                <p className="text-3xl font-black text-slate-900">{applications.length}</p>
+                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Total Applications</p>
                             </div>
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><Users size={22} /></div>
                                     <span className="text-xs font-bold text-slate-400">Target: 20</span>
                                 </div>
-                                <p className="text-3xl font-black text-navy-900">8</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">Shortlisted</p>
+                                <p className="text-3xl font-black text-slate-900">8</p>
+                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Shortlisted</p>
                             </div>
-                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl"><CheckCircle size={22} /></div>
                                     <span className="text-xs font-bold text-amber-600">Top 5%</span>
                                 </div>
-                                <p className="text-3xl font-black text-navy-900">92%</p>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">Success Rate</p>
+                                <p className="text-3xl font-black text-slate-900">92%</p>
+                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mt-1">Success Rate</p>
                             </div>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm space-y-6">
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-xl font-black text-navy-900">Job Analysis</h3>
-                                    <select className="bg-slate-50 border-none outline-none text-xs font-bold text-slate-500 p-2 rounded-lg">
+                                    <h3 className="text-xl font-black text-slate-900">Job Analysis</h3>
+                                    <select className="bg-slate-50 text-xs font-bold text-slate-500 p-2 rounded-lg border-none outline-none">
                                         <option>Last 7 Days</option>
                                         <option>Last 30 Days</option>
                                     </select>
@@ -147,24 +135,22 @@ export default function JobseekerDashboard() {
                                         <line x1="0" y1="160" x2="700" y2="160" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
                                         <line x1="0" y1="80" x2="700" y2="80" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="5,5" />
                                         <defs>
-                                            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <linearGradient id="cg" x1="0%" y1="0%" x2="0%" y2="100%">
                                                 <stop offset="0%" stopColor="#6366F1" stopOpacity="0.15" />
                                                 <stop offset="100%" stopColor="#6366F1" stopOpacity="0" />
                                             </linearGradient>
                                         </defs>
                                         <path d={`M 50,${240 - (chartData[0].apps / maxApps * 200)} ${chartData.slice(1).map((d, i) => `L ${(i + 1) * 100 + 50},${240 - (d.apps / maxApps * 200)}`).join(' ')}`} fill="none" stroke="#6366F1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d={`M 50,240 ${chartData.map((d, i) => `L ${i * 100 + 50},${240 - (d.apps / maxApps * 200)}`).join(' ')} L 650,240 Z`} fill="url(#chartGradient)" />
-                                        {chartData.map((d, i) => (
-                                            <circle key={i} cx={i * 100 + 50} cy={240 - (d.apps / maxApps * 200)} r="5" fill="white" stroke="#6366F1" strokeWidth="3" />
-                                        ))}
+                                        <path d={`M 50,240 ${chartData.map((d, i) => `L ${i * 100 + 50},${240 - (d.apps / maxApps * 200)}`).join(' ')} L 650,240 Z`} fill="url(#cg)" />
+                                        {chartData.map((d, i) => (<circle key={i} cx={i * 100 + 50} cy={240 - (d.apps / maxApps * 200)} r="5" fill="white" stroke="#6366F1" strokeWidth="3" />))}
                                     </svg>
                                     <div className="flex justify-between px-8 mt-2">
                                         {chartData.map(d => <span key={d.day} className="text-[10px] font-bold text-slate-400 uppercase">{d.day}</span>)}
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
-                                <h3 className="text-xl font-black text-navy-900 mb-6">Application Requests</h3>
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h3 className="text-xl font-black text-slate-900 mb-6">Application Requests</h3>
                                 <div className="space-y-4">
                                     {[
                                         { name: 'Sheryl Wang', company: 'Nexus AI', date: '2h ago', score: 94 },
@@ -175,43 +161,43 @@ export default function JobseekerDashboard() {
                                             <div className="flex items-center gap-3">
                                                 <InitialsAvatar name={req.name} color={i === 0 ? "bg-amber-100 text-amber-600" : "bg-indigo-100 text-indigo-600"} />
                                                 <div>
-                                                    <p className="font-black text-navy-900 text-sm">{req.name}</p>
+                                                    <p className="font-black text-slate-900 text-sm">{req.name}</p>
                                                     <p className="text-xs text-slate-400 font-bold">{req.company} · {req.date}</p>
                                                 </div>
                                             </div>
                                             <div className="relative w-12 h-12 flex items-center justify-center">
-                                                <svg className="w-full h-full -rotate-90">
+                                                <svg className="w-full h-full -rotate-90" viewBox="0 0 48 48">
                                                     <circle cx="24" cy="24" r="20" stroke="#f1f5f9" strokeWidth="3" fill="transparent" />
                                                     <circle cx="24" cy="24" r="20" stroke="#6366F1" strokeWidth="3" fill="transparent" strokeDasharray="126" strokeDashoffset={126 - (req.score / 100 * 126)} />
                                                 </svg>
-                                                <span className="absolute text-[10px] font-black text-navy-900">{req.score}%</span>
+                                                <span className="absolute text-[10px] font-black text-slate-900">{req.score}%</span>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            {/* RESUME POLISH SECTION */}
-                            <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm col-span-1 lg:col-span-2">
-                                <div className="flex items-center justify-between mb-6">
-                                    <h3 className="text-xl font-black text-navy-900">Resume Protocol</h3>
-                                    <span className="text-[10px] font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-widest italic">AI Optimization Active</span>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                                <h3 className="text-xl font-black text-slate-900 mb-6">Resume Optimization</h3>
+                                <div className="space-y-4">
+                                    <textarea
+                                        placeholder="Paste your current resume content here..."
+                                        value={resumeText}
+                                        onChange={(e) => setResumeText(e.target.value)}
+                                        className="w-full h-40 bg-slate-50 border border-slate-100 rounded-2xl p-4 text-xs font-medium focus:outline-none focus:border-indigo-600 transition-all resize-none"
+                                    />
+                                    <button
+                                        onClick={() => handleChat(`Help me polish my resume. Here's my current content: ${resumeText}`)}
+                                        className="w-full py-3 bg-indigo-600 text-white rounded-xl font-black text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20"
+                                    >
+                                        🚀 Optimize Experience Points
+                                    </button>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-4">
-                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Main Professional Summary</p>
-                                        <textarea
-                                            placeholder="Paste your current resume content here..."
-                                            value={resumeText}
-                                            onChange={(e) => setResumeText(e.target.value)}
-                                            className="w-full h-40 bg-slate-50 border border-slate-100 rounded-2xl p-4 text-xs font-medium focus:outline-none focus:border-indigo-600 transition-all resize-none"
-                                        />
-                                        <button
-                                            onClick={() => handleChat(`Help me polish my resume. Here's my current content: ${resumeText}`)}
-                                            className="w-full py-3 bg-indigo-600 text-white rounded-xl font-black text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20"
-                                        >
-                                            🚀 Optimize Experience Points
-                                        </button>
-                                    </div>
+                            </div>
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h3 className="text-xl font-black text-slate-900 mb-6">Career Boosters</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center items-center text-center">
                                         <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-indigo-600 mb-4 shadow-sm"><TrendingUp size={24} /></div>
                                         <h4 className="font-black text-navy-900 mb-2">Last Optimized Score: 84</h4>
@@ -235,11 +221,11 @@ export default function JobseekerDashboard() {
                                     { day: 'Sat', date: '17', active: false },
                                     { day: 'Sun', date: '18', active: false },
                                 ].map((item, i) => (
-                                    <div key={i} className={`p-4 rounded-2xl border transition-all ${item.active ? 'bg-indigo-600 text-white border-transparent shadow-lg shadow-indigo-600/20' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+                                    <div key={i} className={`p-4 rounded-2xl border transition-all ${item.active ? 'bg-indigo-600 text-white border-transparent shadow-lg' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
                                         <p className={`text-[10px] font-black uppercase tracking-wider ${item.active ? 'text-indigo-200' : 'text-slate-400'}`}>{item.day}</p>
                                         <p className="text-xl font-black mb-2">{item.date}</p>
                                         {item.active && (
-                                            <div className="mt-2 space-y-2">
+                                            <div className="mt-2 space-y-1">
                                                 <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[9px] font-black">{item.avatar}</div>
                                                 <p className="text-[10px] font-black">{item.title}</p>
                                                 <p className="text-[10px] text-indigo-200">{item.time}</p>
@@ -266,20 +252,19 @@ export default function JobseekerDashboard() {
                     <div className="flex-1 space-y-3">
                         <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest border-b border-indigo-50 pb-2">Career Boosters</p>
                         {[
-                            { label: "Prepare for Interview", prompt: "I have an interview upcoming. Please help me prepare." },
-                            { label: "Add Interview Reminder", prompt: "I want to add a new interview to my calendar with prep points." },
-                            { label: "Optimize My Resume", prompt: "Please look at my resume and suggest remote-focused keywords." }
+                            { label: "Prepare for an upcoming interview", prompt: "I have an interview upcoming. Please help me prepare." },
+                            { label: "Connect with recruiters directly", prompt: "I want to connect with recruiters directly. Please advise on how to approach them." },
+                            { label: "Set a reminder for my next interview", prompt: "I want to add a new interview to my calendar with prep points." }
                         ].map((btn, i) => (
                             <button
                                 key={`booster-${i}`}
                                 onClick={() => {
-                                    console.log("Booster clicked:", btn.label);
                                     handleChat(btn.prompt);
                                 }}
-                                className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-slate-50 transition-all flex items-center justify-between group active:scale-[0.98] cursor-pointer z-10"
+                                className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-slate-50 transition-all flex items-center justify-between group active:scale-[0.98] cursor-pointer"
                             >
-                                <span className="relative z-20 pointer-events-none">{btn.label}</span>
-                                <ChevronRight size={14} className="opacity-40 group-hover:opacity-100 transition-all pointer-events-none" />
+                                <span>{btn.label}</span>
+                                <ChevronRight size={14} className="opacity-40 group-hover:opacity-100 transition-all" />
                             </button>
                         ))}
                     </div>
@@ -303,7 +288,7 @@ export default function JobseekerDashboard() {
                         <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), handleChat(chatInput))} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
                         <button onClick={() => handleChat(chatInput)} className="absolute bottom-4 right-4 p-2 bg-navy-900 text-white rounded-xl hover:bg-indigo-600 transition-all active:scale-90"><Send size={16} /></button>
                     </div>
-                    <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Google Gemini</p>
+                    <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Anthropic</p>
                 </aside>
             </div>
             <Footer />
