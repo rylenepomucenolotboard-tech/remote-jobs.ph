@@ -104,7 +104,7 @@ function RegisterForm() {
                             companyName,
                             country,
                             role1: roleHiringFor,
-                            budgetNote: budgetMessage || '',
+                            budgetMessage: budgetMessage || '',
                             website: '',
                         }),
                     }).catch(err => console.warn('[GHL employer sync]', err));

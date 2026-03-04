@@ -30,7 +30,7 @@ export async function POST(request) {
             role5,
             website,
             country,
-            budgetNote,
+            budgetMessage,
         } = body;
 
         if (!firstName || !email) {
@@ -58,7 +58,7 @@ export async function POST(request) {
             role5,
             website,
             country,
-            budgetNote,
+            budgetMessage,
         });
 
         return NextResponse.json({
