@@ -59,14 +59,14 @@ export default function JobseekerDashboard() {
                     <div className="space-y-1">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Navigation</p>
                         <button onClick={() => setActiveTab('overview')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'overview' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><LayoutDashboard size={20} /><span>Overview</span></button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Briefcase size={20} /><span>Applications</span></button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Calendar size={20} /><span>Interviews</span></button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><MessageSquare size={20} /><span>Messages</span></button>
+                        <button onClick={() => setActiveTab('applications')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'applications' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><Briefcase size={20} /><span>Applications</span></button>
+                        <button onClick={() => setActiveTab('interviews')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'interviews' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><Calendar size={20} /><span>Interviews</span></button>
+                        <button onClick={() => setActiveTab('messages')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'messages' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><MessageSquare size={20} /><span>Messages</span></button>
                     </div>
                     <div className="space-y-1">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Account</p>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><User size={20} /><span>Profile</span></button>
-                        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"><Settings size={20} /><span>Settings</span></button>
+                        <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'profile' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><User size={20} /><span>Profile</span></button>
+                        <button onClick={() => setActiveTab('settings')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all ${activeTab === 'settings' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}><Settings size={20} /><span>Settings</span></button>
                         <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-red-500 hover:bg-red-50 transition-all"><LogOut size={20} /><span>Logout</span></button>
                     </div>
                     <div className="mt-auto p-4 bg-indigo-900 rounded-2xl text-white">
@@ -77,6 +77,38 @@ export default function JobseekerDashboard() {
                 </aside>
                 <main className="flex-1 bg-slate-50/50 p-6 lg:p-10 overflow-y-auto">
                     <div className="max-w-5xl mx-auto space-y-8">
+                        {activeTab === 'applications' && (
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">My Applications</h2>
+                                <p className="text-slate-400 font-medium">You have {applications.length} applications. More details coming soon.</p>
+                            </div>
+                        )}
+                        {activeTab === 'interviews' && (
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">My Interviews</h2>
+                                <p className="text-slate-400 font-medium">Your scheduled interviews will appear here.</p>
+                            </div>
+                        )}
+                        {activeTab === 'messages' && (
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">Messages</h2>
+                                <p className="text-slate-400 font-medium">Your messages with employers will appear here.</p>
+                            </div>
+                        )}
+                        {activeTab === 'profile' && (
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">My Profile</h2>
+                                <p className="text-slate-400 font-medium">Name: {profile?.full_name}</p>
+                                <p className="text-slate-400 font-medium mt-2">Email: {user?.email}</p>
+                            </div>
+                        )}
+                        {activeTab === 'settings' && (
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">Settings</h2>
+                                <p className="text-slate-400 font-medium">Account settings coming soon.</p>
+                            </div>
+                        )}
+                        {activeTab === 'overview' && <div className="space-y-8">
                         <div className="flex items-center justify-between">
                             <div>
                                 <h1 className="text-3xl font-black text-slate-900">Good morning, {profile?.full_name?.split(' ')[0] || 'there'}</h1>
@@ -153,6 +185,7 @@ export default function JobseekerDashboard() {
                                 ))}
                             </div>
                         </div>
+                    </div>}
                     </div>
                 </main>
                 <aside className="hidden xl:flex flex-col w-80 bg-white border-l border-slate-100 p-8 space-y-6">
