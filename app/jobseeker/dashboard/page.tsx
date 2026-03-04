@@ -16,8 +16,8 @@ export default function JobseekerDashboard() {
     const [profile, setProfile] = useState<any>(null);
     const [applications, setApplications] = useState<any[]>([]);
     const [activeTab, setActiveTab] = useState('overview');
-    const [chatInput, setChatInput] = useState(');
-    const [chatMessages, setChatMessages] = useState<{role: string, content: string}[]>([]);
+    const [chatInput, setChatInput] = useState("");
+    const [chatMessages, setChatMessages] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
     useEffect(() => {
         const checkUser = async () => {
@@ -33,8 +33,32 @@ export default function JobseekerDashboard() {
         checkUser();
     }, [router]);
     const handleSignOut = async () => { await supabase.auth.signOut(); router.push('/'); };
-    const chartData = [{ day: 'Mon', apps: 12 },{ day: 'Tue', apps: 18 },{ day: 'Wed', apps: 15 },{ day: 'Thu', apps: 25 },{ day: 'Fri', apps: 32 },{ day: 'Sat', apps: 28 },{ day: 'Sun', apps: 35 }];
+    const chartData = [{ day: 'Mon', apps: 12 }, { day: 'Tue', apps: 18 }, { day: 'Wed', apps: 15 }, { day: 'Thu', apps: 25 }, { day: 'Fri', apps: 32 }, { day: 'Sat', apps: 28 }, { day: 'Sun', apps: 35 }];
     const maxApps = Math.max(...chartData.map(d => d.apps));
+
+    const handleChat = async (message: string) => {
+        if (!message.trim() || chatLoading) return;
+        const newMessages = [...chatMessages, { role: "user", content: message }];
+        setChatMessages(newMessages);
+        setChatInput("");
+        setChatLoading(true);
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ messages: newMessages }),
+            });
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            setChatMessages(prev => [...prev, { role: "assistant", content: data.content }]);
+        } catch (error) {
+            console.error("Chat Error:", error);
+            setChatMessages(prev => [...prev, { role: "assistant", content: "I'm having trouble connecting right now." }]);
+        } finally {
+            setChatLoading(false);
+        }
+    };
+
     if (loading) return <div className="flex items-center justify-center min-h-screen"><div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div></div>;
     return (
         <div className="min-h-screen bg-white flex flex-col">
@@ -207,12 +231,31 @@ export default function JobseekerDashboard() {
                             "Connect with recruiters directly",
                             "Set a reminder for your next interview"
                         ].map((prompt, i) => (
-                            <button key={i} onClick={() => handleChat(prompt)}
-                            <button key={i} className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/30 transition-all flex items-center justify-between group">
+                            <button
+                                key={i}
+                                onClick={() => handleChat(prompt)}
+                                className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/30 transition-all flex items-center justify-between group"
+                            >
                                 {prompt}
                                 <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" />
                             </button>
                         ))}
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto space-y-4 px-1 min-h-[150px] max-h-[300px] scrollbar-hide">
+                        {chatMessages.map((msg, i) => (
+                            <div key={i} className={`p-4 rounded-2xl text-xs font-medium leading-relaxed ${msg.role === 'user'
+                                ? 'bg-indigo-600 text-white ml-4'
+                                : 'bg-slate-50 text-slate-600 border border-slate-100 mr-4'
+                                }`}>
+                                {msg.content}
+                            </div>
+                        ))}
+                        {chatLoading && (
+                            <div className="bg-slate-50 text-slate-400 p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest animate-pulse mr-4">
+                                Analyzing...
+                            </div>
+                        )}
                     </div>
                     <div className="relative">
                         <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), handleChat(chatInput))} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
