@@ -122,6 +122,7 @@ function RegisterForm() {
                             expectedSalary,
                             skills: '',
                             educationalAttainment: '',
+                            resumeUrl: resumeUrl || '',
                         }),
                     }).catch(err => console.warn('[GHL jobseeker sync]', err));
                 }

@@ -5,7 +5,8 @@
  * GHL result:
  *   tag: jobseeker, remote-jobs-ph, trigger-jobseeker-sequence
  *   custom fields: job_title_applied, expected_salary,
- *                  years_of_working_experience, skills, educational_attainment
+ *                  total_years_of_experience, skills, educational_attainment,
+ *                  attach_your_resume_pdfdocs
  */
 
 import { NextResponse } from 'next/server';
@@ -24,6 +25,7 @@ export async function POST(request) {
             experience,
             expectedSalary,
             educationalAttainment,
+            resumeUrl,
         } = body;
 
         if (!firstName || !email) {
@@ -46,6 +48,7 @@ export async function POST(request) {
             experience,
             expectedSalary,
             educationalAttainment,
+            resumeUrl,
         });
 
         return NextResponse.json({

@@ -157,6 +157,7 @@ export default function JobseekerDashboard() {
                     skills: skills,
                     experience: experienceYears,
                     educationalAttainment: education,
+                    resumeUrl: publicUrl || '',
                 }),
             }).catch(err => console.warn('[GHL jobseeker resume sync]', err));
 
