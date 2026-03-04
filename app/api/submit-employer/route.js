@@ -29,6 +29,8 @@ export async function POST(request) {
             role4,
             role5,
             website,
+            country,
+            budgetNote,
         } = body;
 
         if (!firstName || !email) {
@@ -55,6 +57,8 @@ export async function POST(request) {
             role4,
             role5,
             website,
+            country,
+            budgetNote,
         });
 
         return NextResponse.json({

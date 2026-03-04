@@ -102,7 +102,9 @@ function RegisterForm() {
                             email,
                             phone: phone || '',
                             companyName,
+                            country,
                             role1: roleHiringFor,
+                            budgetNote: budgetMessage || '',
                             website: '',
                         }),
                     }).catch(err => console.warn('[GHL employer sync]', err));
