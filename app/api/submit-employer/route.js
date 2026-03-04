@@ -3,10 +3,10 @@
  * Employer form submission → GoHighLevel
  *
  * GHL result:
- *   tag: employer
- *   tag: remote-jobs-ph
- *   tag: trigger-employer-sequence  ← fires employer email/SMS workflow
- *   custom field contact_type = 'employer'
+ *   tag: employer, remote-jobs-ph, trigger-employer-sequence
+ *   custom fields: type, company_name, company_size, industry,
+ *                  role_1__requirement through role_5__requirement,
+ *                  website, source
  */
 
 import { NextResponse } from 'next/server';
@@ -15,7 +15,21 @@ import { upsertContact } from '@/lib/ghl';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { firstName, lastName, email, phone, companyName, companySize, industry, rolesHiring, website } = body;
+        const {
+            firstName,
+            lastName,
+            email,
+            phone,
+            companyName,
+            companySize,
+            industry,
+            role1,
+            role2,
+            role3,
+            role4,
+            role5,
+            website,
+        } = body;
 
         if (!firstName || !email) {
             return NextResponse.json({ error: 'First name and email are required.' }, { status: 400 });
@@ -28,8 +42,19 @@ export async function POST(request) {
 
         const contact = await upsertContact({
             contactType: 'employer',
-            firstName, lastName, email, phone,
-            companyName, companySize, industry, rolesHiring, website,
+            firstName,
+            lastName,
+            email,
+            phone,
+            companyName,
+            companySize,
+            industry,
+            role1,
+            role2,
+            role3,
+            role4,
+            role5,
+            website,
         });
 
         return NextResponse.json({

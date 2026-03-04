@@ -89,6 +89,41 @@ function RegisterForm() {
 
                 if (profileError) throw profileError;
 
+                // Sync to GoHighLevel (fire-and-forget — never blocks the user)
+                const [ghlFirstName, ...rest] = fullName.trim().split(' ');
+                const ghlLastName = rest.join(' ');
+                if (userType === 'employer') {
+                    fetch('/api/submit-employer', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: ghlFirstName,
+                            lastName: ghlLastName,
+                            email,
+                            phone: phone || '',
+                            companyName,
+                            role1: roleHiringFor,
+                            website: '',
+                        }),
+                    }).catch(err => console.warn('[GHL employer sync]', err));
+                } else {
+                    fetch('/api/submit-jobseeker', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: ghlFirstName,
+                            lastName: ghlLastName,
+                            email,
+                            phone: phone || '',
+                            jobTitle: role,
+                            experience: yearsOfExperience,
+                            expectedSalary,
+                            skills: '',
+                            educationalAttainment: '',
+                        }),
+                    }).catch(err => console.warn('[GHL jobseeker sync]', err));
+                }
+
                 // Redirect to appropriate dashboard
                 router.push(userType === 'employer' ? '/employer/dashboard' : '/jobseeker/dashboard');
             }

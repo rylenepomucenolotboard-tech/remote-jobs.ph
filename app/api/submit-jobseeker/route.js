@@ -3,10 +3,9 @@
  * Jobseeker form submission → GoHighLevel
  *
  * GHL result:
- *   tag: jobseeker
- *   tag: remote-jobs-ph
- *   tag: trigger-jobseeker-sequence  ← fires jobseeker email/SMS workflow
- *   custom field contact_type = 'jobseeker'
+ *   tag: jobseeker, remote-jobs-ph, trigger-jobseeker-sequence
+ *   custom fields: job_title_applied, expected_salary,
+ *                  years_of_working_experience, skills, educational_attainment
  */
 
 import { NextResponse } from 'next/server';
@@ -15,7 +14,17 @@ import { upsertContact } from '@/lib/ghl';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { firstName, lastName, email, phone, jobTitle, skills, experience, linkedIn } = body;
+        const {
+            firstName,
+            lastName,
+            email,
+            phone,
+            jobTitle,
+            skills,
+            experience,
+            expectedSalary,
+            educationalAttainment,
+        } = body;
 
         if (!firstName || !email) {
             return NextResponse.json({ error: 'First name and email are required.' }, { status: 400 });
@@ -28,8 +37,15 @@ export async function POST(request) {
 
         const contact = await upsertContact({
             contactType: 'jobseeker',
-            firstName, lastName, email, phone,
-            jobTitle, skills, experience, linkedIn,
+            firstName,
+            lastName,
+            email,
+            phone,
+            jobTitle,
+            skills,
+            experience,
+            expectedSalary,
+            educationalAttainment,
         });
 
         return NextResponse.json({
