@@ -13,6 +13,7 @@ export type ApplicationStatus = 'pending' | 'reviewed' | 'shortlisted' | 'reject
 
 export interface Profile {
   id: string;
+  email?: string;
   user_type: UserType;
   full_name: string;
   company_name?: string;
