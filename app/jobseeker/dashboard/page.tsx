@@ -19,6 +19,7 @@ export default function JobseekerDashboard() {
     const [chatInput, setChatInput] = useState("");
     const [chatMessages, setChatMessages] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
+    const [resumeText, setResumeText] = useState("");
     useEffect(() => {
         const checkUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
@@ -37,23 +38,29 @@ export default function JobseekerDashboard() {
     const maxApps = Math.max(...chartData.map(d => d.apps));
 
     const handleChat = async (message: string) => {
-        if (!message.trim() || chatLoading) return;
-        const newMessages = [...chatMessages, { role: "user", content: message }];
-        setChatMessages(newMessages);
+        console.log("Chat triggered with:", message);
+        if (!message || message.trim() === "" || chatLoading) return;
+
+        const userMessage = { role: "user", content: message };
+        setChatMessages(prev => [...prev, userMessage]);
         setChatInput("");
         setChatLoading(true);
+
         try {
             const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: newMessages }),
+                body: JSON.stringify({ messages: [...chatMessages, userMessage] }),
             });
+
+            if (!response.ok) throw new Error("Failed to fetch");
+
             const data = await response.json();
             if (data.error) throw new Error(data.error);
             setChatMessages(prev => [...prev, { role: "assistant", content: data.content }]);
         } catch (error) {
             console.error("Chat Error:", error);
-            setChatMessages(prev => [...prev, { role: "assistant", content: "I'm having trouble connecting right now." }]);
+            setChatMessages(prev => [...prev, { role: "assistant", content: "I'm having trouble connecting right now. Please check your API key." }]);
         } finally {
             setChatLoading(false);
         }
@@ -183,6 +190,38 @@ export default function JobseekerDashboard() {
                                     ))}
                                 </div>
                             </div>
+                            {/* RESUME POLISH SECTION */}
+                            <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm col-span-1 lg:col-span-2">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h3 className="text-xl font-black text-navy-900">Resume Protocol</h3>
+                                    <span className="text-[10px] font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-widest italic">AI Optimization Active</span>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Main Professional Summary</p>
+                                        <textarea
+                                            placeholder="Paste your current resume content here..."
+                                            value={resumeText}
+                                            onChange={(e) => setResumeText(e.target.value)}
+                                            className="w-full h-40 bg-slate-50 border border-slate-100 rounded-2xl p-4 text-xs font-medium focus:outline-none focus:border-indigo-600 transition-all resize-none"
+                                        />
+                                        <button
+                                            onClick={() => handleChat(`Help me polish my resume. Here's my current content: ${resumeText}`)}
+                                            className="w-full py-3 bg-indigo-600 text-white rounded-xl font-black text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20"
+                                        >
+                                            🚀 Optimize Experience Points
+                                        </button>
+                                    </div>
+                                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center items-center text-center">
+                                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-indigo-600 mb-4 shadow-sm"><TrendingUp size={24} /></div>
+                                        <h4 className="font-black text-navy-900 mb-2">Last Optimized Score: 84</h4>
+                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-4 leading-relaxed">
+                                            The AI has identified 3 areas where your<br />remote-readiness can be improved.
+                                        </p>
+                                        <button onClick={() => handleChat("Give me a keyword breakdown of current remote job trends for my role.")} className="text-xs font-black text-indigo-600 hover:underline">View Keyword Analysis →</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
                             <h3 className="text-xl font-black text-navy-900 mb-6">Upcoming Interviews</h3>
@@ -225,19 +264,22 @@ export default function JobseekerDashboard() {
                         <p className="text-sm font-medium text-slate-600 italic">"I've analyzed 200+ remote job listings. Your match score for Full Stack Dev is at an all-time high."</p>
                     </div>
                     <div className="flex-1 space-y-3">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Suggested</p>
+                        <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest border-b border-indigo-50 pb-2">Career Boosters</p>
                         {[
-                            "Prepare for an upcoming interview",
-                            "Connect with recruiters directly",
-                            "Set a reminder for your next interview"
-                        ].map((prompt, i) => (
+                            { label: "Prepare for Interview", prompt: "I have an interview upcoming. Please help me prepare." },
+                            { label: "Add Interview Reminder", prompt: "I want to add a new interview to my calendar with prep points." },
+                            { label: "Optimize My Resume", prompt: "Please look at my resume and suggest remote-focused keywords." }
+                        ].map((btn, i) => (
                             <button
-                                key={i}
-                                onClick={() => handleChat(prompt)}
-                                className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/30 transition-all flex items-center justify-between group"
+                                key={`booster-${i}`}
+                                onClick={() => {
+                                    console.log("Booster clicked:", btn.label);
+                                    handleChat(btn.prompt);
+                                }}
+                                className="w-full text-left p-4 rounded-xl border border-slate-100 text-xs font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 hover:bg-slate-50 transition-all flex items-center justify-between group active:scale-[0.98] cursor-pointer z-10"
                             >
-                                {prompt}
-                                <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" />
+                                <span className="relative z-20 pointer-events-none">{btn.label}</span>
+                                <ChevronRight size={14} className="opacity-40 group-hover:opacity-100 transition-all pointer-events-none" />
                             </button>
                         ))}
                     </div>
@@ -261,7 +303,7 @@ export default function JobseekerDashboard() {
                         <textarea placeholder="Ask your AI recruiter..." value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), handleChat(chatInput))} className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 pr-14 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none" rows={3} />
                         <button onClick={() => handleChat(chatInput)} className="absolute bottom-4 right-4 p-2 bg-navy-900 text-white rounded-xl hover:bg-indigo-600 transition-all active:scale-90"><Send size={16} /></button>
                     </div>
-                    <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Anthropic</p>
+                    <p className="text-[10px] text-center text-slate-300 font-bold uppercase tracking-tight">Powered by Google Gemini</p>
                 </aside>
             </div>
             <Footer />
